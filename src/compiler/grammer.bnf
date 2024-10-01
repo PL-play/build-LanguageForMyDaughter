@@ -1,0 +1,60 @@
+program -> declaration* EOF;
+declaration -> classDecl
+            | funDecl
+            | varDecl
+            | statement
+            | traitDecl;
+classDecl -> "class" IDENTIFIER ( "<" IDENTIFIER )? ("with" parameters)? "{" methodDecl* "}" ;
+traitDecl -> "trait" IDENTIFIER  ("with" parameters)? "{" function* "}";
+methodDecl -> IDENTIFIER "("  parameters? ")" block
+            | "static" IDENTIFIER "("  parameters? ")" block
+            | IDENTIFIER block
+            | "static" block;
+funDecl -> "fun" function ;
+function -> IDENTIFIER "(" parameters? ")" block ;
+parameters -> IDENTIFIER ( "," IDENTIFIER )* ;
+varDecl -> "var" IDENTIFIER ( "=" expression )? ";" ;
+statement -> continueStmt
+            | breakStmt
+            | exprStmt
+            | forStmt
+            | ifStmt
+            | printStmt
+            | returnStmt
+            | whileStmt
+            | block
+            | importStmt
+            | tryStmt
+            | throwStmt;;
+continueStmt -> "continue" ";" ;
+breakStmt -> "break" ";" ;
+block -> "{" declaration* "}" ;
+exprStmt -> expression ";" ;
+forStmt -> "for" "(" ( varDecl | exprStmt | ";" ) expression? ";" expression? ")" statement ;
+ifStmt -> "if" "(" expression ")" statement ( "else" statement )? ;
+printStmt -> "print" expression ";" ;
+returnStmt -> "return" expression? ";" ;
+whileStmt -> "while" "(" expression ")" statement ;
+importStmt -> "want" STRING ("as" IDENTIFIER)? ;
+tryStmt -> "try" block ( "catch" "(" IDENTIFIER (as IDENTIFIER)? ")" block )+ ( "finally" block )? ;
+throwStmt -> "throw" expression ;
+expression -> assignment ;
+assignment -> lvalue "=" assignment ;
+            | ternary ;
+lvalue -> call ;
+ternary -> logic_or ("?" expression ":" ternary)?  ;
+logic_or -> logic_and ( "or" logic_and )* ;
+logic_and -> equality ( "and" equality )* ;
+equality -> comparison ( ( "!=" | "==" ) comparison )* ;
+comparison -> term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+term -> factor ( ( "-" | "+" ) factor )* ;
+factor -> unary ( ( "/" | "*" ) unary )* ;
+unary -> ( "!" | "-" ) unary
+        | call ;
+call -> primary ( "(" arguments? ")" | "." IDENTIFIER | "[" expression "]")* ;
+arguments -> expression ( "," expression )* ;
+primary -> NUMBER | STRING | "true" | "false" | "nil"
+        | "(" expression ")" | IDENTIFIER | "super" "." IDENTIFIER
+        | "lambda" "(" parameters? ")" block
+        | "[" arguments? "]";
+
