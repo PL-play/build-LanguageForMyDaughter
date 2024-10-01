@@ -121,12 +121,12 @@ static void test_parse_exp() {
 
 static void test_parse_stmt() {
   char *stmts[] = {
-      "class C1 < C2 {\n"
+      "castle C1 < C2 {\n"
       "    init(a){\n"
       "      this.a = a;\n "
       "    }\n"
       "    method1(){\n"
-      "      print this.a;\n"
+      "      puff this.a;\n"
       "    }\n"
       "    static method2(a,b,c){\n"
       "      method1();\n"
@@ -176,19 +176,19 @@ static void test_parse_invoke() {
 
 static void test_parse_super() {
   char *stmts[] = {
-      "class A < B{\n"
+      "castle A < B{\n"
       "    init(){\n"
-      "      super.m();\n"
+      "      hero.m();\n"
       "    }\n"
       "}\n",
-      "class A{\n"
+      "castle A{\n"
       "  static m(){\n"
-      "     class B<A{\n"
+      "     castle B<A{\n"
       "       static m(){\n"
       "       }\n"
       "       m1(){\n"
       "         this;\n"
-      "         super.m();\n"
+      "         hero.m();\n"
       "       }\n"
       "     }\n"
       "  }\n"
@@ -214,10 +214,10 @@ static void test_parse_super() {
 
 static void test_static_method() {
   char *stmts[] = {
-      "class A {\n"
+      "castle A {\n"
       "    static m(){\n"
       "      this;"
-      "      super.m();\n"
+      "      hero.m();\n"
       "    }\n"
       "}\n",
 
@@ -328,12 +328,12 @@ static void test_array() {
 
 static void test_string() {
   char *stmts[] = {
-      "print \"abc\\n\";",
-      "print \"a\\\"b\\n\";\n",
-      "print \"abc123\\n\";\n",
-      "print \"b\u6735\u6735s01b\";\n",
-      "print \"\\u6735\" +\"\\n\";\n",
-      "print \"\u6735\";",
+      "puff \"abc\\n\";",
+      "puff \"a\\\"b\\n\";\n",
+      "puff \"abc123\\n\";\n",
+      "puff \"b\u6735\u6735s01b\";\n",
+      "puff \"\\u6735\" +\"\\n\";\n",
+      "puff \"\u6735\";",
 //      "\"${a+b}\";",
       NULL
   };
@@ -357,12 +357,12 @@ static void test_string() {
 
 static void test_try() {
   char *stmts[] = {
-      "try{\n"
-      "  var a=1;\n"
-      "} catch(Expression as e){\n"
-      "  print false;\n"
-      "} catch(E2 as e){\n"
-      "  throw e;\n"
+      "adventure{\n"
+      "  waa a=1;\n"
+      "} rescue(Expression as e){\n"
+      "  puff false;\n"
+      "} rescue(E2 as e){\n"
+      "  toss e;\n"
       "}\n"
       "finally {\n"
       "  a=a+1;\n"
@@ -389,15 +389,15 @@ static void test_try() {
 
 static UnitTestFunction tests[] = {
     test_parse_exp,
-    // test_parse_stmt,
-    // test_parse_invoke,
-    // test_parse_super,
-    // test_static_method,
-    // test_comment,
-    // test_import,
-    // test_array,
-    // test_string,
-    // test_try,
+    test_parse_stmt,
+    test_parse_invoke,
+    test_parse_super,
+    test_static_method,
+    test_comment,
+    test_import,
+    test_array,
+    test_string,
+    test_try,
     NULL
 };
 

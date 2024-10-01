@@ -891,19 +891,19 @@ static Expression *this_(Parser *parser, Token token, Expression *left) {
 
 static Expression *super_(Parser *parser, Token token, Expression *left) {
   if (parser->class_depth == 0) {
-    error(parser, "Can't use 'super' out of class.\n");
+    error(parser, "Can't use 'hero' out of castle.\n");
     return NULL;
   }
   if (!parser->class_has_super[parser->class_depth - 1]) {
-    error(parser, "Can't use 'super' in class without super class.\n");
+    error(parser, "Can't use 'hero' in class without super castle.\n");
     return NULL;
   }
   if (parser->static_method_depth >= parser->class_depth) {
-    error(parser, "Can't use 'super' in static method.\n");
+    error(parser, "Can't use 'hero' in static method.\n");
     return NULL;
   }
-  consume(parser, TOKEN_DOT, "Expect '.' after 'super'\n");
-  consume(parser, TOKEN_IDENTIFIER, "Expect superclass method name.\n");
+  consume(parser, TOKEN_DOT, "Expect '.' after 'hero'\n");
+  consume(parser, TOKEN_IDENTIFIER, "Expect supercastle method name.\n");
   Expression *super = SUPER_EXP(token);
   return GET_EXP(super, parser->prev);
 }
@@ -1007,7 +1007,7 @@ static Expression *fun_or_call(Parser *parser, Token token, Expression *left) {
     for (int i = 0; i < call_expr->call.arg_num; ++i) {
       Expression *ex = call_expr->call.args[i];
       if (ex->type != VARIABLE_EXPR) {
-        error_at(parser, &parser->prev, "Function parameter must be identifier.");
+        error_at(parser, &parser->prev, "Magic parameter must be identifier.");
         params[i] = (Token) {.type=TOKEN_ERROR};
       } else {
         params[i] = ex->variable.name;
@@ -1023,17 +1023,17 @@ static Expression *fun_or_call(Parser *parser, Token token, Expression *left) {
 }
 
 static Expression *lambda(Parser *parser, Token token, Expression *left) {
-  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after lambda.");
+  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after shadow.");
   TokenArrayList *params = Tokennew_arraylist(10);
   if (!match(parser, TOKEN_RIGHT_PAREN)) {
     for (;;) {
-      consume(parser, TOKEN_IDENTIFIER, "Expect identifier after lambda.");
+      consume(parser, TOKEN_IDENTIFIER, "Expect identifier after shadow.");
       Tokenappend_arraylist(params, parser->prev);
       if (!match(parser, TOKEN_COMMA)) {
         break;
       }
     }
-    consume(parser, TOKEN_RIGHT_PAREN, "Expect ')' after lambda.");
+    consume(parser, TOKEN_RIGHT_PAREN, "Expect ')' after shadow.");
   }
   size_t params_num = params->size;
   Token *parameters = NULL;
@@ -1041,7 +1041,7 @@ static Expression *lambda(Parser *parser, Token token, Expression *left) {
     parameters = malloc(sizeof(Token) * params_num);
     memcpy(parameters, params->data, sizeof(Token) * params_num);
   }
-  consume(parser, TOKEN_LEFT_BRACE, "Expect '{' before lambda body.");
+  consume(parser, TOKEN_LEFT_BRACE, "Expect '{' before shadow body.");
   parser->func_depth++;
   Statement *body = block(parser);
   parser->func_depth--;
@@ -1102,7 +1102,7 @@ static Expression *assign(Parser *parser, Token token, Expression *left) {
     Expression *obj = left->get.object;
     Token t = left->get.name;
     if (obj->type == SUPER_EXPR) {
-      error_at(parser, &t, "Can't assign super class method.");
+      error_at(parser, &t, "Can't assign super casle method.");
       return NULL;
     }
     free(left);
@@ -1304,7 +1304,7 @@ static Statement *block(Parser *parser) {
 }
 
 static Statement *if_statement(Parser *parser) {
-  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after 'if'.");
+  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after 'wish'.");
   Expression *condition = expression(parser);
   consume(parser, TOKEN_RIGHT_PAREN, "Expect ')' after condition.");
   Statement *then_statement = statement(parser);
@@ -1316,7 +1316,7 @@ static Statement *if_statement(Parser *parser) {
 }
 
 static Statement *while_statement(Parser *parser) {
-  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after 'while'.");
+  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after 'wloop'.");
   Expression *condition = expression(parser);
   consume(parser, TOKEN_RIGHT_PAREN, "Expect ')' after condition.");
   parser->loop_depth++;
@@ -1335,7 +1335,7 @@ static Statement *for_statement(Parser *parser) {
    *   if ( l1[ i ] == l2[ j ] )
    *     break outer;
    */
-  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after 'for'.");
+  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after 'loop'.");
   Statement *initializer = NULL;
   if (match(parser, TOKEN_SEMICOLON)) {
     // no initializer
@@ -1367,7 +1367,7 @@ static Statement *for_statement(Parser *parser) {
 }
 
 static Statement *continue_statement(Parser *parser) {
-  if (parser->loop_depth == 0) error(parser, "'continue' must be inside a loop.");
+  if (parser->loop_depth == 0) error(parser, "'skip' must be inside a loop.");
   Token prev = parser->prev;
   consume(parser, TOKEN_SEMICOLON, "Expect ';' after 'continue'");
   return CONTINUE_STMTS(prev);
@@ -1382,14 +1382,14 @@ static Statement *break_statement(Parser *parser) {
 
 static Statement *return_statement(Parser *parser) {
   if (parser->func_depth == 0) {
-    error(parser, "'return' must be inside a function.");
+    error(parser, "'home' must be inside a magic.");
   }
   Token keyword = parser->prev;
   if (match(parser, TOKEN_SEMICOLON)) {
     return RETURN_STMTS(keyword, NULL);
   } else {
     Statement *return_stmt = RETURN_STMTS(parser->prev, expression(parser));
-    consume(parser, TOKEN_SEMICOLON, "Expect ';' after 'return'");
+    consume(parser, TOKEN_SEMICOLON, "Expect ';' after 'home'");
     return return_stmt;
   }
 }
@@ -1408,15 +1408,15 @@ static Statement *import_statement(Parser *parser) {
 static Statement *throw_statement(Parser *parser) {
   Token kw = parser->prev;
   Expression *throwable = expression(parser);
-  consume(parser, TOKEN_SEMICOLON, "Expect ';' after throw.");
+  consume(parser, TOKEN_SEMICOLON, "Expect ';' after toss.");
   return THROW_STMTS(kw, throwable);
 }
 
 static Statement *try_statement(Parser *parser) {
-  consume(parser, TOKEN_LEFT_BRACE, "Expect '{' after try.");
+  consume(parser, TOKEN_LEFT_BRACE, "Expect '{' after adventure.");
   Statement *try_block = block(parser);
 
-  consume(parser, TOKEN_CATCH, "Expect 'catch' after try block.");
+  consume(parser, TOKEN_CATCH, "Expect 'rescue' after adventure block.");
   StatementArrayList *catch_stmts = Statementnew_arraylist(8);
   Statement *catch_stmt = catch_statement(parser);
   Statementappend_arraylist(catch_stmts, catch_stmt);
@@ -1440,7 +1440,7 @@ static Statement *try_statement(Parser *parser) {
 }
 
 static Statement *catch_statement(Parser *parser) {
-  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after catch.");
+  consume(parser, TOKEN_LEFT_PAREN, "Expect '(' after adventure.");
   consume(parser, TOKEN_IDENTIFIER, "Expect exception identifier after '(',");
   Expression *id = NULL;
   Expression *as_ = NULL;
@@ -1452,22 +1452,22 @@ static Statement *catch_statement(Parser *parser) {
   } else {
     as_ = ID_EXP(t1);
   }
-  consume(parser, TOKEN_RIGHT_PAREN, "Expect ')' after catch.");
-  consume(parser, TOKEN_LEFT_BRACE, "Expect '{' before catch block.");
+  consume(parser, TOKEN_RIGHT_PAREN, "Expect ')' after adventure.");
+  consume(parser, TOKEN_LEFT_BRACE, "Expect '{' before adventure block.");
   Statement *catch_block = block(parser);
   return CATCH_STMTS(catch_block, id, as_);
 
 }
 
 static Statement *class_declaration(Parser *parser) {
-  consume(parser, TOKEN_IDENTIFIER, "Expect class name.");
+  consume(parser, TOKEN_IDENTIFIER, "Expect castle name.");
   Token name = parser->prev;
   Expression *super_class = NULL;
   bool class_nesting_overflow = false;
   if (parser->class_depth >= MAX_CLASS_NESTING) {
     class_nesting_overflow = true;
     char msg[50];
-    sprintf(msg, "Can't nesting class over %d", MAX_CLASS_NESTING);
+    sprintf(msg, "Can't nesting castle over %d", MAX_CLASS_NESTING);
     error(parser, msg);
   } else {
     parser->class_depth++;
@@ -1475,7 +1475,7 @@ static Statement *class_declaration(Parser *parser) {
 
   if (match(parser, TOKEN_LESS)) {
     // "< superclassName"
-    consume(parser, TOKEN_IDENTIFIER, "Expect super class name.");
+    consume(parser, TOKEN_IDENTIFIER, "Expect super castle name.");
     if (parser->prev.length == name.length && memcmp(parser->prev.start, name.start, name.length) == 0) {
       error(parser, "Unable to inherit its own class.");
     }
@@ -1490,7 +1490,7 @@ static Statement *class_declaration(Parser *parser) {
     }
   }
 
-  consume(parser, TOKEN_LEFT_BRACE, "Expect '{' before class body.");
+  consume(parser, TOKEN_LEFT_BRACE, "Expect '{' before castle body.");
 
   StatementArrayList *methods = Statementnew_arraylist(8);
   StatementArrayList *static_methods = Statementnew_arraylist(8);
@@ -1503,7 +1503,7 @@ static Statement *class_declaration(Parser *parser) {
       Statementappend_arraylist(methods, method);
     }
   }
-  consume(parser, TOKEN_RIGHT_BRACE, "Expect '}' after class body.");
+  consume(parser, TOKEN_RIGHT_BRACE, "Expect '}' after castle body.");
   if (!class_nesting_overflow) {
     parser->class_depth--;
   }
@@ -1538,16 +1538,16 @@ static Statement *var_declaration(Parser *parser) {
 }
 
 static Statement *fun_declaration(Parser *parser, bool is_method, bool is_static) {
-  consume(parser, TOKEN_IDENTIFIER, is_method ? "Expect method name." : "Expect function name.");
+  consume(parser, TOKEN_IDENTIFIER, is_method ? "Expect method name." : "Expect magic name.");
   Token name = parser->prev;
-  consume(parser, TOKEN_LEFT_PAREN, is_method ? "Expect '(' after method name." : "Expect '(' after function name.");
+  consume(parser, TOKEN_LEFT_PAREN, is_method ? "Expect '(' after method name." : "Expect '(' after magic name.");
 
   size_t params_num = 0;
   // parameters
   TokenArrayList *params = Tokennew_arraylist(10);
   if (!match(parser, TOKEN_RIGHT_PAREN)) {
     for (;;) {
-      consume(parser, TOKEN_IDENTIFIER, is_method ? "Expect method parameter." : "Expect function parameter.");
+      consume(parser, TOKEN_IDENTIFIER, is_method ? "Expect method parameter." : "Expect magic parameter.");
       Token p = parser->prev;
       Tokenappend_arraylist(params, p);
       if (!match(parser, TOKEN_COMMA)) {
@@ -1556,9 +1556,9 @@ static Statement *fun_declaration(Parser *parser, bool is_method, bool is_static
     }
     consume(parser,
             TOKEN_RIGHT_PAREN,
-            is_method ? "Expect ')' after method parameters." : "Expect ')' after function parameters.");
+            is_method ? "Expect ')' after method parameters." : "Expect ')' after magic parameters.");
   }
-  consume(parser, TOKEN_LEFT_BRACE, is_method ? "Expect '{' before method body." : "Expect '{' before function body.");
+  consume(parser, TOKEN_LEFT_BRACE, is_method ? "Expect '{' before method body." : "Expect '{' before magic body.");
   parser->func_depth++;
   if (is_static) parser->static_method_depth++;
   Statement *body = block(parser);
