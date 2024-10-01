@@ -8,7 +8,6 @@
 #include "common/framework.h"
 #include "compiler/parser.h"
 #include "chunk/chunk.h"
-#include "zjson.h"
 
 static char *exps[] = {
     "a%2;",
@@ -26,74 +25,74 @@ static char *exps[] = {
     "23.234-34*(123+-5*343)/23-23;",
     "(-1 + 2) * 3 - -4;",
     "nil;",
-    "true;",
+    "aow;",
     "1>2;",
     "2<4;",
     "2==5;",
     "3>=5;",
     "4<=1;",
     "a(1,2,3,4,5,6);",
-    "var a;",
+    "waa a;",
     // "print this;",
-    "var a=1+2;",
+    "waa a=1+2;",
     "a.b;",
     "a=efs;",
     "a.b=efs;",
     "a.b(c).d.f=\"duoduo\";",
-    "{var a=1; {var b=2;}}",
-    "if(a>b) print a; else print b;",
+    "{waa a=1; {waa b=2;}}",
+    "wish(a>b) puff a; dream puff b;",
     "a and b or !c;",
     "a && b || !c;",
     "a + !b;",
     "a + -b;",
     "a && b && !c;",
-    "while(a){print a;}",
-    "var a=\"5\"; \n",
-    "while(a>0){\n"
-    "  print a;\n"
+    "wloop(a){puff a;}",
+    "waa a=\"5\"; \n",
+    "wloop(a>0){\n"
+    "  puff a;\n"
     "  a = a-1;\n"
     "}\n",
-    "for(;;){\n"
-    "   print a;\n"
+    "loop(;;){\n"
+    "   puff a;\n"
     "}",
-    "for(a=1;;){\n"
-    "   print a;\n"
+    "loop(a=1;;){\n"
+    "   puff a;\n"
     "}",
-    "for(var a=1;;){\n"
-    "   print a;\n"
+    "loop(waa a=1;;){\n"
+    "   puff a;\n"
     "}",
-    "for(;a>0;){\n"
-    "   print a;\n"
+    "loop(;a>0;){\n"
+    "   puff a;\n"
     "}",
-    "for(var a=1;a>0;a=a+1){\n"
-    "   print a;\n"
+    "loop(waa a=1;a>0;a=a+1){\n"
+    "   puff a;\n"
     "}",
 
-    "for(;;){\n"
-    "   continue;\n"
+    "loop(;;){\n"
+    "   skip;\n"
     "} ",
-    "for(;;){\n"
+    "loop(;;){\n"
     "   break;\n"
     "}",
     "a(1,2,3);",
     "a(1,2,3)();",
-    "n(a,b,v){print a;};",
-    "fun n(a,b,v){print a;}",
-    "fun f1(a,b){\n"
-    "      return a+b;\n"
+    "n(a,b,v){puff a;};",
+    "magic n(a,b,v){puff a;}",
+    "magic f1(a,b){\n"
+    "      home a+b;\n"
     "   }",
-    "lambda(a,b){return a+b;}(1,2);",
-    "1; var x = \"outside\";\n",
-    "   fun inner() {\n"
-    "     print x;\n"
+    "shadow(a,b){home a+b;}(1,2);",
+    "1; waa x = \"outside\";\n",
+    "   magic inner() {\n"
+    "     puff x;\n"
     "   }\n"
     "   inner();\n",
-    "fun outer(){\n"
-    "fun outer(){\n"
-    "  var x = \"duoduo\";\n"
-    "  fun inner(){\n"
+    "magic outer(){\n"
+    "magic outer(){\n"
+    "  waa x = \"duoduo\";\n"
+    "  magic inner(){\n"
     "    x = \"I love \" + x;\n"
-    "    print x;\n"
+    "    puff x;\n"
     "  }\n"
     "  inner();\n"
     "  }\n"
@@ -389,16 +388,16 @@ static void test_try() {
 
 
 static UnitTestFunction tests[] = {
-//    test_parse_exp,
-//    test_parse_stmt,
-//    test_parse_invoke,
-//    test_parse_super,
-//    test_static_method,
-//    test_comment,
-//    test_import,
-//    test_array,
-//    test_string,
-    test_try,
+    test_parse_exp,
+    // test_parse_stmt,
+    // test_parse_invoke,
+    // test_parse_super,
+    // test_static_method,
+    // test_comment,
+    // test_import,
+    // test_array,
+    // test_string,
+    // test_try,
     NULL
 };
 
