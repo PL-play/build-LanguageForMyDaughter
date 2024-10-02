@@ -11,22 +11,22 @@
 
 static void test_str() {
     char *es[] = {
-        "puff __str;",
-        "puff __str(1);",
-        "puff __str(1.234);",
-        "puff __str(1+1);",
-        "puff __str(aow);",
-        "puff __str(emm);",
-        "puff __str(__clock);",
-        "puff __str(shadow(a,b){puff a+b; home a+b;});",
+        "puff (__str);",
+        "puff (__str(1));",
+        "puff (__str(1.234));",
+        "puff (__str(1+1));",
+        "puff (__str(aow));",
+        "puff (__str(emm));",
+        "puff (__str(__clock));",
+        "puff (__str(shadow(a,b){ home a+b;}));",
         "castle A{}\n"
-        "puff __str(A);",
-        "puff __str(A());",
-        "puff __str(1>2?1:-1);",
-        "puff __str(\"Baba\")+ __str(\"\\n\")+__str(\"love \n\")+__str(\"duoduo!\");",
-        "puff __str([1,\"duoduo\",3]);",
-        "puff __str([]);",
-        "puff __str([aow,emm,3.14,3+5,__clock,shadow(a,b){home a+b;}(1,41)]);",
+        "puff (__str(A));",
+        "puff (__str(A()));",
+        "puff (__str(1>2?1:-1));",
+        "puff (__str(\"Baba\")+ __str(\"\\n\")+__str(\"love \n\")+__str(\"duoduo!\"));",
+        "puff ([1,\"duoduo\",3]);",
+        "puff ([[1,2,3,[\"a\",\"b\",\"c\"]],[4,5,6]]);",
+        "puff ([aow,emm,3.14,3+5,__clock,shadow(a,b){home a+b;}(1,41)]);",
         NULL
     };
     VM vm;

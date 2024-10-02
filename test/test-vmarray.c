@@ -12,12 +12,12 @@
 
 static void test_array() {
   char *es[] = {
-      "want \"../libarr.duo\" as ll;\n",
+      "want \"./duoduolib/libarr.duo\" as ll;\n",
 //      "__len(1);", //throw error
       "print [1,2,3];",
       "print [];",
       "print __len([]);",
-      "var arr = [1,2,3];\n"
+      "waa arr = [1,2,3];\n"
       "print __len(arr);\n",
       "print [1,2,3][1];\n",
       "ll.printv(1);\n",
@@ -33,12 +33,13 @@ static void test_array() {
       "ll.printv(arr[:0]);\n",
       "ll.printv(arr[-10:]);\n",
       "print(arr[-10:][2]=5);\n",
-      "var a1 = [[1,2,3],[4,5,6]];\n"
+      "waa a1 = [[1,2,3],[4,5,6]];\n"
       "print __type(a1);\n",
       "print __array_type;\n",
       "print __type(a1)== __array_type;\n",
       "ll.printv(a1);",
       "ll.printv(a1[1:2][0][1:2]);",
+      "ll.printv ([[1,2,3,[\"a\",\"b\",\"c\"]],[4,5,6]]);",
       NULL
   };
   VM vm;

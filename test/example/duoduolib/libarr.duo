@@ -1,15 +1,15 @@
 magic printv(arr) {
    wish (__type(arr) != __array_type) {
-     print arr;
+     puff(arr);
      home;
    }
-   print "[";
+   puff("[" );
    waa len = __len(arr);
    loop(waa i=0;i<len;i=i+1){
       printv( arr[i]);
       wish(i!=len-1){
-        print ", ";
+        puff(", ");
       }
    }
-   print "]";
+   puff("]");
 }
