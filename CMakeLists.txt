@@ -16,18 +16,19 @@ include_directories("src")
 include_directories("src/zcollection/include")
 include_directories("src/zjson/include")
 # 检测是否使用 Emscripten
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
     set(CMAKE_EXECUTABLE_SUFFIX ".html")  # 生成 HTML 文件
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s WASM=1 -s ALLOW_MEMORY_GROWTH=1")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_ZLIB=1 -s USE_LIBPNG=1")
-endif()
+endif ()
 
 add_library(ZHI STATIC
         src/vm/vm.c src/vm/gc.c
         src/compiler/compiler.c src/compiler/parser.c src/compiler/scanner.c
         src/common/alloc-testing.c src/common/framework.c
         src/chunk/chunk.c src/chunk/debug.c src/chunk/object.c src/chunk/value.c
-
+        # 如果设置find_package(ZCollection REQUIRED)和find_package(ZJSON REQUIRED)，或手动连接/usr/local/lib/libZCollection.a和/usr/local/lib/libZJSON.a，则不需要
+        # 手动设置zcollection和zjson
         src/zcollection/src/list/array_list.c src/zcollection/src/list/linked_list.c src/zcollection/src/tree/binary_search_tree.c
         src/zcollection/src/heap/binary_heap.c
         src/zcollection/src/tree/avl_tree.c src/zcollection/src/tree/rb_tree.c src/zcollection/src/stack/stack_al.c src/zcollection/src/tree/trie.c
@@ -45,10 +46,10 @@ add_library(ZHI STATIC
 
 target_link_libraries(ZHI PUBLIC
         m
-#        ZCollection::ZCollection
-#        ZJSON::ZJSON
-#        /usr/local/lib/libZCollection.a #手动连接库
-#        /usr/local/lib/libZJSON.a
+        #        ZCollection::ZCollection
+        #        ZJSON::ZJSON
+        #        /usr/local/lib/libZCollection.a #手动连接库
+        #        /usr/local/lib/libZJSON.a
 )
 
 # tests
