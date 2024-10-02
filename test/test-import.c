@@ -11,29 +11,29 @@
 #include "common/framework.h"
 
 static void test_require() {
-  char *source = "want \"../duoduolib/lib.duo\" as a;\n"
-                 "print a.global;\n" // expect "BABA love DuoDuo"
-                 "var f = a.f1();\n"
+  char *source = "want \"./duoduolib/lib.duo\" as a;\n"
+                 "puffln( a.global);\n" // expect "BABA love DuoDuo"
+                 "waa f = a.f1();\n"
                  "f();\n" // expect "MAMA DuoDuo"
-                 "print a.global;\n" // expect "DuoDuo"
-                 "var ca = a.A(\"BABA\");\n" // new instance with name
-                 "print ca.name+\"\\n\";\n"// expect "BABA"
-                 "print ca+\"\\n\";\n" // expect "<A:instance>"
+                 "puffln( a.global);\n" // expect "DuoDuo"
+                 "waa ca = a.A(\"BABA\");\n" // new instance with name
+                 "puffln( ca.name);\n"// expect "BABA"
+                 "puffln( ca);\n" // expect "<A:instance>"
                  "ca.methodA1();\n" // change this.name to global
-                 "print ca.name+\"\\n\";\n" // expect "DuoDuo"
-                 "print a.ca+\"\\n\";\n" // expect "<class:A>"
-                 "var cb = a.B();\n" //
-                 "print \"----\"+\"\\n\";\n"
+                 "puffln( ca.name);\n" // expect "DuoDuo"
+                 "puffln( a.ca);\n" // expect "<class:A>"
+                 "waa cb = a.B();\n" //
+                 "puffln( \"----\");\n"
                  "cb.methodA1(\"LALA\");"// call super.methodA1 will change cb.name to global, which is "DuoDuo", then change back to "LALA"
-                 "print cb.name+\"\\n\";\n"// expect "LALA"
+                 "puffln( cb.name);\n"// expect "LALA"
                  "cb.methodB1();\n" // will print "DuoDuo" then change name to "BABA"
-                 "print cb.name+\"\\n\";\n" // expect "BABA"
+                 "puffln( cb.name);\n" // expect "BABA"
                  "a.B.methodB2(6);\n"// expect "out of range"
                  "a.changeGlobal(\"Other\");\n"
-                 "var bb = a.cb.methodB2(1);\n" // will print "Other"
-                 "print bb.name+\"\\n\";\n" // will print "0 love"
+                 "waa bb = a.cb.methodB2(1);\n" // will print "Other"
+                 "puffln( bb.name);\n" // will print "0 love"
                  "bb = a.cb.methodB2(2);\n"
-                 "print bb.name+\"\\n\";\n" // will print "Other" and "BABA"
+                 "puffln( bb.name);\n" // will print "Other" and "BABA"
                  // "a = 1;" // runtime error : Can't set module variable.
                  "a.getlib2G();\n" // expect "love"
                  ""
@@ -55,7 +55,7 @@ static void test_require() {
 }
 
 static void test_require2() {
-  char *source = "want \"../duoduolib/lib3.duo\" as a;\n"
+  char *source = "want \"./duoduolib/lib3.duo\" as a;\n"
                  ""
                  ""
                  "";//
@@ -72,7 +72,7 @@ static void test_require2() {
 static void test_dependency() {
   // libc1.duo and libc2.duo is circular dependent
   // exit with code 70
-  char *source = "want \"../duoduolib/libc1.duo\" as a;\n"
+  char *source = "want \"./duoduolib/libc1.duo\" as a;\n"
                  ""
                  ""
                  "";//
@@ -86,14 +86,14 @@ static void test_dependency() {
 static void test_circular_dependency() {
   // libc1.duo and libc2.duo is circular dependent
   // exit with code 70
-  char *source = "want \"../duoduolib/circular/c1.duo\" as a;\n"
+  char *source = "want \"./duoduolib/circular/c1.duo\" as a;\n"
                  ""
                  ""
                  "";//
   VM vm;
   init_VM(&vm, NULL, NULL, true);
   InterpretResult result = interpret(&vm, NULL, source);
-  assert(result == INTERPRET_OK);
+  assert(result == INTERPRET_RUNTIME_ERROR);
   free_VM(&vm);
 }
 
@@ -101,7 +101,7 @@ static UnitTestFunction tests[] = {
     test_require,
     test_require2,
     test_dependency,
-//    test_circular_dependency,
+    // test_circular_dependency,
     NULL
 };
 

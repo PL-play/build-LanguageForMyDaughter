@@ -50,7 +50,7 @@ static char *read_file(const char *fp) {
 
 static void run_file(VM *vm, const char *fp) {
   char *source = read_file(fp);
-  InterpretResult result = interpret(vm, NULL,source);
+  InterpretResult result = interpret(vm, fp,source);
   free(source);
   if (result == INTERPRET_COMPILE_ERROR) exit(65);
   if (result == INTERPRET_RUNTIME_ERROR) exit(70);

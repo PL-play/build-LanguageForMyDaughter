@@ -151,6 +151,15 @@ Value native_stringify(int arg_count, Value *args, void *);
  */
 Value native_puffln(int arg_count, Value *args, void *);
 
+/**
+ * print value.
+ *
+ * @param arg_count
+ * @param args
+ * @return
+ */
+Value native_puff(int arg_count, Value *args, void *);
+
 int compile(Compiler *compiler, StatementArrayList *statement);
 
 /**

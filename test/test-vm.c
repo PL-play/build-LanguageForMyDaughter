@@ -32,59 +32,59 @@ label2:
 
 static char *exps[] = {
     "1;",
-    "puff 1;",
+    "puff (1);",
     "1+3*3;",
-    "puff 1+3*3;",
+    "puff(1+3*3);",
     "(1-2)/3;",
-    "puff (1-2)/3;",
+    "puff( (1-2)/3);",
     "-1-2;",
-    "puff -1-2;",
+    "puff (-1-2);",
     "(2-3)*4/3;",
-    "puff (2-3)*4/3;",
-    "puff 1.234*3.14-1--2;",
+    "puff ((2-3)*4/3);",
+    "puff (1.234*3.14-1--2);",
     "23.234-34*(123+-5*343)/23-23;",
-    "puff 23.234-34*(123+-5*343)/23-23;",
+    "puff (23.234-34*(123+-5*343)/23-23);",
     "23.234--2353.39;",
-    "puff 23.234--2353.39;",
+    "puff( 23.234--2353.39);",
     "(-1 + 2) * 3 - -4;",
-    "puff (-1 + 2) * 3 - -4;",
+    "puff ((-1 + 2) * 3 - -4);",
     "-3!+4^3;",
-    "puff -3!+4^3;",
+    "puff (-3!+4^3);",
     "aow;",
-    "puff aow;",
+    "puff (aow);",
     "!aow;",
-    "puff !aow;",
+    "puff (!aow);",
     "nil;",
-    "puff nil;",
+    "puff (nil);",
     "!0;",
-    "puff !0;",
+    "puff (!0);",
     "!1;",
-    "puff !1;",
+    "puff( !1);",
     "!nil;",
-    "puff !nil;",
+    "puff( !nil);",
     "1>2;",
-    "puff 1>2;",
+    "puff( 1>2);",
     "2>=2;",
-    "puff 2>=2;",
+    "puff (2>=2);",
     "1<2;",
-    "puff 1<2;",
+    "puff (1<2);",
     "1<=2;",
-    "puff 1<=2;",
+    "puff (1<=2);",
     "2<=2;",
-    "puff 2<=2;",
+    "puff (2<=2);",
     "3>2;",
-    "puff 3>2;",
+    "puff (3>2);",
     "!(6 - 4 > 3 * 4 == !nil);",
-    "puff !(6 - 4 > 3 * 4 == !nil);",
-    "puff 1;",
-    "puff \"12345\";",
-    "puff \"2\";",
+    "puff (!(6 - 4 > 3 * 4 == !nil));",
+    "puff (1);",
+    "puff (\"12345\");",
+    "puff (\"2\");",
     "\"aaa\"==\"aaa\";",
-    "puff \"aaa\"==\"aaa\";",
+    "puff (\"aaa\"==\"aaa\");",
     "\"aab\"==\"aaa\";",
-    "puff \"aab\"==\"aaa\";",
-    "puff \"aaa\"+\"bbb\"+\"123\";",
-    "puff 1+2;",
+    "puff (\"aab\"==\"aaa\");",
+    "puff (\"aaa\"+\"bbb\"+\"123\");",
+    "puff (1+2);",
     NULL
 };
 
@@ -106,14 +106,14 @@ static void test_vm() {
 
 static void test_global_variable() {
     char *es[] = {
-        "waa a=1;puff a=1;",
-        "waa a;\npuff a;",
-        "waa a=1;\npuff a;",
-        "waa a=1;\npuff a; \nwaa a=2; waa b =3;\npuff a+b;",
-        "waa i = \"baba\"; waa j = \"mama\"; waa q = \"duoduo\";\n puff i+\" love \"+j +\" love \"+ q;",
-        "waa i=3;waa j=i;puff i; puff j; i=6; puff i; puff j;",
-        "waa aa=3; aa=6; puff aa;",
-        "aa=7; puff aa;",
+        "waa a=1;puff( a=1);",
+        "waa a;\npuff( a);",
+        "waa a=1;\npuff( a);",
+        "waa a=1;\npuff( a); \nwaa a=2; waa b =3;\npuff( a+b);",
+        "waa i = \"baba\"; waa j = \"mama\"; waa q = \"duoduo\";\n puff (i+\" love \"+j +\" love \"+ q);",
+        "waa i=3;waa j=i;puff( i); puff (j); i=6; puff (i); puff( j);",
+        "waa aa=3; aa=6; puff( aa);",
+        "aa=7; puff (aa);",
         NULL
     };
     VM vm;
@@ -134,9 +134,9 @@ static void test_global_variable() {
 
 static void test_local_variable() {
     char *es[] = {
-        "waa a=1;{ waa a=2; puff a;} puff a; a=3; puff a;",
-        "waa a=1;{ waa b=2; puff a;} puff a;",
-        "waa a=1;{  waa b=a; puff b;} waa b=4;puff b;",
+        "waa a=1;{ waa a=2; puff( a);} puff (a); a=3; puff (a);",
+        "waa a=1;{ waa b=2; puff (a);} puff (a);",
+        "waa a=1;{  waa b=a; puff (b);} waa b=4;puff (b);",
         //      "{waa a=1;waa a=2;}",
         NULL
     };
@@ -158,9 +158,9 @@ static void test_local_variable() {
 
 static void test_local_variable_long() {
     char *es[] = {
-        "waa a=1;{ waa a=2; puff a;} puff a; a=3; puff a;",
-        "waa a=1;{ waa b=2; puff a;} puff a;",
-        "waa a=1;{  waa b=a; puff b;} waa b=4;puff b;",
+        "waa a=1;{ waa a=2; puff (a);} puff (a); a=3; puff (a);",
+        "waa a=1;{ waa b=2; puff (a);} puff (a);",
+        "waa a=1;{  waa b=a; puff (b);} waa b=4;puff (b);",
         //      "{waa a=1;waa a=2;}",
         NULL
     };
@@ -168,7 +168,7 @@ static void test_local_variable_long() {
     init_VM(&vm, NULL,NULL, true);
     for (int i = 0; i < 257; ++i) {
         char a[27];
-        sprintf(a, "{waa v%-3d=%-3d;puff v%-3d;}", i, i, i);
+        sprintf(a, "{waa v%-3d=%-3d;puff( v%-3d);}", i, i, i);
         printf("%s\n", a);
         InterpretResult result = interpret(&vm, NULL, a);
         assert(result == INTERPRET_OK);
@@ -192,7 +192,7 @@ static void test_global_variable_long() {
     init_VM(&vm, NULL,NULL, true);
     for (int i = 0; i < 257; ++i) {
         char a[100];
-        sprintf(a, "waa v%-3d=%-3d;puff v%-3d+\"\\n\";", i, i, i);
+        sprintf(a, "waa v%-3d=%-3d;puffln(v%-3d);", i, i, i);
         printf("%s\n", a);
         InterpretResult result = interpret(&vm, NULL, a);
         assert(result == INTERPRET_OK);
@@ -200,7 +200,7 @@ static void test_global_variable_long() {
 
     for (int i = 0; i < 10; ++i) {
         char a[100];
-        sprintf(a, "waa t%-2d=%-2d; t%-2d=%d;\npuff t%-2d+\"\\n\";", i, i, i, i * i, i);
+        sprintf(a, "waa t%-2d=%-2d; t%-2d=%d;\npuffln( t%-2d);", i, i, i, i * i, i);
         printf("%s\n", a);
         printf("++++++++++++\n interpret expression: %s \n+++++++++++\n", a);
         printf("\n------ result ------\n");
@@ -215,19 +215,19 @@ static void test_wish_statement() {
     VM vm;
     init_VM(&vm, NULL,NULL, true);
     char *es[] = {
-        "waa a=1;wish(a>=1){ puff a;} puff 3;",
-        "wish(1)  puff 2;",
+        "waa a=1;wish(a>=1){ puffln( a);} puffln( 3);",
+        "wish(1)  puffln( 2);",
         "waa a =5; wish(a>3){"
-        "   puff a;"
+        "   puffln( a);"
         "   waa b = 5;"
-        "   wish(a>b) puff \"duoduo\"; "
-        "     dream puff \" love\";"
+        "   wish(a>b) puffln( \"duoduo\"); "
+        "     dream puffln( \" love\");"
         "} dream {"
-        "   puff \"baba\";"
+        "   puffln(\"baba\");"
         "}",
-        "waa a = 4; wish(a>8) {puff 8;} dream wish(a>6){puff 6;} dream {puff a;}",
-        "waa a = 9; wish(a>8) {puff 8;} dream wish(a>6){puff 6;} dream {puff a;}",
-        "waa a = 8; wish(a>8) {puff 8;} dream wish(a>6){puff 6;} dream {puff a;}",
+        "waa a = 4; wish(a>8) {puffln(  8);} dream wish(a>6){puffln(  6);} dream {puffln(  a);}",
+        "waa a = 9; wish(a>8) {puffln(  8);} dream wish(a>6){puffln(  6);} dream {puffln(  a);}",
+        "waa a = 8; wish(a>8) {puffln(  8);} dream wish(a>6){puffln(  6);} dream {puffln(  a);}",
         NULL
     };
     for (int i = 0; es[i] != NULL; ++i) {
@@ -249,8 +249,7 @@ static void test_wloop_statement() {
         "waa a=5; \n"
         "wloop(a>=0){\n"
         "  a = a-1;\n"
-        "  puff a && (a-1) || \"i love duoduo\";\n"
-        " puff \"\\n\";"
+        "  puffln( a && (a-1) || \"i love duoduo\");\n"
         "}\n",
         NULL
     };
@@ -271,13 +270,13 @@ static void test_loop_statement() {
     init_VM(&vm,NULL, NULL, true);
     char *es[] = {
         "loop(waa a=0;a<5;a=a+1){\n"
-        "    puff \"duoduo cool \";\n"
+        "    puffln(\"duoduo cool \");\n"
         "}",
 
         "waa b;\n"
         "loop(b=5;b>0;b=b-1){\n"
-        "  puff b;\n"
-        "  puff \"mama love duoduo \";\n"
+        "  puffln( b);\n"
+        "  puffln(\"mama love duoduo \");\n"
         "}",
         NULL
     };
@@ -297,40 +296,30 @@ static void test_skip() {
     VM vm;
     init_VM(&vm, NULL,NULL, true);
     char *es[] = {
-        "puff 1 + 1+nil+emm+aow;\n"
-        "puff \"\\n\";\n",
-
-        "puff \"\" + 1 + 1;\n"
-        "puff \"\\n\";\n",
-        "waa a=1; puff \"\" + a + a;\n"
-        "puff \"\\n\";\n",
+        "puffln( 1 + 1+nil+emm+aow);\n"
+        "puffln( \"\" + 1 + 1);\n"
+        "waa a=1; puffln( \"\" + a + a);\n"
         "loop(waa a=0;a<5;a=a+1){\n"
         "   wish(a==3) skip;  \n"
-        "   puff \"a=\"+(a+1);\n"
-        "   puff \"\\n\";\n"
+        "   puffln( \"a=\"+(a+1));\n"
         "}",
         "loop(waa a =0;a<5;a=a+1){\n"
         "  loop(waa b=0;b<5; b=b+1){\n"
         "    wish(a+b==7) skip;\n"
-        "    puff \"\"+ a +\"+\"+ b+\"=\"+(a+b);\n"
-        "    puff \"\\n\";\n"
+        "    puffln( \"\"+ a +\"+\"+ b+\"=\"+(a+b));\n"
         "  }\n"
-        "  puff \"\";"
         "}\n",
         "waa b;\n"
         "loop(b=5;b>0;b=b-1){\n"
         "  wish(b%2==0) skip;\n"
-        "  puff b;\n"
-        "  puff \"\\n\";\n"
-        "  puff \"mama love duoduo\";\n"
-        "  puff \"\\n\";\n"
+        "  puffln( b);\n"
+        "  puffln( \"mama love duoduo\");\n"
         "}",
         "waa a=5; \n"
         "wloop(a>=0){\n"
         "  a = a-1;\n"
         "  wish(a%2==0) skip;"
-        "  puff a && (a-1) || \"i love duoduo\";\n"
-        "  puff \"\\n\";\n"
+        "  puffln( a && (a-1) || \"i love duoduo\");\n"
         "}\n",
         NULL
     };
@@ -353,12 +342,12 @@ static void test_equals() {
         ""
         "waa b1 = emm;\n"
         "waa b2 = emm;\n"
-        "puff \"b1==b2 : \" + (b1==b2) +\"\\n\";\n"
+        "puffln( \"b1==b2 : \" + (b1==b2) );\n"
         "b2=aow;"
-        "puff \"b1==b2 : \" + (b1==b2)+\"\\n\";\n"
+        "puffln( \"b1==b2 : \" + (b1==b2));\n"
         "waa s1 = \"duoduo\";\n"
         "waa s2 = \"duo\"+\"duo\";\n"
-        "puff \"s1==s2 : \" + (s1==s2)+\"\\n\";\n"
+        "puffln( \"s1==s2 : \" + (s1==s2));\n"
         "",
         NULL
     };
@@ -381,15 +370,15 @@ static void test_break() {
         "loop(waa a=0;a<5;a=a+1){\n"
         "   wish(a==3) break;  \n"
         "   wish(a%2==0) skip;"
-        "   puff a;\n"
+        "   puffln( a);\n"
         "}\n"
-        "puff \"end\\n\";",
+        "puffln(  \"end\");",
         "waa a=5; \n"
         "wloop(a>=0){\n"
         "  a = a-1;\n"
         "  wish(a==0) break;\n"
         "  wish(a%2==0) skip;\n"
-        "  puff \"i love duoduo\"+a+\"\\n\";\n"
+        "  puffln(  \"i love duoduo\"+a);\n"
         "}\n",
         NULL
     };
@@ -412,19 +401,19 @@ static void test_magic() {
         "magic f1(a,b){\n"
         "      home a+b;\n"
         "   }\n"
-        "puff f1+\"\\n\";"
-        "puff f1(2,4);",
+        "puffln(  f1);"
+        "puffln(  f1(2,4));",
         "magic f1(a){\n"
         "   wish (a<=1) home 1;\n"
         "   home a*f1(a-1);\n"
         "}\n"
-        "puff f1(7)+f1(2);",
+        "puffln( f1(7)+f1(2));",
         "{\n"
         "     magic f2(a,b){home a+b;}\n"
-        "     puff f2(4,5);\n"
+        "     puffln(f2(4,5));\n"
         "}",
-        "shadow(a,b){puff a+b;}(1,\"234\");\n",
-        "waa ff = shadow(a,b){puff a+b; home a+b;};\n"
+        "shadow(a,b){puffln( a+b);}(1,\"234\");\n",
+        "waa ff = shadow(a,b){puffln( a+b); home a+b;};\n"
         "ff(\"i love\", ff(\" mama ,\", \"duoduo\"));",
         NULL
     };
@@ -447,19 +436,19 @@ static void test_magic2() {
         "magic f1(a,b){\n"
         "      home a(b);\n"
         "   }\n"
-        "puff f1(shadow(a){home a+a;}, \"duo\");",
+        "puffln(f1(shadow(a){home a+a;}, \"duo\"));",
         "magic f1(a){\n"
         "   wish (a<2) home a;\n"
         "   home f1(a-2)+f1(a-1);\n"
         "}\n"
         "waa start = __clock();\n"
-        "puff f1(5);\n"
-        "puff __clock() - start;\n",
-        "puff __clock();",
+        "puffln( f1(5));\n"
+        "puffln( __clock() - start);\n",
+        "puffln( __clock());",
         "magic f1(a,b){\n"
         "      home a+b;\n"
         "   }\n"
-        "puff f1(1,4);\n",
+        "puffln( f1(1,4));\n",
         NULL
     };
     for (int i = 0; es[i] != NULL; ++i) {
@@ -482,7 +471,7 @@ static void test_charm() {
         "  waa x = \"duoduo\";\n"
         "  magic inner(){\n"
         "    x = \"I love \" + x;\n"
-        "    puff x;\n"
+        "    puffln( x);\n"
         "  }\n"
         "  inner();\n"
         "}\n"
@@ -491,7 +480,7 @@ static void test_charm() {
         "   waa x = \"outside\";\n"
         "   magic inner() {\n"
         "    x = \"inside\";\n"
-        "     puff x;\n"
+        "     puffln( x);\n"
         "   }\n"
         "   inner();\n"
         " }\n",
@@ -500,12 +489,12 @@ static void test_charm() {
         "  waa x = \"duoduo\";\n"
         "  magic inner(){\n"
         "    x = \"baba love \"+x;"
-        "    puff x;\n"
+        "    puffln(  x);\n"
         "  }\n"
         "  home inner;\n"
         "}\n"
         "waa closure = outer();\n"
-        "puff closure+\"\\n\";\n"
+        "puffln(  closure);\n"
         "closure();"
         "",
         "\n"
@@ -513,12 +502,12 @@ static void test_charm() {
         "  waa x = \"duoduocool\";\n"
         "  magic middle(){\n"
         "    magic inner(){\n"
-        "       puff x;\n"
+        "       puffln(  x);\n"
         "    }"
-        "    puff \"create inner closure\";\n"
+        "    puffln(  \"create inner closure\");\n"
         "    home inner;\n"
         "  }\n"
-        "  puff \"return from outer\";\n"
+        "  puffln(  \"return from outer\");\n"
         "  home middle;\n"
         "}\n"
         "waa mid = outer();\n"
@@ -527,7 +516,7 @@ static void test_charm() {
         "{\n"
         "   waa y = \"outside\";\n"
         "   magic inner() {\n"
-        "     puff y;\n"
+        "     puffln(  y);\n"
         "   }\n"
         "   inner();\n"
         " }\n",
@@ -548,35 +537,35 @@ static void test_charm() {
 static void test_castle() {
     char *es[] = {
         "castle A{}\n"
-        "puff A;\n"
+        "puffln(A);\n"
         "{\n"
         "  castle B{}\n"
-        "  puff A;\n"
-        "  puff B;\n"
+        "  puffln( A);\n"
+        "  puffln( B);\n"
         "  waa a = A;\n"
-        "  puff \"a=\"+a;\n"
+        "  puffln( \"a=\"+a);\n"
         "   a = B;\n"
-        "  puff \"a=\"+a;\n"
+        "  puffln( \"a=\"+a);\n"
         "}\n"
         "waa a =A;\n"
-        "puff \"a=\"+a;\n"
+        "puffln( \"a=\"+a);\n"
         "",
         "magic f1(){\n"
         "  castle Duoduo{}\n"
-        "  puff Duoduo;\n"
+        "  puffln( Duoduo);\n"
         "  magic inf1(){\n"
-        "    puff \"inf1:\"+Duoduo;\n"
+        "    puffln( \"inf1:\"+Duoduo);\n"
         "    home Duoduo;\n"
         "  }\n"
         "  home inf1;\n"
         "}\n"
         "waa f = f1();\n"
         "waa c = f();\n"
-        "puff c;\n",
-        "puff A();\n"
-        "puff c();\n"
+        "puffln( c);\n",
+        "puffln( A());\n"
+        "puffln( c());\n"
         "waa ic = c();\n"
-        "puff \"ic=\"+ic;\n",
+        "puffln( \"ic=\"+ic);\n",
         NULL
     };
     VM vm;
@@ -600,12 +589,12 @@ static void test_property() {
         "waa a = A();\n"
         "a.f1=3;\n"
         "a.f2 = 8;\n"
-        "puff a.f1;\n"
-        "puff a.f2;\n"
-        "puff a.f1+a.f2;\n"
-        "puff __has_field(a,\"f1\");\n"
+        "puffln( a.f1);\n"
+        "puffln( a.f2);\n"
+        "puffln( a.f1+a.f2);\n"
+        "puffln( __has_field(a,\"f1\"));\n"
         "__del_field(a,\"f1\");\n"
-        "puff __has_field(a,\"f1\");\n",
+        "puffln( __has_field(a,\"f1\"));\n",
         NULL
     };
     VM vm;
@@ -670,7 +659,7 @@ static void test_method() {
         "a.b = B;\n"
         "waa b = a.b();\n"
         "puffln( \"b name: \"+ b.name);\n"
-        "a.c = shadow(x){puff x.name;};\n"
+        "a.c = shadow(x){puffln( x.name);};\n"
         "puffln( \"call a.c()\");\n"
         "a.c(b);\n",
         NULL
@@ -786,7 +775,7 @@ static void test_condition() {
     char *es[] = {
         "waa i = 3;\n"
         "waa j = i>2?1:-1;\n"
-        "puff j;\n", // expect 1
+        "puffln( j);\n", // expect 1
         "waa age = 22;\n"
         "waa income = 45000;\n"
         "waa creditScore = 700;\n"
@@ -799,7 +788,7 @@ static void test_condition() {
         "        : \"Does not qualify\"\n"
         "    : \"Does not qualify\"\n"
         ": \"Does not qualify\";\n"
-        "puff eligibility;\n", //Output: Qualifies
+        "puffln(  eligibility);\n", //Output: Qualifies
         NULL
     };
     VM vm;
@@ -819,12 +808,12 @@ static void test_condition() {
 
 static void test_string() {
     char *es[] = {
-        "puff \"a\\\"b\\n\";\n"
-        "puff \"abc123\\n\";\n"
-        "puff \"b\u6735\u6735s01b\";\n",
-        "puff \"\\u6735\" +\"\\n\";\n",
-        "puff \"\u6735\";",
-        "puff 1.312341234123412341234;",
+        "puffln( \"a\\\"b\\n\");\n"
+        "puffln( \"abc123\\n\");\n"
+        "puffln( \"b\u6735\u6735s01b\");\n",
+        "puffln( \"\\u6735\" +\"\\n\");\n",
+        "puffln( \"\u6735\");",
+        "puffln( 1.312341234123412341234);",
         NULL
     };
     VM vm;

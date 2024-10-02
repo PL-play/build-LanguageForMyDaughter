@@ -40,32 +40,32 @@ static char *exps[] = {
     "a.b=efs;",
     "a.b(c).d.f=\"duoduo\";",
     "{waa a=1; {waa b=2;}}",
-    "wish(a>b) puff a; dream puff b;",
+    "wish(a>b) puff (a); dream puff (b);",
     "a and b or !c;",
     "a && b || !c;",
     "a + !b;",
     "a + -b;",
     "a && b && !c;",
-    "wloop(a){puff a;}",
+    "wloop(a){puff (a);}",
     "waa a=\"5\"; \n",
     "wloop(a>0){\n"
-    "  puff a;\n"
+    "  puff (a);\n"
     "  a = a-1;\n"
     "}\n",
     "loop(;;){\n"
-    "   puff a;\n"
+    "   puff( a);\n"
     "}",
     "loop(a=1;;){\n"
-    "   puff a;\n"
+    "   puff (a);\n"
     "}",
     "loop(waa a=1;;){\n"
-    "   puff a;\n"
+    "   puff (a);\n"
     "}",
     "loop(;a>0;){\n"
-    "   puff a;\n"
+    "   puff (a);\n"
     "}",
     "loop(waa a=1;a>0;a=a+1){\n"
-    "   puff a;\n"
+    "   puff (a);\n"
     "}",
 
     "loop(;;){\n"
@@ -76,15 +76,15 @@ static char *exps[] = {
     "}",
     "a(1,2,3);",
     "a(1,2,3)();",
-    "n(a,b,v){puff a;};",
-    "magic n(a,b,v){puff a;}",
+    "n(a,b,v){puff (a);};",
+    "magic n(a,b,v){puff (a);}",
     "magic f1(a,b){\n"
     "      home a+b;\n"
     "   }",
     "shadow(a,b){home a+b;}(1,2);",
     "1; waa x = \"outside\";\n",
     "   magic inner() {\n"
-    "     puff x;\n"
+    "     puff (x);\n"
     "   }\n"
     "   inner();\n",
     "magic outer(){\n"
@@ -92,7 +92,7 @@ static char *exps[] = {
     "  waa x = \"duoduo\";\n"
     "  magic inner(){\n"
     "    x = \"I love \" + x;\n"
-    "    puff x;\n"
+    "    puff (x);\n"
     "  }\n"
     "  inner();\n"
     "  }\n"
@@ -126,7 +126,7 @@ static void test_parse_stmt() {
       "      this.a = a;\n "
       "    }\n"
       "    method1(){\n"
-      "      puff this.a;\n"
+      "      puff( this.a);\n"
       "    }\n"
       "    static method2(a,b,c){\n"
       "      method1();\n"
@@ -328,12 +328,12 @@ static void test_array() {
 
 static void test_string() {
   char *stmts[] = {
-      "puff \"abc\\n\";",
-      "puff \"a\\\"b\\n\";\n",
-      "puff \"abc123\\n\";\n",
-      "puff \"b\u6735\u6735s01b\";\n",
-      "puff \"\\u6735\" +\"\\n\";\n",
-      "puff \"\u6735\";",
+      "puff( \"abc\\n\");",
+      "puff( \"a\\\"b\\n\");\n",
+      "puff (\"abc123\\n\");\n",
+      "puff (\"b\u6735\u6735s01b\");\n",
+      "puff (\"\\u6735\" +\"\\n\");\n",
+      "puff (\"\u6735\");",
 //      "\"${a+b}\";",
       NULL
   };
@@ -360,7 +360,7 @@ static void test_try() {
       "adventure{\n"
       "  waa a=1;\n"
       "} rescue(Expression as e){\n"
-      "  puff false;\n"
+      "  puff (emm);\n"
       "} rescue(E2 as e){\n"
       "  toss e;\n"
       "}\n"

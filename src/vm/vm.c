@@ -1601,12 +1601,12 @@ static InterpretResult run(VM *vm) {
       printf("resolve module [%s] get: [%s]\n", path->string, module_abs_path);
 #endif
             if (strlen(module_abs_path) == 0) {
-                runtime_error(vm, "Can't want lib from '%s'.", path->string);
+                runtime_error(vm, "Can't want lib from '%s'. Lib path not found.", path->string);
                 return INTERPRET_RUNTIME_ERROR;
             }
             FILE *file = fopen(module_abs_path, "rb");
             if (file == NULL) {
-                runtime_error(vm, "Can't want lib from '%s'.", path->string);
+                runtime_error(vm, "Can't want lib from '%s'. Read content failed.", path->string);
                 return INTERPRET_RUNTIME_ERROR;
             }
 
@@ -2664,6 +2664,9 @@ static void runtime_error(VM *vm, const char *format, ...) {
         ObjFunction *function = get_frame_function(frame);
         size_t offset = frame->ip - function->chunk->code->data - 1;
         size_t line = get_line(function->chunk, offset);
+        if(vm->source_path!=NULL) {
+            fprintf(stderr, "[%s] ", vm->source_path);
+        }
         fprintf(stderr, "[line %zu] in %s()\n", line,
                 function->name == NULL ? "script" : function->name->string);
     }
@@ -2925,6 +2928,13 @@ Value native_stringify(int arg_count, Value *args, void *v) {
 }
 
 Value native_puffln(int arg_count, Value *args, void *v) {
+    native_puff(arg_count, args, v);
+    printf("\n");
+    return NIL_VAL;
+}
+
+Value native_puff(int arg_count, Value *args, void *v) {
     Value str = native_stringify(arg_count, args, v);
-    printf("%s\n",AS_STRING(str)->string);
+    printf("%s",AS_STRING(str)->string);
+    return NIL_VAL;
 }

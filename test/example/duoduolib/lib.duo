@@ -1,0 +1,67 @@
+want "lib2.duo" as lib2;
+waa global = "\u6735\u6735";
+puffln( "lib.duo :" + "\u6735");
+global = "BABA"+ " love " +global;
+
+
+magic f1(){
+  waa p = "MAMA";
+  magic inner(){
+    global = "DuoDuo";
+    puffln( "MAMA "+global);
+    home lib2.lib2f(p,global);
+  }
+  home inner;
+}
+
+magic changeGlobal(g){
+   global = g;
+}
+
+magic getlib2G(){
+   puffln( lib2.lib2g);
+}
+
+waa c = f1();
+
+castle A {
+   init(name) {
+     puffln( "time:" + __clock());
+     this.name = name;
+     puffln( "time:" + __clock());
+   }
+   methodA1(){
+     this.name = global;
+   }
+}
+
+castle B < A {
+    methodA1(name){
+       hero.methodA1();
+       puffln( this.name);
+       this.name = name;
+    }
+    methodB1(){
+       this.methodA1("BABA");
+    }
+
+    static methodB2(p){
+        wish(p>5||p<0){
+            puffln( "out of range");
+            home;
+        }
+        waa b;
+        loop(waa i = 0;i<p;i=i+1){
+            b = B();
+            wish(i%2==0){
+                b.methodA1(i+" love ");
+            } dream {
+               b.methodB1();
+            }
+        }
+        home b;
+    }
+}
+
+waa ca = A;
+waa cb = B;

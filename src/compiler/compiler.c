@@ -114,6 +114,7 @@ static NativeFunctionDecl f6 = (NativeFunctionDecl){.name = "__len", .arity = 1,
 static NativeFunctionDecl f7 = (NativeFunctionDecl){.name = "__type", .arity = 1, .function = native_type};
 static NativeFunctionDecl f8 = (NativeFunctionDecl){.name = "__str", .arity = 1, .function = native_stringify};
 static NativeFunctionDecl f9 = (NativeFunctionDecl){.name = "puffln", .arity = 1, .function = native_puffln};
+static NativeFunctionDecl f10 = (NativeFunctionDecl){.name = "puff", .arity = 1, .function = native_puff};
 
 static NativeValueDecl v1 = {.name = "__bool_type", .value = NUMBER_VAL(VAL_BOOL)};
 static NativeValueDecl v2 = {.name = "__nil_type", .value = NUMBER_VAL(VAL_NIL)};
@@ -129,7 +130,7 @@ static NativeValueDecl v11 = {.name = "__realm_type", .value = NUMBER_VAL(OBJ_MO
 static NativeValueDecl v12 = {.name = "__array_type", .value = NUMBER_VAL(OBJ_ARRAY + VAL_OBJ)};
 
 NativeFunctionDecl *NATIVE_FUNC[] = {
-    &f1, &f2, &f3, &f4, &f5, &f6, &f7, &f8, &f9,
+    &f1, &f2, &f3, &f4, &f5, &f6, &f7, &f8, &f9, &f10,
     NULL,
 };
 

@@ -1,0 +1,3 @@
+//want "lib.duo" as lib1;
+want "libc2.duo" as libc2;
+want "lib.duo" as duoduo;

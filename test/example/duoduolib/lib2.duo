@@ -1,0 +1,6 @@
+puffln( "lib2:朵");
+waa lib2g = "love";
+magic lib2f(a,b){
+    puffln( "爸爸妈妈爱朵朵！");
+    home a+b;
+}
