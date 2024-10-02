@@ -133,6 +133,24 @@ Value native_len(int arg_count, Value *args, void *);
  */
 Value native_type(int arg_count, Value *args, void *);
 
+/**
+ * Stringify value.
+ *
+ * @param arg_count
+ * @param args
+ * @return
+ */
+Value native_stringify(int arg_count, Value *args, void *);
+
+/**
+ * print value and append an '\n' at the end.
+ *
+ * @param arg_count
+ * @param args
+ * @return
+ */
+Value native_puffln(int arg_count, Value *args, void *);
+
 int compile(Compiler *compiler, StatementArrayList *statement);
 
 /**

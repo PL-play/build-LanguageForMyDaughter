@@ -24,7 +24,7 @@ void print_value(Value value) {
   if (IS_NUMBER(value)) {
     printf("%g", AS_NUMBER(value));
   } else if (IS_BOOL(value)) {
-    printf("%s", AS_BOOL(value) ? "true" : "false");
+    printf("%s", AS_BOOL(value) ? "aow" : "emm");
   } else if (IS_NIL(value)) {
     printf("%s", "nil");
   } else if (IS_OBJ(value)) {

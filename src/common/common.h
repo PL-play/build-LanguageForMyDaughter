@@ -28,7 +28,7 @@
 // this keyword literal
 #define THIS_LITERAL "this"
 #define INIT_METHOD_NAME "init"
-#define SUPER_LITERAL "super"
+#define SUPER_LITERAL "hero"
 
 #define MAX_CLASS_NESTING 8
 

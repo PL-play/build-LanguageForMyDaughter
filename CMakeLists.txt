@@ -30,7 +30,9 @@ target_link_libraries(ZHI PUBLIC
 file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/test/*.c")
 foreach (file ${files})
     get_filename_component(name ${file} NAME_WE)
-    add_executable(${name} ${file})
+    add_executable(
+            ${name} ${file}
+    )
     # Option to enable ALLOC_TESTING
     option(ENABLE_ALLOC_TESTING "Enable allocation testing" OFF)
     # Define ALLOC_TESTING if the option is enabled
@@ -40,19 +42,19 @@ foreach (file ${files})
 
     option(ENABLE_DEBUG_TRACE "Enable debugging trace execution" OFF)
 
-    if(ENABLE_DEBUG_TRACE)
+    if (ENABLE_DEBUG_TRACE)
         # Define the DEBUG_TRACE_EXECUTION macro
         add_definitions(-DDEBUG_TRACE_EXECUTION=ON)
-    endif()
-    if(ENABLE_GC_DEBUG)
+    endif ()
+    if (ENABLE_GC_DEBUG)
         add_definitions(-DDEBUG_GC_LOG=${ENABLE_GC_DEBUG})
-    endif()
-    if(INIT_GC)
+    endif ()
+    if (INIT_GC)
         add_definitions(-DINIT_GC=${INIT_GC})
-    endif()
-    if(GC_TRIGGER)
+    endif ()
+    if (GC_TRIGGER)
         add_definitions(-DGC_TRIGGER=${GC_TRIGGER})
-    endif()
+    endif ()
 
     target_link_libraries(${name} ZHI)
     install(TARGETS ${name} RUNTIME DESTINATION bin)

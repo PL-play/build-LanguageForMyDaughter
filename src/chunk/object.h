@@ -125,34 +125,34 @@ typedef struct {
                             case OBJ_FUNCTION: {\
                               ObjFunction *_fn = (ObjFunction *) (OBJ);\
                               if (_fn->name == NULL) {\
-                                len = 3;\
+                                len = 8;/*<shadow>*/\
                               } else {\
-                                len = (int) _fn->name->length + 5;\
+                                len = (int) _fn->name->length + 8; /*<magic:%s>*/\
                               }\
                               break;\
                             }\
                             case OBJ_CLOSURE: {\
                               ObjFunction *_fn = ((ObjClosure *) (OBJ))->function;\
-                              len = (int) _fn->name->length + 10;\
+                              len = (int) _fn->name->length + 8; /*<charm:%s>*/\
                               break;\
                             }         \
                             case OBJ_INSTANCE_METHOD:{                  \
                               if(((InstanceMethod *) (OBJ))->method->type == OBJ_FUNCTION){   \
                                  ObjFunction *_fn = (ObjFunction *) (((InstanceMethod *) (OBJ))->method);\
                                 if (_fn->name == NULL) {\
-                                  len = 3;\
+                                  len = 3; /* <g> */ \
                                 } else {\
-                                  len = (int) _fn->name->length + 5;\
+                                  len = (int) _fn->name->length + 8;/*<magic:%s>*/\
                                 }\
                                 break;     \
                               }else {  \
                                  ObjFunction *_fn = ((ObjClosure *) (((InstanceMethod *) (OBJ))->method))->function;\
-                                 len = (int) _fn->name->length + 10;\
+                                 len = (int) _fn->name->length + 8;/*<charm:%s>*/\
                                  break;\
                               } \
                             }          \
                             case OBJ_NATIVE: {\
-                            len = (int) ((ObjNative *) (OBJ))->name->length + 9;\
+                            len = (int) ((ObjNative *) (OBJ))->name->length + 9; /*<primal:%s>*/\
                             break;\
                             }         \
                            case OBJ_UPVALUE: {  \
@@ -162,20 +162,20 @@ typedef struct {
                           case OBJ_CLASS: {     \
                              ObjClass* c = ((ObjClass *) (OBJ));         \
                              if(c->name==NULL){    \
-                                len = 7;         \
+                                len = 8;         \
                              }else{   \
-                               len = (int) c->name->length+8;          \
+                               len = (int) c->name->length+9;   /*<castle:%s>*/       \
                              }         \
                              break;          \
                            }          \
                            case OBJ_INSTANCE: {     \
                              ObjInstance* i = ((ObjInstance *) (OBJ));  \
-                             len = (int) i->klass->name->length+11;          \
+                             len = (int) i->klass->name->length+9;      /* <%s:knight>*/   \
                              break;          \
                            }          \
                           case OBJ_MODULE: {     \
                              ObjModule* i = ((ObjModule *) (OBJ));  \
-                             len = (int) i->lib->length+9;          \
+                             len = (int) i->lib->length+8;       /*<realm:%s>*/   \
                              break;          \
                            }          \
                            case OBJ_ARRAY: {     \
@@ -195,14 +195,14 @@ typedef struct {
                             }\
                             case OBJ_FUNCTION: {\
                               if (((ObjFunction *) (OBJ))->name == NULL) {\
-                                sprintf(string_, "%s", "<g>");\
+                                sprintf(string_, "%s", "<shadow>");\
                               } else {\
-                                sprintf(string_, "<fn:%s>", ((ObjFunction *) (OBJ))->name->string);\
+                                sprintf(string_, "<magic:%s>", ((ObjFunction *) (OBJ))->name->string);\
                               }\
                               break;\
                             }\
                             case OBJ_CLOSURE: {\
-                              sprintf(string_, "<closure:%s>", ((ObjClosure *) (OBJ))->function->name->string);\
+                              sprintf(string_, "<charm:%s>", ((ObjClosure *) (OBJ))->function->name->string);\
                               break;\
                             }         \
                             case OBJ_INSTANCE_METHOD:{                   \
@@ -211,17 +211,17 @@ typedef struct {
                                 if (_fn->name == NULL) {\
                                    sprintf(string_, "%s", "<g>");\
                                 } else {\
-                                  sprintf(string_, "<fn:%s>", _fn->name->string);\
+                                  sprintf(string_, "<magic:%s>", _fn->name->string);\
                                 }\
                                 break;     \
                               }else {  \
                                  ObjFunction *_fn = ((ObjClosure *) (((InstanceMethod *) (OBJ))->method))->function;\
-                                 sprintf(string_, "<closure:%s>", _fn->name->string);\
+                                 sprintf(string_, "<charm:%s>", _fn->name->string);\
                                  break;\
                               }           \
                             }          \
                             case OBJ_NATIVE: {\
-                              sprintf(string_, "<native:%s>", ((ObjNative *) (OBJ))->name->string);\
+                              sprintf(string_, "<primal:%s>", ((ObjNative *) (OBJ))->name->string);\
                               break;\
                             }         \
                             case OBJ_UPVALUE: {  \
@@ -230,18 +230,18 @@ typedef struct {
                             }         \
                             case OBJ_CLASS: {   \
                               if(((ObjClass*)(OBJ))->name == NULL){   \
-                                 sprintf(string_, "%s","<class>");        \
+                                 sprintf(string_, "%s","<castle>");        \
                               } else{       \
-                              sprintf(string_, "<class:%s>",((ObjClass*)(OBJ))->name->string);           \
+                              sprintf(string_, "<castle:%s>",((ObjClass*)(OBJ))->name->string);           \
                               }          \
                             break;\
                             }         \
                             case OBJ_INSTANCE: {   \
-                              sprintf(string_, "<%s:instance>",((ObjInstance*)(OBJ))->klass->name->string);           \
+                              sprintf(string_, "<%s:knight>",((ObjInstance*)(OBJ))->klass->name->string);           \
                             break;\
                             }         \
                             case OBJ_MODULE:{   \
-                               sprintf(string_, "<module:%s>",((ObjModule*)(OBJ))->lib->string);          \
+                               sprintf(string_, "<realm:%s>",((ObjModule*)(OBJ))->lib->string);          \
                                break;          \
                             }         \
                             case OBJ_ARRAY:{   \
