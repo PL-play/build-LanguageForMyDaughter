@@ -1,0 +1,39 @@
+json -> ws value ws
+ws -> (space | tab | LF | CR)*
+space -> U+0020
+tab -> U+0009
+LF -> U+000A
+CR ->  U+000D
+
+value -> null | false | true | number | string | array | object
+null -> "null"
+false -> "false"
+true -> "true"
+
+number -> "-"? int frac? exp?
+int -> "0" | (digit1_9)+ digit
+frac -> "." digit+
+exp -> ("e" | "E") ("-" | "+")? digit+
+digit1_9 -> "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+digit -> "0" | digit1_9
+
+string -> quotation_mark char* quotation_mark
+char -> unescaped
+        | escaped ( %x22 |          // "    quotation mark  U+0022
+                    %x5C |          // \    reverse solidus U+005C
+                    %x2F |          // /    solidus         U+002F
+                    %x62 |          // b    backspace       U+0008
+                    %x66 |          // f    form feed       U+000C
+                    %x6E |          // n    line feed       U+000A
+                    %x72 |          // r    carriage return U+000D
+                    %x74 |          // t    tab             U+0009
+                    %x75 4HEXDIG )  // uXXXX                U+XXXX
+                  )
+escape -> %x5C          // \
+quotation-mark = %x22   // "
+unescaped = %x20-21 | %x23-5B | %x5D-10FFFF
+
+array -> "[" ws (value (ws "," ws value ws)* )? ws "]"
+
+object -> "{" ws (member (ws "," ws member)* )? ws "}"
+member -> string ws ":" ws value

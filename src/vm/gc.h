@@ -12,8 +12,8 @@ extern "C" {
 /**
     Tricolor Abstraction in Garbage Collection (GC)
 
-    The tricolor abstraction is a method used in garbage collection algorithms, particularly in tracing garbage
-    collectors, to keep track of which objects have been visited during the collection process. This method helps
+    The tricolor abstraction is a method used in garbage zcollection algorithms, particularly in tracing garbage
+    collectors, to keep track of which objects have been visited during the zcollection process. This method helps
     in efficiently identifying live objects and collecting garbage. The objects are divided into three sets,
     represented by colors:
 

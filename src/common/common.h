@@ -52,7 +52,7 @@
 #define GC_MAX_SIZE (1024*1024*50)
 #endif
 
-// When user call "__GC()" function, vm treat it as a "suggestion" of garbage collection but could be ignored according
+// When user call "__GC()" function, vm treat it as a "suggestion" of garbage zcollection but could be ignored according
 // to the GC policy. This controls how many "suggestions" will definitely trigger a GC.
 #ifdef GC_TRIGGER
 #define GC_CALL_TRIGGER (GC_TRIGGER)

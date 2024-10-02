@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(ZHI C)
 
-find_package(ZCollection REQUIRED)
-find_package(ZJSON REQUIRED)
+#find_package(ZCollection REQUIRED)
+#find_package(ZJSON REQUIRED)
 set(CMAKE_INSTALL_PREFIX install)
 
 if (APPLE)
@@ -13,17 +13,42 @@ endif ()
 set(CMAKE_C_STANDARD 11)
 
 include_directories("src")
+include_directories("src/zcollection/include")
+include_directories("src/zjson/include")
+# 检测是否使用 Emscripten
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+    set(CMAKE_EXECUTABLE_SUFFIX ".html")  # 生成 HTML 文件
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s WASM=1 -s ALLOW_MEMORY_GROWTH=1")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_ZLIB=1 -s USE_LIBPNG=1")
+endif()
 
 add_library(ZHI STATIC
         src/vm/vm.c src/vm/gc.c
         src/compiler/compiler.c src/compiler/parser.c src/compiler/scanner.c
         src/common/alloc-testing.c src/common/framework.c
         src/chunk/chunk.c src/chunk/debug.c src/chunk/object.c src/chunk/value.c
+
+        src/zcollection/src/list/array_list.c src/zcollection/src/list/linked_list.c src/zcollection/src/tree/binary_search_tree.c
+        src/zcollection/src/heap/binary_heap.c
+        src/zcollection/src/tree/avl_tree.c src/zcollection/src/tree/rb_tree.c src/zcollection/src/stack/stack_al.c src/zcollection/src/tree/trie.c
+        src/zcollection/src/hashtable/hash_table.c src/zcollection/src/hashtable/hash-int.c
+        src/zcollection/src/hashtable/hash-pointer.c src/zcollection/src/hashtable/hash-string.c src/zcollection/src/hashtable/compare-int.c
+        src/zcollection/src/hashtable/compare-pointer.c
+        src/zcollection/src/hashtable/compare-string.c src/zcollection/src/hashtable/hash_set.c src/zcollection/src/tree/b_tree.c src/zcollection/src/queue/dqueue_ll.c
+        src/zcollection/src/stack/stack_ll.c
+        src/zcollection/src/tree/bp_tree_indisk.c src/zcollection/src/tree/b_tree2.c src/zcollection/src/unionfind/union_find.c src/zcollection/src/queue/priority_queue.c
+        src/zcollection/src/hashtable/hash-double.c
+        src/zcollection/src/hashtable/sha256.c
+
+        src/zjson/src/zjson.c
 )
+
 target_link_libraries(ZHI PUBLIC
         m
-        ZCollection::ZCollection
-        ZJSON::ZJSON
+#        ZCollection::ZCollection
+#        ZJSON::ZJSON
+#        /usr/local/lib/libZCollection.a #手动连接库
+#        /usr/local/lib/libZJSON.a
 )
 
 # tests

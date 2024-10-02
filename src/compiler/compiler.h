@@ -84,7 +84,7 @@ extern NativeValueDecl *NATIVE_VAL[];
 Value native_func_clock(int arg_count, Value *args, void *);
 
 /**
- * Native function. A GC indicator for garbage collection.
+ * Native function. A GC indicator for garbage zcollection.
  *
  * @param arg_count
  * @param args
