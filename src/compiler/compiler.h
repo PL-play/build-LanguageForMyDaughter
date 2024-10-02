@@ -22,51 +22,52 @@ typedef char CompileType;
 
 // local variable representation
 typedef struct {
-  Token name;
-  int depth;
-  uint32_t hash;
-  int is_captured; // if the local variable is captured by a closure.
+ Token name;
+ int depth;
+ uint32_t hash;
+ int is_captured; // if the local variable is captured by a closure.
 } Local;
 
 typedef struct {
-  size_t index;
-  bool is_local;
+ size_t index;
+ bool is_local;
 } Upvalue;
 
 DECLARE_ARRAY_LIST(Local, Local)
+
 DECLARE_ARRAY_LIST(size_t, BreakPoint)
 
 typedef struct {
-  String_Hashtable *string_intern; // hash table for string interning
-  LinkedList *objs; // objects that allocated during compiling. string objects are EXCLUDED because there are interning
-  // in a hash table
-  String_Hashtable *global_names; // map of global variable name to the index of value array where its value is stored
-  ValueArrayList *global_values; // value of global variables
-  ValueArrayList *class_objs; // value of class objects
+ String_Hashtable *string_intern; // hash table for string interning
+ LinkedList *objs; // objects that allocated during compiling. string objects are EXCLUDED because there are interning
+ // in a hash table
+ String_Hashtable *global_names; // map of global variable name to the index of value array where its value is stored
+ ValueArrayList *global_values; // value of global variables
+ ValueArrayList *class_objs; // value of class objects
 } CompileContext;
 
 typedef struct {
-  LocalArrayList *local; // locals array
-  int scope_depth; // current scope. starts from 0
+ LocalArrayList *local; // locals array
+ int scope_depth; // current scope. starts from 0
 } LocalContext;
 
 typedef struct {
-  int current_loop_start;      // track the start of loop
-  int current_loop_scope_depth; // track the depth of loop
-  BreakPointArrayList *current_loop_breaks; // track the index of break to path
-  Expression *increment; // increment expression
+ int current_loop_start; // track the start of loop
+ int current_loop_scope_depth; // track the depth of loop
+ BreakPointArrayList *current_loop_breaks; // track the index of break to path
+ Expression *increment; // increment expression
 } LoopState;
 
 typedef struct Compiler {
-  ObjFunction *function; // current compiling function
-  CompileType type; // compile type, global script or function
-  struct Compiler *enclosing; // enclosing compiler
-  Upvalue upvalues[UINT8_MAX]; // upvalues
-  CompileContext *context;
-  Parser *parser;
-  LocalContext *local_context;
-  bool has_compile_error;
-  LoopState *loop_state;
+ ObjFunction *function; // current compiling function
+ CompileType type; // compile type, global script or function
+ struct Compiler *enclosing; // enclosing compiler
+ Upvalue upvalues[UINT8_MAX]; // upvalues
+ CompileContext *context;
+ Parser *parser;
+ LocalContext *local_context;
+ bool has_compile_error;
+ LoopState *loop_state;
 } Compiler;
 
 extern NativeFunctionDecl *NATIVE_FUNC[];
@@ -188,6 +189,7 @@ void define_native(CompileContext *context, const char *name, NativeFunction fun
  * @param value
  */
 void define_native_variable(CompileContext *context, const char *name, Value value);
+
 /**
  *
  * @param context

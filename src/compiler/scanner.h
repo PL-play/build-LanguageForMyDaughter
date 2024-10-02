@@ -66,10 +66,10 @@ typedef struct {
   // unmatched "(" that are waiting to be closed.
   int braces[MAX_INTERPOLATION_NESTING];
   int num_braces;
-
 } Scanner;
 
 void init_scanner(Scanner *scanner, const char *source);
+
 Token scan_token(Scanner *scanner);
 #ifdef __cplusplus
 }

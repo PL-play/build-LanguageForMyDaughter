@@ -2664,7 +2664,7 @@ static void runtime_error(VM *vm, const char *format, ...) {
         ObjFunction *function = get_frame_function(frame);
         size_t offset = frame->ip - function->chunk->code->data - 1;
         size_t line = get_line(function->chunk, offset);
-        if(vm->source_path!=NULL) {
+        if (vm->source_path != NULL) {
             fprintf(stderr, "[%s] ", vm->source_path);
         }
         fprintf(stderr, "[line %zu] in %s()\n", line,

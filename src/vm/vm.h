@@ -17,34 +17,38 @@ typedef char InterpretResult;
 #define INTERPRET_RUNTIME_ERROR (InterpretResult)2
 
 DECLARE_HASHTABLE(Obj*, size_t, RTObj)
+
 DECLARE_HASHTABLE(ObjString*, ObjModule *, Module)
 
 typedef struct CallFrame {
-  //ObjFunction *function; // function being called.
-  Obj *function; // may be either a ObjClosure or ObjFunction
-  uint8_t *ip; // caller's ip where function will return.
-  // Value *window_stack;
-  size_t frame_stack; // first slot index that function can use in VM's value stack.
+    //ObjFunction *function; // function being called.
+    Obj *function; // may be either a ObjClosure or ObjFunction
+    uint8_t *ip; // caller's ip where function will return.
+    // Value *window_stack;
+    size_t frame_stack; // first slot index that function can use in VM's value stack.
 } CallFrame;
 
 typedef struct GCInfo GCInfo;
 typedef struct VM VM;
+
 struct VM {
-  CallFrame frames[MAX_CALL_STACK]; // call frame stack
-  size_t frame_count; // count of frame stack
-  CompileContext compile_context;
-  ValueArrayList *stack; // value stack
-  ObjUpvalue *open_upvalues; // head pointer of open upvalue linked list
-  RTObjHashtable *objects; // any object that allocated during runtime. used for gc.
-  GCInfo *gc_info; // gc info
-  VM *enclosing; // used for sub vm (when importing module) to save parent vm
-  const char *source_path; // current file path
+    CallFrame frames[MAX_CALL_STACK]; // call frame stack
+    size_t frame_count; // count of frame stack
+    CompileContext compile_context;
+    ValueArrayList *stack; // value stack
+    ObjUpvalue *open_upvalues; // head pointer of open upvalue linked list
+    RTObjHashtable *objects; // any object that allocated during runtime. used for gc.
+    GCInfo *gc_info; // gc info
+    VM *enclosing; // used for sub vm (when importing module) to save parent vm
+    const char *source_path; // current file path
 };
 
 VM *init_VM(VM *vm, VM *enclosing, CompileContext *previous_context, bool register_native);
+
 void free_VM(VM *v);
 
 InterpretResult interpret(VM *v, const char *path, const char *source);
+
 InterpretResult interpret_file(VM *v, const char *file_path);
 
 /**

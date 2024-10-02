@@ -205,20 +205,21 @@ typedef uint8_t OpCode;
 // byte offset of the first instruction on that line. Any bytes after that first
 // one are understood to be on that same line, until it hits the next LineStart.
 typedef struct {
-  size_t offset;
-  size_t line;
+ size_t offset;
+ size_t line;
 } LineStart;
 
 typedef struct {
-  size_t capacity, count;
-  LineStart *lines;
-
+ size_t capacity, count;
+ LineStart *lines;
 } LineInfo;
+
 DECLARE_ARRAY_LIST(uint8_t, Uint8t_)
+
 typedef struct {
-  Uint8t_ArrayList *code;
-  ValueArrayList *constants;
-  LineInfo line_info;
+ Uint8t_ArrayList *code;
+ ValueArrayList *constants;
+ LineInfo line_info;
 } Chunk;
 
 /**
@@ -231,17 +232,22 @@ typedef struct {
  * - Catch Type: The type of exception to catch. This is a reference to the constant pool that specifies the exception.
  */
 typedef struct ExceptionTable {
-  size_t start_pc; // The beginning of the try block.
-  size_t end_pc; // The end of the try block.
-  size_t handle_pc; // The start of the catch block.
-  size_t catch_type; // The type of exception to catch. (constant pool index)
+ size_t start_pc; // The beginning of the try block.
+ size_t end_pc; // The end of the try block.
+ size_t handle_pc; // The start of the catch block.
+ size_t catch_type; // The type of exception to catch. (constant pool index)
 } ExceptionTable;
 
 Chunk *init_chunk();
+
 void free_chunk(Chunk *chunk);
+
 void add_chunk(Chunk *c, uint8_t byte, size_t line);
+
 uint8_t get_code_of(Chunk *chunk, size_t index);
+
 size_t get_code_size(Chunk *chunk);
+
 /**
  * add a constant and return the index of it.
  *
@@ -252,6 +258,7 @@ size_t get_code_size(Chunk *chunk);
 size_t add_constant(Chunk *c, Value value);
 
 static void add_constant_and_write(Chunk *c, Value v, size_t line, uint8_t op);
+
 /**
  * add constant and write chunk.
  *

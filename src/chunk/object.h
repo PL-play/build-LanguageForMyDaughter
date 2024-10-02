@@ -17,6 +17,7 @@ typedef struct {
 } ObjString;
 
 DECLARE_HASHTABLE(ObjString *, Value, Value)
+
 DECLARE_HASHTABLE(ObjString *, int, String_)
 
 DECLARE_ARRAY_LIST(ExceptionTable, ExceptionTable)
@@ -74,6 +75,7 @@ typedef struct {
 } InstanceMethod;
 
 typedef struct ObjModule ObjModule;
+
 struct ObjModule {
   Obj obj;
   ObjString *lib;
@@ -253,32 +255,50 @@ typedef struct {
                             default: {\
                               string_[len] = '\0';\
                             }\
-                        }\
-
+                        }
 
 void free_string(ObjString *os);
+
 void free_string_obj(ObjString *os);
+
 ObjString *new_string_obj(char *str, size_t length, uint32_t hash);
+
 ObjFunction *new_function();
+
 ObjNative *new_native(NativeFunction function, int arity);
+
 ObjClosure *new_closure(ObjFunction *function);
+
 ObjUpvalue *new_upvalue(size_t location);
+
 ObjClass *new_class(ObjString *name);
+
 ObjInstance *new_instance(ObjClass *klass);
+
 InstanceMethod *new_instance_method(Value receiver, Obj *method);
+
 ObjModule *new_module(ObjString *lib);
+
 ObjArray *new_array(ValueArrayList *arr);
 
 void free_function(ObjFunction *function);
+
 void free_closure(ObjClosure *closure);
+
 void free_value(Value value);
+
 void free_class(ObjClass *class);
+
 void free_instance(ObjInstance *instance);
+
 void free_instance_method(InstanceMethod *method);
+
 void free_module(ObjModule *module);
+
 void free_array(ObjArray *array);
 
 uint32_t obj_string_hash(ObjString *string);
+
 int obj_string_equals(ObjString *string1, ObjString *string2);
 
 void free_object(Obj *obj);

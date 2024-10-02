@@ -16,9 +16,13 @@ DEFINE_LINKED_LIST(Obj*, NULL, GrayObj)
 DEFINE_HASHTABLE(int, 0, MarkedObj)
 
 static void trace_reference(GC *gc);
+
 static void blacken_obj(GC *gc, Obj *obj);
+
 static void mark_value_array(GC *gc, ValueArrayList *);
+
 static void unmark_objects(GC *gc);
+
 static void mark_methods(GC *gc, ValueHashtable *table);
 
 void init_GC(GC *gc) {
@@ -181,7 +185,7 @@ static void blacken_obj(GC *gc, Obj *obj) {
       mark_object(gc, (Obj *) ((ObjNative *) obj)->name);
       break;
     }
-    case OBJ_STRING:break;
+    case OBJ_STRING: break;
     case OBJ_FUNCTION: {
       ObjFunction *function = (ObjFunction *) obj;
       if (function->name != NULL) {
@@ -287,6 +291,7 @@ static void blacken_obj(GC *gc, Obj *obj) {
     }
   }
 }
+
 static void mark_methods(GC *gc, ValueHashtable *table) {
   ValueHashtableEntrySet *entry = Valuehashtable_entry_set(table);
   for (size_t i = 0; i < entry->size; i++) {
@@ -296,6 +301,7 @@ static void mark_methods(GC *gc, ValueHashtable *table) {
   }
   Valuefree_hashtable_entry_set(entry);
 }
+
 static void mark_value_array(GC *gc, ValueArrayList *array_list) {
   for (size_t i = 0; i < array_list->size; ++i) {
     mark_value(gc, Valueget_data_arraylist(array_list, i));

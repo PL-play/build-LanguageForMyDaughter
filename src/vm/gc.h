@@ -43,12 +43,13 @@ extern "C" {
  */
 
 DECLARE_LINKED_LIST(Obj*, GrayObj)
+
 DECLARE_HASHTABLE(Obj*, int, MarkedObj)
 
 // Garbage Collector
 typedef struct GC {
-  GrayObjLinkedList *gray_obj;
-  MarkedObjHashtable *mk_obj;
+ GrayObjLinkedList *gray_obj;
+ MarkedObjHashtable *mk_obj;
 } GC;
 
 /**

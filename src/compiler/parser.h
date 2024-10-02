@@ -78,83 +78,102 @@ typedef struct Statement Statement;
 struct Expression {
   ParseType type;
   size_t line;
+
   union {
     struct {
       Token name;
       Expression *right;
     } assign;
+
     struct {
       Expression *object;
       Expression *index;
       Expression *right;
     } element_assign;
+
     struct {
       Expression *object;
       Expression *index;
     } indexing;
+
     struct {
       Expression *object;
       Expression *index0;
       Expression *index1;
     } slicing;
+
     struct {
       Expression *function;
       size_t arg_num;
       Expression **args;
     } call;
+
     struct {
       Token *parameters;
       size_t param_num;
       Statement *body;
     } function;
+
     struct {
       Expression *object;
       Token name;
     } get;
+
     struct {
       Expression *object;
       Token name;
       Expression *value;
     } set;
+
     struct {
       Expression *condition;
       Expression *then_exp;
       Expression *else_exp;
     } conditional;
+
     struct {
       Token name;
     } variable;
+
     struct {
       Token this_;
     } this_;
+
     struct {
       Token super_;
     } super_;
+
     struct {
       Expression *left;
       TokenType operator;
       Expression *right;
     } operator;
+
     struct {
       Expression *left;
       Expression *right;
     } or;
+
     struct {
       Expression *left;
       Expression *right;
     } and;
+
     struct {
       TokenType operator;
       Expression *right;
     } prefix;
+
     struct {
       TokenType operator;
       Expression *left;
     } postfix;
+
     struct {
       size_t size;
       Expression **elements;
     } array;
+
     Value value;
   };
 };
@@ -162,26 +181,32 @@ struct Expression {
 struct Statement {
   ParseType type;
   size_t line;
+
   union {
     Expression *expression;
     Expression *print_expr;
+
     struct {
       Token name;
       Expression *initializer;
     } var_decl;
+
     struct {
       size_t stmt_nums;
       struct Statement **statements;
     } block;
+
     struct {
       Expression *condition;
       struct Statement *then_stmt;
       struct Statement *else_stmt;
     } if_stmt;
+
     struct {
       Expression *condition;
       Statement *body;
     } while_stmt;
+
     struct {
       // either a variable declaration or expression statement or NULL
       struct Statement *initializer;
@@ -189,20 +214,25 @@ struct Statement {
       Expression *increment;
       struct Statement *body;
     } for_stmt;
+
     struct {
       Token token;
     } continue_stmt;
+
     struct {
       Token token;
     } break_stmt;
+
     struct {
       Token name;
       Expression *function;
     } function_stmt;
+
     struct {
       Token keyword;
       Expression *value;
     } return_stmt;
+
     struct {
       Token name;
       Expression *super_class;
@@ -211,21 +241,25 @@ struct Statement {
       Statement **static_methods;
       size_t static_methods_num;
     } class_stmt;
+
     struct {
       Token lib;
       Expression *as;
     } import_stmt;
+
     struct {
       Statement *try_block;
       Statement **catch_stmt;
       size_t catch_nums;
       Statement *finally_block;
     } try_stmt;
+
     struct {
       Expression *catch_exception;
       Expression *as;
       Statement *catch_block;
     } catch_stmt;
+
     struct {
       Token kw;
       Expression *throwable;
@@ -234,6 +268,7 @@ struct Statement {
 };
 
 DECLARE_ARRAY_LIST(Statement*, Statement)
+
 DECLARE_ARRAY_LIST(Token, Token)
 
 int parse(Parser *parser, const char *source, StatementArrayList **array_list);
@@ -241,7 +276,9 @@ int parse(Parser *parser, const char *source, StatementArrayList **array_list);
 char *print_statements(Parser *parser, StatementArrayList *statements);
 
 void free_statement(Parser *parser, Statement *statement);
+
 void free_statements(Parser *parser, StatementArrayList *statements);
+
 size_t eof_line(Parser *parser);
 
 bool has_error(Parser *parser);
