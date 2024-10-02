@@ -6,7 +6,9 @@
 #define ZHI_VM_GC_H_
 
 #include "vm.h"
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 /**
     Tricolor Abstraction in Garbage Collection (GC)
 
@@ -105,5 +107,7 @@ void sweep_string(GC *gc, VM *vm);
  * @param vm
  */
 void collect_garbage(GC *gc, VM *vm);
-
+#ifdef __cplusplus
+}
+#endif
 #endif //ZHI_VM_GC_H_

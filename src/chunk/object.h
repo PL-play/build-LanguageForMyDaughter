@@ -6,7 +6,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "chunk.h"
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef struct {
   Obj obj;
   size_t length;
@@ -280,5 +282,8 @@ uint32_t obj_string_hash(ObjString *string);
 int obj_string_equals(ObjString *string1, ObjString *string2);
 
 void free_object(Obj *obj);
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ZHI_CHUNK_OBJECT_H_

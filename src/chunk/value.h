@@ -7,7 +7,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "common/common.h"
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef char ValueType;
 #define VAL_UNDEFINED ((ValueType) -1)
 #define VAL_BOOL ((ValueType) 0)
@@ -66,5 +68,8 @@ void print_object(Obj *obj);
 
 bool value_equals(Value v1, Value v2);
 bool is_obj_type(Value value, ObjectType type);
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ZHI_CHUNK_VALUE_H_

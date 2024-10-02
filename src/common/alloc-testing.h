@@ -35,7 +35,9 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include <stddef.h>
 /* Don't redefine the functions in the alloc-testing.c, as we need the
  * standard malloc/free functions. */
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 #ifndef ALLOC_TESTING_C
 #undef malloc
 #define malloc   alloc_test_malloc
@@ -125,6 +127,9 @@ void alloc_test_set_limit(signed int alloc_count);
  */
 
 size_t alloc_test_get_allocated(void);
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* #ifndef ALLOC_TESTING_H */
 

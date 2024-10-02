@@ -7,6 +7,9 @@
 
 #include <stdint.h>
 #include "value.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * instruction format
@@ -337,5 +340,7 @@ size_t find_value_in_constant(Chunk *c, Value target, bool *found);
  * @return
  */
 size_t get_line(Chunk *c, size_t offset);
-
+#ifdef __cplusplus
+}
+#endif
 #endif //ZHI_CHUNK_CHUNK_H_

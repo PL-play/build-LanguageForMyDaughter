@@ -6,6 +6,9 @@
 #define ZHI_SCANNER_SCANNER_H_
 #include <stddef.h>
 #include "common/common.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 typedef enum {
   // Single-character tokens.
   TOKEN_LEFT_PAREN, TOKEN_RIGHT_PAREN,
@@ -68,4 +71,8 @@ typedef struct {
 
 void init_scanner(Scanner *scanner, const char *source);
 Token scan_token(Scanner *scanner);
+#ifdef __cplusplus
+}
+#endif
+
 #endif //ZHI_SCANNER_SCANNER_H_

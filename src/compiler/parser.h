@@ -4,6 +4,9 @@
 
 #ifndef ZHI_COMPILER_PARSER_H_
 #define ZHI_COMPILER_PARSER_H_
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stddef.h>
 #include <stdbool.h>
@@ -242,5 +245,8 @@ void free_statements(Parser *parser, StatementArrayList *statements);
 size_t eof_line(Parser *parser);
 
 bool has_error(Parser *parser);
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ZHI_COMPILER_PARSER_H_

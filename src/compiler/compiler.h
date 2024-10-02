@@ -7,6 +7,9 @@
 #include "chunk/object.h"
 #include "parser.h"
 #include "list/linked_list.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define COMPILE_OK 0
 #define COMPILE_ERROR 21
@@ -196,4 +199,8 @@ void register_native_function(CompileContext *context);
  * @param context
  */
 void register_native_values(CompileContext *context);
+#ifdef __cplusplus
+}
+#endif
+
 #endif //ZHI_COMPILER_COMPILER_H_

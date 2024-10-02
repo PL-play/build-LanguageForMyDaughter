@@ -115,7 +115,7 @@ static void set_class_method(VM *vm, Value klass, Value method, bool is_static);
 
 static ObjString *value_to_string(VM *vm, Value value);
 
-static ObjString *path_to_string(char *path);
+static ObjString *path_to_string(const char *path);
 
 static int is_double_an_int(double value);
 
@@ -947,7 +947,7 @@ InterpretResult interpret_file(VM *v, const char *file_path) {
     // TODO
 }
 
-InterpretResult interpret(VM *v, char *source_path, const char *source) {
+InterpretResult interpret(VM *v, const char *source_path, const char *source) {
     v->source_path = source_path;
 
     ObjString *path_string = NULL;
@@ -2735,7 +2735,7 @@ static ObjString *value_to_string(VM *vm, Value value) {
     return get_or_create_string(vm, string, hash, size);
 }
 
-static ObjString *path_to_string(char *path) {
+static ObjString *path_to_string(const char *path) {
     size_t len = strlen(path);
     uint32_t hash = fnv1a_hash(path, len);
     char *str = malloc(len + 1);
