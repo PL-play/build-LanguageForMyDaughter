@@ -4,16 +4,16 @@ declaration -> classDecl
             | varDecl
             | statement
             | traitDecl;
-classDecl -> "class" IDENTIFIER ( "<" IDENTIFIER )? ("with" parameters)? "{" methodDecl* "}" ;
-traitDecl -> "trait" IDENTIFIER  ("with" parameters)? "{" function* "}";
+classDecl -> "castle" IDENTIFIER ( "<" IDENTIFIER )? ("with" parameters)? "{" methodDecl* "}" ;
+traitDecl -> "color" IDENTIFIER  ("with" parameters)? "{" function* "}";
 methodDecl -> IDENTIFIER "("  parameters? ")" block
             | "static" IDENTIFIER "("  parameters? ")" block
             | IDENTIFIER block
             | "static" block;
-funDecl -> "fun" function ;
+funDecl -> "magic" function ;
 function -> IDENTIFIER "(" parameters? ")" block ;
 parameters -> IDENTIFIER ( "," IDENTIFIER )* ;
-varDecl -> "var" IDENTIFIER ( "=" expression )? ";" ;
+varDecl -> "waa" IDENTIFIER ( "=" expression )? ";" ;
 statement -> continueStmt
             | breakStmt
             | exprStmt
@@ -26,18 +26,18 @@ statement -> continueStmt
             | importStmt
             | tryStmt
             | throwStmt;;
-continueStmt -> "continue" ";" ;
+continueStmt -> "skip" ";" ;
 breakStmt -> "break" ";" ;
 block -> "{" declaration* "}" ;
 exprStmt -> expression ";" ;
-forStmt -> "for" "(" ( varDecl | exprStmt | ";" ) expression? ";" expression? ")" statement ;
-ifStmt -> "if" "(" expression ")" statement ( "else" statement )? ;
+forStmt -> "loop" "(" ( varDecl | exprStmt | ";" ) expression? ";" expression? ")" statement ;
+ifStmt -> "wish" "(" expression ")" statement ( "else" statement )? ;
 printStmt -> "print" expression ";" ;
-returnStmt -> "return" expression? ";" ;
-whileStmt -> "while" "(" expression ")" statement ;
+returnStmt -> "home" expression? ";" ;
+whileStmt -> "wloop" "(" expression ")" statement ;
 importStmt -> "want" STRING ("as" IDENTIFIER)? ;
-tryStmt -> "try" block ( "catch" "(" IDENTIFIER (as IDENTIFIER)? ")" block )+ ( "finally" block )? ;
-throwStmt -> "throw" expression ;
+tryStmt -> "adventure" block ( "rescue" "(" IDENTIFIER (as IDENTIFIER)? ")" block )+ ( "finally" block )? ;
+throwStmt -> "toss" expression ;
 expression -> assignment ;
 assignment -> lvalue "=" assignment ;
             | ternary ;
@@ -53,8 +53,8 @@ unary -> ( "!" | "-" ) unary
         | call ;
 call -> primary ( "(" arguments? ")" | "." IDENTIFIER | "[" expression "]")* ;
 arguments -> expression ( "," expression )* ;
-primary -> NUMBER | STRING | "true" | "false" | "nil"
-        | "(" expression ")" | IDENTIFIER | "super" "." IDENTIFIER
-        | "lambda" "(" parameters? ")" block
+primary -> NUMBER | STRING | "aow" | "emm" | "nil"
+        | "(" expression ")" | IDENTIFIER | "hero" "." IDENTIFIER
+        | "shadow" "(" parameters? ")" block
         | "[" arguments? "]";
 
