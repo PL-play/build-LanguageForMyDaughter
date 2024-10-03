@@ -6,7 +6,7 @@
 #include <string.h>
 #include "vm/vm.h"
 #include <emscripten.h>
-// WebAssembly 入口函数，处理参数或文件内容
+// WebAssembly entry
 void process_file_content(const char* content) {
     if (content == NULL) {
         printf("Error: content is NULL\n");
@@ -19,6 +19,11 @@ void process_file_content(const char* content) {
 //    printf("Initialized.\n");
 //    printf("interpret ...\n");
     InterpretResult result = interpret(&vm, NULL, content);
+    // TODO In an Emscripten-compiled WebAssembly environment, output buffering behavior may differ from traditional
+    //  native environments. In particular, fflush(stdout); may not work as expected under Emscripten, causing output
+    //  to not be flushed immediately to the browser's console.
+    printf("\n");
+    fflush(stdout);
 //    printf("interpret result:%s.\n",result==0?"OK":"ERROR");
     if (result == INTERPRET_COMPILE_ERROR) {
         printf("compile error\n");
@@ -33,7 +38,7 @@ void process_file_content(const char* content) {
 
 
 
-// 通过 JavaScript 传递参数的接口
+// js interface
 EMSCRIPTEN_KEEPALIVE
 void handle_file_content(const char* content) {
     process_file_content(content);
