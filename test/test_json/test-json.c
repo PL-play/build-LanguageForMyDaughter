@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <string.h>
 
-#include "help_test/framework.h"
+#include "common/framework.h"
 #include "zjson.h"
 
 #define EXPECT_EQ_BASE(equality, expect, actual, format) \

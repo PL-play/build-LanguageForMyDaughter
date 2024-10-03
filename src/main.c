@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
     } else if (argc == 2) {
         run_file(&vm, argv[1]);
     } else {
-        fprintf(stderr, "Usage: c [path]\n");
+        fprintf(stderr, "Usage: ZHI [path]\n");
         exit(64);
     }
     free_VM(&vm);

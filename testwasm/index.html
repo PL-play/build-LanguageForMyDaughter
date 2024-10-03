@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use WebAssembly in Another Page</title>
+</head>
+<body>
+<h1>Using WebAssembly in a Different Page</h1>
+
+<!-- 提供用户输入代码的文本框 -->
+<textarea id="codeInput" rows="10" cols="50" placeholder="Enter your code here"></textarea>
+<br>
+<button onclick="processInput()">Process Input</button>
+
+<script>
+    // 引入生成的 WebAssembly 和 JS 文件
+    var Module = {
+        onRuntimeInitialized: function() {
+            console.log('WebAssembly module loaded.');
+        }
+    };
+
+    // 处理用户输入的代码并调用 WebAssembly 函数
+    function processInput() {
+        const codeInput = document.getElementById('codeInput').value;
+        if (codeInput.trim() === "") {
+            alert("Please enter some code.");
+            return;
+        }
+
+        // 调用 C 函数处理输入
+        Module.ccall(
+            'handle_file_content',  // C 函数名
+            'void',                 // 返回值类型
+            ['string'],             // 参数类型
+            [codeInput]             // 参数值
+        );
+    }
+</script>
+
+
+<!-- 加载生成的 WebAssembly JavaScript 文件 -->
+<script src="ZHI_wasm.js"></script>
+</body>
+</html>

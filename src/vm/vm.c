@@ -723,18 +723,15 @@ VM *init_VM(VM *v, VM *enclosing, CompileContext *previous_context, bool registe
     v->enclosing = enclosing;
     // runtime created objects
     v->objects = RTObjnew_hash_table((RTObjHashtableHashFunc) hash_pointer, (RTObjHashtableEqualsFunc) pointer_compare);
-
     GCInfo *gc_info = malloc(sizeof(GCInfo));
     gc_info->bytes_allocated = 0;
     gc_info->next_GC = INITIAL_GC_SIZE;
     gc_info->gc_call = 0;
-
     GC *gc = malloc(sizeof(GC));
     init_GC(gc);
     gc_info->gc = gc;
 
     v->gc_info = gc_info;
-
     ObjFunction *function = new_function();
     CompileContext context;
     if (previous_context == NULL) {
@@ -760,7 +757,6 @@ VM *init_VM(VM *v, VM *enclosing, CompileContext *previous_context, bool registe
     // the "base pointer" of function
     push(v, OBJ_VAL(function));
     call(v, (Obj *) function, function, 0);
-
     // init method name
     if (init_hash == 0) {
         init_hash = fnv1a_hash(INIT_METHOD_NAME, init_len);

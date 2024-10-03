@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <string.h>
 
-#include "help_test/framework.h"
+#include "common/framework.h"
 #include "zjson.h"
 
 /**
@@ -96,7 +96,7 @@ static void test_write_json() {
 static void test_read_json() {
     json_value value;
 
-    int result = json_load(&value, "input.json");
+    int result = json_load(&value, "output.json");
     if (result == JSON_PARSE_OK) {
         printf("JSON loaded successfully.\n");
         // Process JSON...

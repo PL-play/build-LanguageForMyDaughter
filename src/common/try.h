@@ -2,8 +2,8 @@
 // Created by ran on 2024/7/1.
 // https://dev.to/pauljlucas/setjmp-longjmp-and-exception-handling-in-c-1h7h
 //
-#ifndef INTERPRETER_TRY_H_
-#define INTERPRETER_TRY_H_
+#ifndef ZHI_TRY_H_
+#define ZHI_TRY_H_
 
 #include <setjmp.h>
 #include <stdbool.h>
