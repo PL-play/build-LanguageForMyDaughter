@@ -25,12 +25,12 @@ void process_file_content(const char* content) {
     printf("\n");
     fflush(stdout);
 //    printf("interpret result:%s.\n",result==0?"OK":"ERROR");
-    if (result == INTERPRET_COMPILE_ERROR) {
-        printf("compile error\n");
-    }
-    if(result == INTERPRET_RUNTIME_ERROR){
-        printf("runtime error\n");
-    }
+//    if (result == INTERPRET_COMPILE_ERROR) {
+//        printf("compile error\n");
+//    }
+//    if(result == INTERPRET_RUNTIME_ERROR){
+//        printf("runtime error\n");
+//    }
 //    printf("Free ZHI VM...\n");
     free_VM(&vm);
 //    printf("process_file_content ended.\n");
