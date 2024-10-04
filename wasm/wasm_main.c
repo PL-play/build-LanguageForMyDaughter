@@ -18,7 +18,7 @@ void process_file_content(const char* content) {
     init_VM(&vm,NULL,NULL,true);
 //    printf("Initialized.\n");
 //    printf("interpret ...\n");
-    InterpretResult result = interpret(&vm, NULL, content);
+    interpret(&vm, NULL, content);
     // TODO In an Emscripten-compiled WebAssembly environment, output buffering behavior may differ from traditional
     //  native environments. In particular, fflush(stdout); may not work as expected under Emscripten, causing output
     //  to not be flushed immediately to the browser's console.
