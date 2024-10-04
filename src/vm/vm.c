@@ -16,6 +16,9 @@
 #ifdef ALLOC_TESTING
 #include "common/alloc-testing.h"
 #endif
+#ifdef WASM_LOG
+#include <emscripten/emscripten.h>
+#endif
 #include "chunk/debug.h"
 #include "hashtable/hash-string.h"
 #include "hashtable/compare-pointer.h"
@@ -844,7 +847,7 @@ void free_VM(VM *v) {
   printf("++free runtime objects\n");
 #endif
 #ifdef WASM_LOG
-    printf("[status]-ZHI free runtime objects.\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-ZHI free runtime objects.");
 #endif
     // free runtime objects
     RTObjHashtableIterator *it = RTObjhashtable_iterator(v->objects);
@@ -878,7 +881,7 @@ void free_VM(VM *v) {
 #endif
     // free string interning
 #ifdef WASM_LOG
-    printf("[status]-ZHI free string interning.\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-ZHI free string interning.");
 #endif
     String_register_hashtable_free_functions(v->compile_context.string_intern, free_string_obj, NULL);
     //  String_HashtableIterator *iter = String_hashtable_iterator(v->compile_context.string_intern);
@@ -897,7 +900,7 @@ void free_VM(VM *v) {
   printf("++free objects during compiling\n");
 #endif
 #ifdef WASM_LOG
-    printf("[status]-ZHI free objects during compiling.\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-ZHI free objects during compiling.");
 #endif
     free_linked_list(v->compile_context.objs, (void (*)(void *)) free_object);
 #ifdef DEBUG_GC_LOG
@@ -907,7 +910,7 @@ void free_VM(VM *v) {
 #endif
     // free global value array
 #ifdef WASM_LOG
-    printf("[status]-ZHI free global value.\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-ZHI free global value.");
 #endif
     Valuefree_arraylist(v->compile_context.global_values);
 
@@ -969,11 +972,11 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
 
     StatementArrayList *stmts = NULL;
 #ifdef WASM_LOG
-    printf("[status]-Initialize scanner and parser.\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Initialize scanner and parser.");
 #endif
     Parser parser;
 #ifdef WASM_LOG
-    printf("[status]-Parsing.\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Parsing.");
 #endif
     int parse_result = parse(&parser, source, &stmts);
     if (parse_result != PARSE_OK) {
@@ -984,7 +987,7 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
 
     // init compiler
 #ifdef WASM_LOG
-    printf("[status]-Initialize compiler.\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Initialize compiler.");
 #endif
     Compiler compiler;
     compiler.function = (ObjFunction *) v->frames[0].function;
@@ -997,7 +1000,7 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
 
     size_t prev_op = get_code_size(get_frame_function(&v->frames[0])->chunk);
 #ifdef WASM_LOG
-    printf("[status]-Compiling...\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Compiling...");
 #endif
     if (compile(&compiler, stmts) != COMPILE_OK) {
         free_statements(&parser, stmts);
@@ -1006,13 +1009,13 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
         return INTERPRET_COMPILE_ERROR;
     }
 #ifdef WASM_LOG
-    printf("[status]-Preparing byte codes...\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Preparing byte codes....");
 #endif
     v->frames[0].ip = get_frame_function(&v->frames[0])->chunk->code->data + prev_op;
 
     //v->ip = v->chunk->code + v->prev_top;
 #ifdef WASM_LOG
-    printf("[status]-ZHI VM interpreting...\n");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-ZHI VM interpreting...");
 #endif
     InterpretResult result = run(v);
     free_statements(&parser, stmts);

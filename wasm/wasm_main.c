@@ -5,22 +5,33 @@
 #include <stdlib.h>
 #include <string.h>
 #include "vm/vm.h"
-#include <emscripten.h>
+#include "common/common.h"
+#ifdef WASM_LOG
+#include <emscripten/emscripten.h>
+#endif
+
+void log_immediate(const char* message) {
+#ifdef WASM_LOG
+    EM_ASM_({console.warn(UTF8ToString($0));}, message);
+#endif
+#ifndef WASM_LOG
+    printf("%s\n",message);
+#endif
+}
+
 // WebAssembly entry
 void process_file_content(const char* content) {
     if (content == NULL) {
         printf("Error: content is NULL\n");
         return;
     }
-#ifdef WASM_LOG
-        printf("[status]-Receive content.\n");
-        printf("[status]-Initialize ZHI VM...\n");
-#endif
+    log_immediate("[status]-Receive content.");
+    log_immediate("[status]-Initialize ZHI VM...");
     VM vm;
     init_VM(&vm,NULL,NULL,true);
 #ifdef WASM_LOG
-    printf("[status]-ZHI VM Initialized.\n");
-    printf("[status]-interpret ...\n");
+    log_immediate("[status]-ZHI VM Initialized.");
+    log_immediate("[status]-interpret ...");
 #endif
     InterpretResult result = interpret(&vm, NULL, content);
     printf("\n");
@@ -30,18 +41,18 @@ void process_file_content(const char* content) {
 //    fflush(stdout);
 #ifdef WASM_LOG
     if(result == PARSE_ERROR) {
-        printf("[status][error]-Parse error.\n");
+        log_immediate("[status][error]-Parse error.");
     }
     else if (result == INTERPRET_COMPILE_ERROR) {
-        printf("[status][error]-Compile error.\n");
+        log_immediate("[status][error]-Compile error.");
     }
     else if(result == INTERPRET_RUNTIME_ERROR){
-        printf("[status][error]-Runtime error.\n");
+        log_immediate("[status][error]-Runtime error.");
     }
 #endif
     free_VM(&vm);
 #ifdef WASM_LOG
-    printf("[status]-Process ended.\n");
+    log_immediate("[status]-Process ended.\n");
 #endif
 }
 

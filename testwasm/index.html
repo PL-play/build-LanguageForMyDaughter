@@ -113,7 +113,10 @@
         mode: 'javascript', // 根据需要更换语言模式
         theme: 'monokai',   // 选择主题
         lineNumbers: true,  // 显示行号
-        value: 'puffln("Hello, DuoDuo!");'           // 初始内容
+        value: 'puffln("Hello, DuoDuo!");\n' +
+            'loop(waa i=1;i<1000;i=i+1){\n' +
+            '   puff(__str(i));\n' +
+            '}'           // 初始内容
     });
 
     // 配置 Module 对象
@@ -125,28 +128,36 @@
             processOutput(text);
         },
         printErr: function(text) {
-            processOutput('[status][error]-' + text);
+            updateStatusBar(`${text}`);
         }
     };
+
+    // 监听控制台的警告输出
+    (function() {
+        var originalConsoleWarn = console.warn;
+        console.warn = function(message) {
+            updateStatusBar(message);
+            originalConsoleWarn.apply(console, arguments);
+        };
+    })();
 
     // 更新状态栏信息
     function updateStatusBar(message) {
         const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false }) + '.' + new Date().getMilliseconds();
-        statusBarElement.innerHTML += `[${timestamp}] ${message}\n`;
+        var text='';
+        if (message.startsWith('[status]-')) {
+             text = message.replace('[status]-', '');
+        } else if (message.startsWith('[status][error]-')) {
+             text = message.replace('[status][error]-', '');
+            text =`<span class="error">${text}</span>`;
+        }
+        statusBarElement.innerHTML += `[${timestamp}] ${text}\n`;
     }
 
     // 处理输出内容
     function processOutput(text) {
-        if (text.startsWith('[status]-')) {
-            const message = text.replace('[status]-', '');
-            updateStatusBar(message);
-        } else if (text.startsWith('[status][error]-')) {
-            const message = text.replace('[status][error]-', '');
-            updateStatusBar(`<span class="error">${message}</span>`);
-        } else {
-            outputContent += text + '\n';
-            outputElement.innerHTML = outputContent;
-        }
+        outputContent += text + '\n';
+        outputElement.innerHTML = outputContent;
     }
 
     // 处理用户输入的代码并调用 WebAssembly 函数
@@ -157,18 +168,10 @@
             return;
         }
 
-        // 更新状态栏信息
-        updateStatusBar("Receive input");
-
         // 清空之前的输出内容
         outputContent = '';
         outputElement.innerHTML = '';
         statusBarElement.innerHTML = '';
-
-        // 更新状态栏信息
-        updateStatusBar("Initialize ZHI VM...");
-
-        updateStatusBar("Initialized.");
 
         // 调用 C 函数处理输入
         updateStatusBar("interpreting...");
@@ -184,10 +187,6 @@
             outputContent = outputContent.slice(0, -1);
             outputElement.innerHTML = outputContent;
         }
-
-        // 更新状态栏信息
-        updateStatusBar("Free ZHI VM...");
-        updateStatusBar("Process ended.");
     }
 </script>
 
