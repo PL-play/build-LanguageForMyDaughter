@@ -23,7 +23,7 @@ void process_file_content(const char* content) {
     //  native environments. In particular, fflush(stdout); may not work as expected under Emscripten, causing output
     //  to not be flushed immediately to the browser's console.
     printf("\n");
-    fflush(stdout);
+//    fflush(stdout);
 //    printf("interpret result:%s.\n",result==0?"OK":"ERROR");
 //    if (result == INTERPRET_COMPILE_ERROR) {
 //        printf("compile error\n");

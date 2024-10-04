@@ -3477,10 +3477,10 @@ var wasmImports = {
 };
 var wasmExports = createWasm();
 var ___wasm_call_ctors = createExportWrapper("__wasm_call_ctors", 0);
-var _fflush = createExportWrapper("fflush", 1);
 var _handle_file_content = Module["_handle_file_content"] = createExportWrapper("handle_file_content", 1);
 var _malloc = Module["_malloc"] = createExportWrapper("malloc", 1);
 var _free = Module["_free"] = createExportWrapper("free", 1);
+var _fflush = createExportWrapper("fflush", 1);
 var _emscripten_get_sbrk_ptr = createExportWrapper("emscripten_get_sbrk_ptr", 0);
 var _sbrk = createExportWrapper("sbrk", 1);
 var _strerror = createExportWrapper("strerror", 1);
