@@ -51,67 +51,71 @@ target_link_libraries(zhi_core PUBLIC
         #        /usr/local/lib/libZCollection.a #手动连接库
         #        /usr/local/lib/libZJSON.a
 )
-# 测试用例，测试时开启
-## tests
-#file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/test/*.c")
-#foreach (file ${files})
-#    get_filename_component(name ${file} NAME_WE)
-#    add_executable(
-#            ${name} ${file}
-#    )
-#    # Option to enable ALLOC_TESTING
-#    option(ENABLE_ALLOC_TESTING "Enable allocation testing" OFF)
-#    # Define ALLOC_TESTING if the option is enabled
-#    if (ENABLE_ALLOC_TESTING)
-#        add_definitions(-DALLOC_TESTING=ON)
-#    endif ()
-#
-#    option(ENABLE_DEBUG_TRACE "Enable debugging trace execution" OFF)
-#
-#    if (ENABLE_DEBUG_TRACE)
-#        # Define the DEBUG_TRACE_EXECUTION macro
-#        add_definitions(-DDEBUG_TRACE_EXECUTION=ON)
-#    endif ()
-#    if (ENABLE_GC_DEBUG)
-#        add_definitions(-DDEBUG_GC_LOG=${ENABLE_GC_DEBUG})
-#    endif ()
-#    if (INIT_GC)
-#        add_definitions(-DINIT_GC=${INIT_GC})
-#    endif ()
-#    if (GC_TRIGGER)
-#        add_definitions(-DGC_TRIGGER=${GC_TRIGGER})
-#    endif ()
-#
-#    target_link_libraries(${name} zhi_core)
-#endforeach ()
-#
-## test collection
-#file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/test/test_collection/*.c")
-#foreach (file ${files})
-#    get_filename_component(name ${file} NAME_WE)
-#    add_executable(
-#            ${name} ${file}
-#    )
-#    target_link_libraries(${name} zhi_core)
-#endforeach ()
-## test json
-#file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/test/test_json/*.c")
-#foreach (file ${files})
-#    get_filename_component(name ${file} NAME_WE)
-#    add_executable(
-#            ${name} ${file}
-#    )
-#    target_link_libraries(${name} zhi_core)
-#endforeach ()
+# 测试用例，非emcmake时测试时开启
+if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+    # tests
+    file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/test/*.c")
+    foreach (file ${files})
+        get_filename_component(name ${file} NAME_WE)
+        add_executable(
+                ${name} ${file}
+        )
+        # Option to enable ALLOC_TESTING
+        option(ENABLE_ALLOC_TESTING "Enable allocation testing" OFF)
+        # Define ALLOC_TESTING if the option is enabled
+        if (ENABLE_ALLOC_TESTING)
+            add_definitions(-DALLOC_TESTING=ON)
+        endif ()
 
-# 添加 main.c 作为可执行程序
-add_executable(ZHI src/main.c)
+        option(ENABLE_DEBUG_TRACE "Enable debugging trace execution" OFF)
 
-# 将 ZHI 库与可执行程序链接
-target_link_libraries(ZHI PRIVATE zhi_core)
+        if (ENABLE_DEBUG_TRACE)
+            # Define the DEBUG_TRACE_EXECUTION macro
+            add_definitions(-DDEBUG_TRACE_EXECUTION=ON)
+        endif ()
+        if (ENABLE_GC_DEBUG)
+            add_definitions(-DDEBUG_GC_LOG=${ENABLE_GC_DEBUG})
+        endif ()
+        if (INIT_GC)
+            add_definitions(-DINIT_GC=${INIT_GC})
+        endif ()
+        if (GC_TRIGGER)
+            add_definitions(-DGC_TRIGGER=${GC_TRIGGER})
+        endif ()
 
-# 安装可执行程序
-install(TARGETS ZHI RUNTIME DESTINATION bin)
+        target_link_libraries(${name} zhi_core)
+    endforeach ()
+
+    # test collection
+    file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/test/test_collection/*.c")
+    foreach (file ${files})
+        get_filename_component(name ${file} NAME_WE)
+        add_executable(
+                ${name} ${file}
+        )
+        target_link_libraries(${name} zhi_core)
+    endforeach ()
+    # test json
+    file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/test/test_json/*.c")
+    foreach (file ${files})
+        get_filename_component(name ${file} NAME_WE)
+        add_executable(
+                ${name} ${file}
+        )
+        target_link_libraries(${name} zhi_core)
+    endforeach ()
+endif ()
+
+if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+    # 添加 main.c 作为可执行程序
+    add_executable(ZHI src/main.c)
+
+    # 将 ZHI 库与可执行程序链接
+    target_link_libraries(ZHI PRIVATE zhi_core)
+
+    # 安装可执行程序
+    install(TARGETS ZHI RUNTIME DESTINATION bin)
+endif ()
 
 # 检测是否使用 Emscripten
 # 单独为 WebAssembly 设置目标
@@ -145,7 +149,6 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
             --no-entry
             # --source-map-base http://localhost:8000/ZHI_wasm.wasm #启用 Emscripten 的日志功能，获取更多调试信息
     )
-
 
     # 安装生成的文件
     install(TARGETS ZHI_wasm RUNTIME DESTINATION bin)
