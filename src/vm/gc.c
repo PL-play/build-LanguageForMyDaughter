@@ -347,12 +347,16 @@ void collect_garbage(GC *gc, VM *vm) {
   clock_t start, end;
   start = clock();
 #endif
+  printf("[status]-ZHI GC collecting garbage...\n");
   mark_roots(gc, vm);
+  printf("[status]-ZHI GC tracing root...\n");
   trace_reference(gc);
+  printf("[status]-ZHI GC sweeping...\n");
   sweep_string(gc, vm);
   sweep(gc, vm);
   update_next_gc_size(vm->gc_info);
   unmark_objects(gc);
+  printf("[status]-ZHI GC end.\n");
 #ifdef DEBUG_GC_LOG
   end = clock();
   double cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;

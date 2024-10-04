@@ -12,28 +12,37 @@ void process_file_content(const char* content) {
         printf("Error: content is NULL\n");
         return;
     }
-//    printf("Received file content: %s\n", content);
-//    printf("Initialize ZHI VM...\n");
+#ifdef WASM_LOG
+        printf("[status]-Receive content.\n");
+        printf("[status]-Initialize ZHI VM...\n");
+#endif
     VM vm;
     init_VM(&vm,NULL,NULL,true);
-//    printf("Initialized.\n");
-//    printf("interpret ...\n");
-    interpret(&vm, NULL, content);
+#ifdef WASM_LOG
+    printf("[status]-ZHI VM Initialized.\n");
+    printf("[status]-interpret ...\n");
+#endif
+    InterpretResult result = interpret(&vm, NULL, content);
+    printf("\n");
     // TODO In an Emscripten-compiled WebAssembly environment, output buffering behavior may differ from traditional
     //  native environments. In particular, fflush(stdout); may not work as expected under Emscripten, causing output
     //  to not be flushed immediately to the browser's console.
-    printf("\n");
 //    fflush(stdout);
-//    printf("interpret result:%s.\n",result==0?"OK":"ERROR");
-//    if (result == INTERPRET_COMPILE_ERROR) {
-//        printf("compile error\n");
-//    }
-//    if(result == INTERPRET_RUNTIME_ERROR){
-//        printf("runtime error\n");
-//    }
-//    printf("Free ZHI VM...\n");
+#ifdef WASM_LOG
+    if(result == PARSE_ERROR) {
+        printf("[status][error]-Parse error.\n");
+    }
+    else if (result == INTERPRET_COMPILE_ERROR) {
+        printf("[status][error]-Compile error.\n");
+    }
+    else if(result == INTERPRET_RUNTIME_ERROR){
+        printf("[status][error]-Runtime error.\n");
+    }
+#endif
     free_VM(&vm);
-//    printf("process_file_content ended.\n");
+#ifdef WASM_LOG
+    printf("[status]-Process ended.\n");
+#endif
 }
 
 

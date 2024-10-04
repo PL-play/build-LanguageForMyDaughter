@@ -15,7 +15,9 @@ set(CMAKE_C_STANDARD 11)
 include_directories("src")
 include_directories("src/zcollection/include")
 include_directories("src/zjson/include")
-
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+    add_definitions(-DWASM_LOG=ON)
+endif ()
 # 递归获取 src 目录下的所有 .c文件
 file(GLOB_RECURSE SRC_FILES src/*.c)
 

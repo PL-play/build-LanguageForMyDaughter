@@ -843,6 +843,9 @@ void free_VM(VM *v) {
 
   printf("++free runtime objects\n");
 #endif
+#ifdef WASM_LOG
+    printf("[status]-ZHI free runtime objects.\n");
+#endif
     // free runtime objects
     RTObjHashtableIterator *it = RTObjhashtable_iterator(v->objects);
     while (RTObjhashtable_iter_has_next(it)) {
@@ -874,6 +877,9 @@ void free_VM(VM *v) {
   printf("++free string interning\n");
 #endif
     // free string interning
+#ifdef WASM_LOG
+    printf("[status]-ZHI free string interning.\n");
+#endif
     String_register_hashtable_free_functions(v->compile_context.string_intern, free_string_obj, NULL);
     //  String_HashtableIterator *iter = String_hashtable_iterator(v->compile_context.string_intern);
     //  while (String_hashtable_iter_has_next(iter)) {
@@ -890,6 +896,9 @@ void free_VM(VM *v) {
   // free objects during compiling
   printf("++free objects during compiling\n");
 #endif
+#ifdef WASM_LOG
+    printf("[status]-ZHI free objects during compiling.\n");
+#endif
     free_linked_list(v->compile_context.objs, (void (*)(void *)) free_object);
 #ifdef DEBUG_GC_LOG
   printf("--free objects during compiling\n");
@@ -897,6 +906,9 @@ void free_VM(VM *v) {
   printf("\n++free global value array.\n");
 #endif
     // free global value array
+#ifdef WASM_LOG
+    printf("[status]-ZHI free global value.\n");
+#endif
     Valuefree_arraylist(v->compile_context.global_values);
 
 #ifdef DEBUG_GC_LOG
@@ -956,7 +968,13 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
     }
 
     StatementArrayList *stmts = NULL;
+#ifdef WASM_LOG
+    printf("[status]-Initialize scanner and parser.\n");
+#endif
     Parser parser;
+#ifdef WASM_LOG
+    printf("[status]-Parsing.\n");
+#endif
     int parse_result = parse(&parser, source, &stmts);
     if (parse_result != PARSE_OK) {
         free_statements(&parser, stmts);
@@ -965,6 +983,9 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
     }
 
     // init compiler
+#ifdef WASM_LOG
+    printf("[status]-Initialize compiler.\n");
+#endif
     Compiler compiler;
     compiler.function = (ObjFunction *) v->frames[0].function;
     compiler.type = COMPILE_GLOBAL;
@@ -975,16 +996,24 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
     compiler.local_context = &local_context;
 
     size_t prev_op = get_code_size(get_frame_function(&v->frames[0])->chunk);
-
+#ifdef WASM_LOG
+    printf("[status]-Compiling...\n");
+#endif
     if (compile(&compiler, stmts) != COMPILE_OK) {
         free_statements(&parser, stmts);
         Statementfree_arraylist(stmts);
         get_frame_function(&v->frames[0])->chunk->code->size = prev_op;
         return INTERPRET_COMPILE_ERROR;
     }
+#ifdef WASM_LOG
+    printf("[status]-Preparing byte codes...\n");
+#endif
     v->frames[0].ip = get_frame_function(&v->frames[0])->chunk->code->data + prev_op;
 
     //v->ip = v->chunk->code + v->prev_top;
+#ifdef WASM_LOG
+    printf("[status]-ZHI VM interpreting...\n");
+#endif
     InterpretResult result = run(v);
     free_statements(&parser, stmts);
     Statementfree_arraylist(stmts);
