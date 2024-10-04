@@ -16,33 +16,11 @@ include_directories("src")
 include_directories("src/zcollection/include")
 include_directories("src/zjson/include")
 
-add_library(zhi_core STATIC
-        src/vm/vm.c src/vm/gc.c
-        src/compiler/compiler.c src/compiler/parser.c src/compiler/scanner.c
-        src/common/alloc-testing.c src/common/framework.c
-        src/chunk/chunk.c src/chunk/debug.c src/chunk/object.c src/chunk/value.c
-        # 如果设置find_package(ZCollection REQUIRED)和find_package(ZJSON REQUIRED)，
-        # 或手动连接/usr/local/lib/libZCollection.a和/usr/local/lib/libZJSON.a，则不需要
-        # 手动设置zcollection和zjson
-        src/zcollection/src/list/array_list.c src/zcollection/src/list/linked_list.c
-        src/zcollection/src/tree/binary_search_tree.c
-        src/zcollection/src/heap/binary_heap.c
-        src/zcollection/src/tree/avl_tree.c src/zcollection/src/tree/rb_tree.c
-        src/zcollection/src/stack/stack_al.c src/zcollection/src/tree/trie.c
-        src/zcollection/src/hashtable/hash_table.c src/zcollection/src/hashtable/hash-int.c
-        src/zcollection/src/hashtable/hash-pointer.c src/zcollection/src/hashtable/hash-string.c
-        src/zcollection/src/hashtable/compare-int.c
-        src/zcollection/src/hashtable/compare-pointer.c
-        src/zcollection/src/hashtable/compare-string.c src/zcollection/src/hashtable/hash_set.c
-        src/zcollection/src/tree/b_tree.c src/zcollection/src/queue/dqueue_ll.c
-        src/zcollection/src/stack/stack_ll.c
-        src/zcollection/src/tree/bp_tree_indisk.c src/zcollection/src/tree/b_tree2.c
-        src/zcollection/src/unionfind/union_find.c src/zcollection/src/queue/priority_queue.c
-        src/zcollection/src/hashtable/hash-double.c
-        src/zcollection/src/hashtable/sha256.c
+# 递归获取 src 目录下的所有 .c文件
+file(GLOB_RECURSE SRC_FILES src/*.c)
 
-        src/zjson/src/zjson.c
-)
+# 添加静态或共享库
+add_library(zhi_core ${SRC_FILES})
 
 target_link_libraries(zhi_core PUBLIC
         m
@@ -108,7 +86,7 @@ endif ()
 
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
     # 添加 main.c 作为可执行程序
-    add_executable(ZHI src/main.c)
+    add_executable(ZHI zhi/main.c)
 
     # 将 ZHI 库与可执行程序链接
     target_link_libraries(ZHI PRIVATE zhi_core)
