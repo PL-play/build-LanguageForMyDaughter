@@ -9,6 +9,11 @@
 #include "hashtable/hash_table_m.h"
 #include "list/array_list_m.h"
 #include "list/linked_list_m.h"
+
+#define ZHI_VERSION_MAJOR 1
+#define ZHI_VERSION_MINOR 0
+#define ZHI_VERSION_PATCH 0
+
 #define GROW_ARRAY(type, cap, count, array, init_size, e) do{ \
                                           if ((type)->cap == 0) {\
                                             (type)->cap = init_size;\

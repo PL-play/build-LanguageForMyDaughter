@@ -40,6 +40,9 @@ void process_file_content(const char* content) {
         log_immediate("[status][error]-Error: content is NULL");
         return;
     }
+    char preface[100];
+    sprintf(preface, "[status][error]-+++++稚%d.%d.%d 献给我的女儿朵朵+++++", ZHI_VERSION_MAJOR, ZHI_VERSION_MINOR, ZHI_VERSION_PATCH);
+    log_immediate(preface);
     log_setup("SET UP MAX_CLASS_NESTING:[%d]", MAX_CLASS_NESTING);
     log_setup("SET UP ARRAY_INIT_SIZE:[%d]", ARRAY_INIT_SIZE);
     log_setup("SET UP MAX_CALL_STACK:[%d]", MAX_CALL_STACK);
