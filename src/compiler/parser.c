@@ -13,7 +13,9 @@
 #ifdef ALLOC_TESTING
 #include "common/alloc-testing.h"
 #endif
-
+#ifdef WASM_LOG
+#include <emscripten/emscripten.h>
+#endif
 typedef enum {
   PREC_NONE,
   PREC_ASSIGNMENT, // =
@@ -829,14 +831,37 @@ static void error(Parser *parser, const char *msg) {
 static void error_at(Parser *parser, Token *token, const char *msg) {
   if (parser->panic_mode) return;
   parser->panic_mode = true;
-
   fprintf(stderr, "[line %zu] Error", token->line);
+#ifdef WASM_LOG
+  char err[100];
+  sprintf(err,"[status][error]-ZHI Parser: [line %zu] Error", token->line);
+#endif
+
+
   if (token->type == TOKEN_EOF) {
     fprintf(stderr, " at end");
+#ifdef WASM_LOG
+    size_t el = strlen(err);
+    sprintf(err+el," at end");
+    EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
   } else if (token->type == TOKEN_ERROR) {
+#ifdef WASM_LOG
+    EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
   } else {
+#ifdef WASM_LOG
+    size_t el = strlen(err);
+    sprintf(err+el, " at '%.*s'", token->length, token->start);
+    EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
     fprintf(stderr, " at '%.*s'", token->length, token->start);
   }
+#ifdef WASM_LOG
+  char wasm_msg[512];
+  sprintf(wasm_msg, "[status][error]-ZHI Parser: %s", msg);
+  EM_ASM_({console.warn(UTF8ToString($0));},wasm_msg);
+#endif
   fprintf(stderr, ": %s\n", msg);
   parser->has_err = true;
 }
