@@ -351,8 +351,7 @@ void collect_garbage(GC *gc, VM *vm) {
   start = clock();
 #endif
 #ifdef WASM_LOG
-    clock_t start, end;
-    start = clock();
+
     EM_ASM_({
        console.warn(UTF8ToString($0));
    }, "[status]-ZHI GC collecting garbage...");
@@ -368,17 +367,19 @@ void collect_garbage(GC *gc, VM *vm) {
     EM_ASM_({
        console.warn(UTF8ToString($0));
    }, "[status]-ZHI GC sweeping...");
+    clock_t start, end;
+    start = clock();
 #endif
     sweep_string(gc, vm);
     sweep(gc, vm);
     update_next_gc_size(vm->gc_info);
     unmark_objects(gc);
 #ifdef WASM_LOG
+    end = clock();
+    double cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
     EM_ASM_({
       console.warn(UTF8ToString($0));
   }, "[status]-ZHI GC end.");
-    end = clock();
-    double cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
     char ss[100];
     sprintf(ss,"[status]-ZHI GC time: %f ms\n", cpu_time_used * 1000);
     EM_ASM_({

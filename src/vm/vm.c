@@ -2701,12 +2701,11 @@ static void runtime_error(VM *vm, const char *format, ...) {
         ObjFunction *function = get_frame_function(frame);
         size_t offset = frame->ip - function->chunk->code->data - 1;
         size_t line = get_line(function->chunk, offset);
-#ifdef WASM_LOG
-        char buffer2[512];
-#endif
+
         if (vm->source_path != NULL) {
             fprintf(stderr, "[%s] ", vm->source_path);
 #ifdef WASM_LOG
+            char buffer2[512];
             sprintf(buffer2, "[status][error]-Runtime ERROR. ZHI VM: [%s] ", vm->source_path);
 #endif
         }
@@ -2714,8 +2713,8 @@ static void runtime_error(VM *vm, const char *format, ...) {
                 function->name == NULL ? "script" : function->name->string);
 
 #ifdef WASM_LOG
-        size_t el = strlen(buffer2);
-        sprintf(buffer2+el, "[status][error]-ZHI VM: [line %zu] in %s()", line,
+        char buffer2[512];
+        sprintf(buffer2, "[status][error]-ZHI VM: [line %zu] in %s()", line,
             function->name == NULL ? "main_script" : function->name->string);
         EM_ASM_({console.warn(UTF8ToString($0));}, buffer2);
 #endif
