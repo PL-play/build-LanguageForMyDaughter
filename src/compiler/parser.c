@@ -904,7 +904,7 @@ static Expression *boolean_value(Parser *parser, Token token, Expression *left) 
 
 static Expression *this_(Parser *parser, Token token, Expression *left) {
   if (parser->class_depth == 0) {
-    error(parser, "Can't use 'this' out of class.\n");
+    error(parser, "Can't use 'this' out of castle.\n");
     return NULL;
   }
   if (parser->static_method_depth >= parser->class_depth) {

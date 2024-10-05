@@ -2684,19 +2684,41 @@ static void runtime_error(VM *vm, const char *format, ...) {
     va_list args;
     va_start(args, format);
     vfprintf(stderr, format, args);
+#ifdef WASM_LOG
+    char buffer[512];
+    vsnprintf(buffer, sizeof(buffer), format, args);
+#endif
     va_end(args);
     fputs("\n", stderr);
-
+#ifdef WASM_LOG
+    // 添加前缀到最终消息
+    char final_message[550];
+    snprintf(final_message, sizeof(final_message), "[status][error]-Runtime ERROR. ZHI VM: %s", buffer);
+    EM_ASM_({console.warn(UTF8ToString($0));}, final_message);
+#endif
     for (size_t i = vm->frame_count; i > 0; --i) {
         CallFrame *frame = &vm->frames[i - 1];
         ObjFunction *function = get_frame_function(frame);
         size_t offset = frame->ip - function->chunk->code->data - 1;
         size_t line = get_line(function->chunk, offset);
+#ifdef WASM_LOG
+        char buffer2[512];
+#endif
         if (vm->source_path != NULL) {
             fprintf(stderr, "[%s] ", vm->source_path);
+#ifdef WASM_LOG
+            sprintf(buffer2, "[status][error]-Runtime ERROR. ZHI VM: [%s] ", vm->source_path);
+#endif
         }
         fprintf(stderr, "[line %zu] in %s()\n", line,
                 function->name == NULL ? "script" : function->name->string);
+
+#ifdef WASM_LOG
+        size_t el = strlen(buffer2);
+        sprintf(buffer2+el, "[status][error]-ZHI VM: [line %zu] in %s()", line,
+            function->name == NULL ? "main_script" : function->name->string);
+        EM_ASM_({console.warn(UTF8ToString($0));}, buffer2);
+#endif
     }
 
     reset_stack(vm);
@@ -2706,8 +2728,20 @@ static void print_error(VM *vm, const char *format, ...) {
     va_list args;
     va_start(args, format);
     vfprintf(stderr, format, args);
+#ifdef WASM_LOG
+    char buffer[512];
+    vsnprintf(buffer, sizeof(buffer), format, args);
+#endif
+
     va_end(args);
     fputs("\n", stderr);
+#ifdef WASM_LOG
+    // 添加前缀到最终消息
+    char final_message[550];
+    snprintf(final_message, sizeof(final_message), "[status][error]-Runtime ERROR. ZHI VM: %s", buffer);
+    EM_ASM_({console.warn(UTF8ToString($0));}, final_message);
+#endif
+
 
     for (size_t i = vm->frame_count; i > 0; --i) {
         CallFrame *frame = &vm->frames[i - 1];
@@ -2716,6 +2750,12 @@ static void print_error(VM *vm, const char *format, ...) {
         size_t line = get_line(function->chunk, offset);
         fprintf(stderr, "[line %zu] in %s()\n", line,
                 function->name == NULL ? "script" : function->name->string);
+#ifdef WASM_LOG
+        char buffer2[512];
+        sprintf(buffer2, "[status][error]-Runtime ERROR. ZHI VM: [line %zu] in %s()", line,
+            function->name == NULL ? "main_script" : function->name->string);
+        EM_ASM_({console.warn(UTF8ToString($0));}, buffer2);
+#endif
     }
 }
 

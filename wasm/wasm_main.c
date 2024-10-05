@@ -47,7 +47,7 @@ void process_file_content(const char* content) {
         log_immediate("[status][error]-Compile error.");
     }
     else if(result == INTERPRET_RUNTIME_ERROR){
-        log_immediate("[status][error]-Runtime error.");
+//        log_immediate("[status][error]-Runtime error.");
     }
 #endif
     free_VM(&vm);

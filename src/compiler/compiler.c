@@ -14,6 +14,9 @@
 #ifdef ALLOC_TESTING
 #include "common/alloc-testing.h"
 #endif
+#ifdef WASM_LOG
+#include <emscripten/emscripten.h>
+#endif
 #define VARIABLE_OPERATION(compiler, var_index, line_, op) do{ \
                                                   if((var_index)<256){ \
                                                     emit_byte((compiler),(op), (line_));\
@@ -380,7 +383,7 @@ static void statement_emit_bytecode(Compiler *compiler, Statement *statement) {
         }
         case CONTINUE_STMT: {
             if (compiler->loop_state->current_loop_start == -1) {
-                error_at(compiler, &statement->continue_stmt.token, "Can't use 'continue' outside of a loop.");
+                error_at(compiler, &statement->continue_stmt.token, "Can't use 'skip' outside of a loop.");
             }
             // discard locals create inside the loop
             for (int i = compiler->local_context->local->size - 1; i >= 0; --i) {
@@ -1382,14 +1385,36 @@ static void end_scope(Compiler *compiler) {
 }
 
 static void error_at(Compiler *compiler, Token *token, const char *msg) {
+#ifdef WASM_LOG
+    char err[100];
+    sprintf(err,"[status][error]-ZHI Compiler: [line %zu] Error", token->line);
+#endif
     fprintf(stderr, "[line %zu] Error", token->line);
     if (token->type == TOKEN_EOF) {
         fprintf(stderr, " at end");
+#ifdef WASM_LOG
+        size_t el = strlen(err);
+        sprintf(err+el," at end");
+        EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
     } else if (token->type == TOKEN_ERROR) {
+#ifdef WASM_LOG
+        EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
     } else {
+#ifdef WASM_LOG
+        size_t el = strlen(err);
+        sprintf(err+el, " at '%.*s'", token->length, token->start);
+        EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
         fprintf(stderr, " at '%.*s'", token->length, token->start);
     }
     fprintf(stderr, ": %s\n", msg);
+#ifdef WASM_LOG
+    char wasm_msg[512];
+    sprintf(wasm_msg, "[status][error]-ZHI Compiler: %s", msg);
+    EM_ASM_({console.warn(UTF8ToString($0));},wasm_msg);
+#endif
     compiler->has_compile_error = true;
     Compiler *c = compiler->enclosing;
     while (c != NULL) {
@@ -1399,14 +1424,36 @@ static void error_at(Compiler *compiler, Token *token, const char *msg) {
 }
 
 static void warn_at(Compiler *compiler, Token *token, const char *msg) {
+#ifdef WASM_LOG
+    char err[100];
+    sprintf(err,"[status]-[WARNING] ZHI Compiler: [line %zu] WARNING", token->line);
+#endif
     fprintf(stdout, "[line %zu] WARNING", token->line);
     if (token->type == TOKEN_EOF) {
         fprintf(stdout, " at end");
+#ifdef WASM_LOG
+        size_t el = strlen(err);
+        sprintf(err+el," at end");
+        EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
     } else if (token->type == TOKEN_ERROR) {
+#ifdef WASM_LOG
+        EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
     } else {
         fprintf(stdout, " at '%.*s'", token->length, token->start);
+#ifdef WASM_LOG
+        size_t el = strlen(err);
+        sprintf(err+el, " at '%.*s'", token->length, token->start);
+        EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#endif
     }
     fprintf(stdout, ": %s\n", msg);
+#ifdef WASM_LOG
+    char wasm_msg[512];
+    sprintf(wasm_msg, "[status]-[WARNING] ZHI Compiler: %s", msg);
+    EM_ASM_({console.warn(UTF8ToString($0));},wasm_msg);
+#endif
 }
 
 static int obj_compare(Obj *obj1, Obj *obj2) {
