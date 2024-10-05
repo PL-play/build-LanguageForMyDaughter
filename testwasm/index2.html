@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>ZHI Playground</title>
+
+    <!-- 引入 CodeMirror 的 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/theme/monokai.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+
+        #header {
+            background-color: #2c3e50;
+            color: #fff;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        #container {
+            width: 1400px;
+            display: flex;
+            flex-direction: row;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+            height: 700px;
+            box-sizing: border-box;
+        }
+
+        #editor, #output {
+            overflow: auto;
+            padding: 10px;
+            height: 300px;
+            width: 500px;
+            box-sizing: border-box;
+        }
+
+        #editor {
+            background-color: #272822;
+        }
+
+        #output {
+            background-color: #f0f0f0;
+            border-top: 1px solid #ccc;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        #statusBar {
+            width: 400px;
+            height: 700px;
+            background-color: #2c3e50;
+            color: #fff;
+            font-family: monospace;
+            text-align: left;
+            padding: 10px;
+            overflow: auto;
+            white-space: pre-wrap;
+            box-sizing: border-box;
+        }
+
+        #runButton {
+            width: 100%;
+            padding: 15px;
+            background-color: #27ae60;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            box-sizing: border-box;
+        }
+
+        #runButton:hover {
+            background-color: #2ecc71;
+        }
+
+        .error {
+            color: red;
+        }
+
+        #astAndByteCodeContainer {
+            width: 400px;
+            margin-right: 20px;
+            background-color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        #astContainer, #byteCodeContainer {
+            height: 50%;
+            overflow: auto;
+            padding: 10px;
+            font-family: monospace;
+            background-color: #e8f0ff;
+            box-sizing: border-box;
+        }
+
+        #astContainer {
+            background-color: #f8f8f8;
+        }
+
+        #byteCodeContainer {
+            background-color: #e8f0ff;
+        }
+    </style>
+</head>
+<body>
+<div id="header">ZHI Language Playground</div>
+
+<!-- 容器，包含代码编辑器、运行按钮、结果显示框和状态栏 -->
+<div id="container">
+    <!-- AST 和 Byte Code 容器 -->
+    <div id="astAndByteCodeContainer">
+        <div id="astContainer"></div>
+        <div id="byteCodeContainer"></div>
+    </div>
+    <div>
+        <!-- 代码编辑器 -->
+        <div id="editor"></div>
+        <!-- 运行按钮 -->
+        <button id="runButton" onclick="processInput()">运行代码</button>
+        <!-- 结果显示框 -->
+        <pre id="output"></pre>
+    </div>
+    <!-- 状态栏 -->
+    <div id="statusBar"></div>
+</div>
+
+<!-- 引入 CodeMirror 的 JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
+<!-- 引入代码模式 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/javascript/javascript.min.js"></script>
+
+<!-- 在加载 WebAssembly 模块之前定义 Module 对象 -->
+<script>
+    // 定义变量
+    var outputContent = '';
+    var outputElement = document.getElementById('output');
+    var statusBarElement = document.getElementById('statusBar');
+    var astContainerElement = document.getElementById('astContainer');
+    var byteCodeContainerElement = document.getElementById('byteCodeContainer');
+
+    // 初始化 CodeMirror 编辑器
+    var editor = CodeMirror(document.getElementById('editor'), {
+        mode: 'javascript', // 根据需要更换语言模式
+        theme: 'monokai',   // 选择主题
+        lineNumbers: true,  // 显示行号
+        value: 'puffln("Hello, DuoDuo!");\n' +
+            'loop(waa i=1;i<1000;i=i+1){\n' +
+            '   puffln(__str(i));\n' +
+            '}'           // 初始内容
+    });
+
+    // 配置 Module 对象
+    var Module = {
+        onRuntimeInitialized: function () {
+            console.log('WebAssembly module loaded.');
+        },
+        print: function (text) {
+            processOutput(text);
+        },
+        printErr: function (text) {
+            updateStatusBar(`${text}`);
+        }
+    };
+
+    // 监听控制台的警告输出
+    (function () {
+        var originalConsoleWarn = console.warn;
+        console.warn = function (message) {
+            dispatchMessage(message);
+            originalConsoleWarn.apply(console, arguments);
+        };
+    })();
+
+    function dispatchMessage(message) {
+        if (message.startsWith('[status]')) {
+            updateStatusBar(message);
+        } else if (message.startsWith('[ast]')) {
+            updateAST(message);
+        } else if (message.startsWith('[bytecode]')) {
+            updateByteCode(message);
+        }
+    }
+
+    // 更新状态栏信息
+    function updateStatusBar(message) {
+        const timestamp = new Date().toLocaleTimeString('en-US', {hour12: false}) + '.' + new Date().getMilliseconds();
+        let text = '';
+        if (message.startsWith('[status]-')) {
+            text = message.replace('[status]-', '');
+        } else if (message.startsWith('[status][error]-')) {
+            text = message.replace('[status][error]-', '');
+            text = `<span class="error">${text}</span>`;
+        }
+        if (text === '') return;
+        statusBarElement.innerHTML += `[${timestamp}] ${text}\n`;
+    }
+
+    function updateAST(message) {
+        let astJson = message.replace('[ast]-', '');
+        astContainerElement.innerHTML = `<span>----AST-----<br></span>` +
+            '<pre>' + JSON.stringify(JSON.parse(astJson), null, 2) + '</pre>';
+    }
+
+    function updateByteCode(message) {
+        let bytecode = message.replace('[bytecode]-', '');
+        if (bytecode.endsWith('[nl]')) {
+            bytecode = bytecode.slice(0, -4);
+            byteCodeContainerElement.innerHTML += `<span>${bytecode}<br></span>`;
+        } else {
+            byteCodeContainerElement.innerHTML += `<span>${bytecode}</span>`;
+        }
+    }
+
+    // 处理输出内容
+    function processOutput(text) {
+        outputContent += text + '\n';
+        outputElement.innerHTML = outputContent;
+    }
+
+    // 处理用户输入的代码并调用 WebAssembly 函数
+    function processInput() {
+        const codeInput = editor.getValue();
+        if (codeInput.trim() === "") {
+            alert("请输入一些代码。");
+            return;
+        }
+
+        // 清空之前的输出内容
+        outputContent = '';
+        outputElement.innerHTML = '';
+        statusBarElement.innerHTML = '';
+        astContainerElement.innerHTML = '';
+        byteCodeContainerElement.innerHTML = '';
+
+        // 调用 C 函数处理输入
+        Module.ccall(
+            'handle_file_content',  // C 函数名
+            'void',                 // 返回值类型
+            ['string'],             // 参数类型
+            [codeInput]             // 参数值
+        );
+
+        // 去掉最后的 '\n'（如果有）
+        if (outputContent.endsWith('\n')) {
+            outputContent = outputContent.slice(0, -1);
+            outputElement.innerHTML = outputContent;
+        }
+    }
+
+</script>
+
+<!-- 加载生成的 WebAssembly JavaScript 文件 -->
+<script src="ZHI_wasm.js"></script>
+</body>
+</html>
