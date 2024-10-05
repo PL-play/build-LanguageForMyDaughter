@@ -1009,6 +1009,9 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
     size_t prev_op = get_code_size(get_frame_function(&v->frames[0])->chunk);
 #ifdef WASM_LOG
     EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Compiling...");
+    EM_ASM_({console.warn(UTF8ToString($0));}, "[bytecode]---- bytecodes of [main script] -----[nl]");
+    EM_ASM_({console.warn(UTF8ToString($0));
+         }, "[bytecode]-offset |  line | code  |   constant index  |  value[nl]");
 #endif
     if (compile(&compiler, stmts) != COMPILE_OK) {
         free_statements(&parser, stmts);

@@ -154,18 +154,7 @@ int compile(Compiler *compiler, StatementArrayList *statements) {
     // printf("======\n");
   }
 #endif
-#ifdef WASM_LOG
-    if (!compiler->has_compile_error) {
-        char* name = compiler->function->name==NULL?"":compiler->function->name->string;
-        char buffer[strlen(name)+30];
-        sprintf(buffer,"[bytecode]---- bytecodes of [%s] -----[nl]",name);
-        EM_ASM_({
-            console.warn(UTF8ToString($0));
-        }, buffer);
 
-        wasm_disassemble_chunk(compiler->function->chunk);
-    }
-#endif
     return compiler->has_compile_error ? COMPILE_ERROR : COMPILE_OK;
 }
 
@@ -434,6 +423,13 @@ static void statement_emit_bytecode(Compiler *compiler, Statement *statement) {
             // A top level declared function will bind to a global variable. Inside a block or other function will create
             // a local variable.
             int local_index = declare_variable(compiler, statement->function_stmt.name);
+#ifdef WASM_LOG
+            char buff_name[statement->function_stmt.name.length+1];
+            snprintf(buff_name,statement->function_stmt.name.length+1,"%s",statement->function_stmt.name.start);
+            char n[statement->function_stmt.name.length+64];
+            sprintf(n,"[bytecode]---- bytecodes of [%s] -----[nl]",buff_name);
+            EM_ASM_({console.warn(UTF8ToString($0));}, n);
+#endif
             if (local_index != -1) {
                 // local
                 // mark the local as initialized.
@@ -448,6 +444,11 @@ static void statement_emit_bytecode(Compiler *compiler, Statement *statement) {
                                              true);
                 VARIABLE_OPERATION(compiler, var_index, statement->line, OP_DEFINE_GLOBAL);
             }
+#ifdef WASM_LOG
+            char n2[statement->function_stmt.name.length+64];
+            sprintf(n2,"[bytecode]---- end bytecodes of [%s] -----[nl]",buff_name);
+            EM_ASM_({console.warn(UTF8ToString($0));}, n2);
+#endif
             return;
         }
         case RETURN_STMT: {
@@ -905,6 +906,11 @@ static void end_compiler(Compiler *compiler, size_t line) {
     //  if (!has_error()) {
     //    disassemble_chunk(current_chunk(), "code");
     //  }
+#endif
+#ifdef WASM_LOG
+    if (!compiler->has_compile_error) {
+        wasm_disassemble_chunk(compiler->function->chunk);
+    }
 #endif
     BreakPointfree_arraylist(compiler->loop_state->current_loop_breaks);
     Localfree_arraylist(compiler->local_context->local);

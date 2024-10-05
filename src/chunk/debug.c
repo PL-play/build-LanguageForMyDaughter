@@ -32,13 +32,7 @@ static size_t slicing_instruction(const char *name, Chunk *chunk, size_t offset)
 
 void disassemble_chunk(Chunk *chunk, const char *name) {
     printf("-- %s --\n", name);
-#ifdef WASM_LOG
-  char buffer[strlen(name)+30];
-  sprintf(buffer,"[bytecode]---- bytecodes of [%s] -----",name);
-  EM_ASM_({
-      console.warn(UTF8ToString($0));
-  }, buffer);
-#endif
+
     size_t offset = 0;
     while (offset < get_code_size(chunk)) {
         offset = disassemble_instruction(chunk, offset);
@@ -46,11 +40,7 @@ void disassemble_chunk(Chunk *chunk, const char *name) {
 }
 
 void wasm_disassemble_chunk(Chunk *chunk) {
-#ifdef WASM_LOG
-  EM_ASM_({
-              console.warn(UTF8ToString($0));
-          }, "[bytecode]-offset |  line | code  |   constant index  |  value[nl]");
-#endif
+
     size_t offset = 0;
     while (offset < get_code_size(chunk)) {
         offset = disassemble_instruction(chunk, offset);
