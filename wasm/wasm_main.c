@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include "vm/vm.h"
 #include "common/common.h"
 #ifdef WASM_LOG
@@ -13,18 +14,43 @@
 void log_immediate(const char* message) {
 #ifdef WASM_LOG
     EM_ASM_({console.warn(UTF8ToString($0));}, message);
-#endif
-#ifndef WASM_LOG
+#else
     printf("%s\n",message);
+#endif
+}
+
+void log_setup(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    vfprintf(stderr, format, args);
+    char buffer[512];
+    vsnprintf(buffer, sizeof(buffer), format, args);
+    char final_message[550];
+    snprintf(final_message, sizeof(final_message), "[status][info]- %s", buffer);
+#ifdef WASM_LOG
+    EM_ASM_({console.warn(UTF8ToString($0));}, final_message);
+#else
+    printf("%s\n",final_message);
 #endif
 }
 
 // WebAssembly entry
 void process_file_content(const char* content) {
     if (content == NULL) {
-        printf("Error: content is NULL\n");
+        log_immediate("[status][error]-Error: content is NULL");
         return;
     }
+    log_setup("SET UP MAX_CLASS_NESTING:[%d]", MAX_CLASS_NESTING);
+    log_setup("SET UP ARRAY_INIT_SIZE:[%d]", ARRAY_INIT_SIZE);
+    log_setup("SET UP MAX_CALL_STACK:[%d]", MAX_CALL_STACK);
+    log_setup("SET UP INITIAL_GC_SIZE:[%d]", INITIAL_GC_SIZE);
+    log_setup("SET UP GC_GROW_FACTOR:[%d]", GC_GROW_FACTOR);
+    log_setup("SET UP GC_MAX_SIZE:[%d]", GC_MAX_SIZE);
+    log_setup("SET UP GC_CALL_TRIGGER:[%d]", GC_CALL_TRIGGER);
+    log_setup("SET UP INIT_METHOD_NAME:[%s]", INIT_METHOD_NAME);
+
+
+    log_immediate("[status]-Processing content");
     log_immediate("[status]-Receive content.");
     log_immediate("[status]-Initialize ZHI VM...");
     VM vm;

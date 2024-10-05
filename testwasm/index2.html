@@ -34,7 +34,7 @@
         }
 
         #container {
-            width: 1400px;
+            width: 1320px;
             display: flex;
             flex-direction: row;
             border: 1px solid #ccc;
@@ -92,6 +92,10 @@
 
         .error {
             color: red;
+        }
+
+        .info {
+            color: orange;
         }
 
         #astAndByteCodeContainer {
@@ -217,6 +221,9 @@
         } else if (message.startsWith('[status][error]-')) {
             text = message.replace('[status][error]-', '');
             text = `<span class="error">${text}</span>`;
+        } else if(message.startsWith('[status][info]-')){
+            text = message.replace('[status][info]-', '');
+            text = `<span class="info">${text}</span>`;
         }
         if (text === '') return;
         statusBarElement.innerHTML += `[${timestamp}] ${text}\n`;

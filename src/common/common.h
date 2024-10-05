@@ -2,8 +2,8 @@
 // Created by ran on 2023/12/18.
 //
 
-#ifndef INTERPRETER_COMMON_H_
-#define INTERPRETER_COMMON_H_
+#ifndef ZHI_COMMON_H_
+#define ZHI_COMMON_H_
 #include "stddef.h"
 #include <stdint.h>
 #include "hashtable/hash_table_m.h"
@@ -61,4 +61,4 @@
 #define GC_CALL_TRIGGER (4)
 #endif
 
-#endif //INTERPRETER_COMMON_H_
+#endif //ZHI_COMMON_H_
