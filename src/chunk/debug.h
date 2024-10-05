@@ -9,6 +9,7 @@
 extern "C" {
 #endif
 void disassemble_chunk(Chunk *chunk, const char *name);
+void wasm_disassemble_chunk(Chunk *chunk);
 
 size_t disassemble_instruction(Chunk *chunk, size_t offset);
 #ifdef __cplusplus

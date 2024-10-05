@@ -975,6 +975,7 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
     EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Initialize scanner and parser.");
 #endif
     Parser parser;
+
 #ifdef WASM_LOG
     EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Parsing.");
 #endif
@@ -984,6 +985,13 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
         Statementfree_arraylist(stmts);
         return PARSE_ERROR;
     }
+#ifdef WASM_LOG
+    char* ast = print_statements(&parser, stmts);
+    char buffer[strlen(ast)+7];
+    sprintf(buffer,"[ast]-%s",ast);
+    EM_ASM_({console.warn(UTF8ToString($0));}, buffer);
+    free(ast);
+#endif
 
     // init compiler
 #ifdef WASM_LOG
@@ -1011,6 +1019,7 @@ InterpretResult interpret(VM *v, const char *source_path, const char *source) {
 #ifdef WASM_LOG
     EM_ASM_({console.warn(UTF8ToString($0));}, "[status]-Preparing byte codes....");
 #endif
+
     v->frames[0].ip = get_frame_function(&v->frames[0])->chunk->code->data + prev_op;
 
     //v->ip = v->chunk->code + v->prev_top;

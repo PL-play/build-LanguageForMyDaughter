@@ -154,6 +154,18 @@ int compile(Compiler *compiler, StatementArrayList *statements) {
     // printf("======\n");
   }
 #endif
+#ifdef WASM_LOG
+    if (!compiler->has_compile_error) {
+        char* name = compiler->function->name==NULL?"":compiler->function->name->string;
+        char buffer[strlen(name)+30];
+        sprintf(buffer,"[bytecode]---- bytecodes of [%s] -----[nl]",name);
+        EM_ASM_({
+            console.warn(UTF8ToString($0));
+        }, buffer);
+
+        wasm_disassemble_chunk(compiler->function->chunk);
+    }
+#endif
     return compiler->has_compile_error ? COMPILE_ERROR : COMPILE_OK;
 }
 

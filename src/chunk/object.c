@@ -13,7 +13,9 @@
 #ifdef ALLOC_TESTING
 #include "common/alloc-testing.h"
 #endif
-
+#ifdef WASM_LOG
+#include <emscripten/emscripten.h>
+#endif
 DEFINE_HASHTABLE(int, -1, String_)
 DEFINE_HASHTABLE(Value, undefined_value, Value)
 
@@ -44,8 +46,14 @@ static void print_function(ObjFunction *function) {
 
 void print_object(Obj *obj) {
   OBJ_TOSTRING(obj)
-
+#ifdef WASM_LOG
+  char buff[len+32];
+  sprintf(buff,"[bytecode]-type:%d. %s ", obj->type, string_);
+  EM_ASM_({console.warn(UTF8ToString($0));}, buff);
+#else
   printf("type:%d. %s ", obj->type, string_);
+#endif
+
 }
 
 ObjString *new_string_obj(char *str, size_t length, uint32_t hash) {
