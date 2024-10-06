@@ -138,8 +138,8 @@ function processInput() {
 const codeSelection = [
     {
         id: 1,
-        name: "\u793a\u4f8b\u4ee3\u78011",
-        intro: "\u6253\u5370Hello World",
+        name: "你好，世界！",
+        intro: "欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边，欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边",
         codeContent: 'code/code1.duo',
         storyContent: 'story/story1.html',
         enabled: true,
@@ -245,20 +245,55 @@ function selectCode() {
     codeSelection.forEach((codeItem) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = `<img src="${codeItem.thumbnail}" alt="\u7f29\u7565\u56fe"><div><strong>${codeItem.name}</strong><br>${codeItem.intro}</div>`;
-        if (selectedCodeId === codeItem.id) {
-            card.classList.add('selected');
-        }
+        card.style.display = 'flex';  // 使用 flexbox 布局使卡片内元素水平排列
+        card.style.alignItems = 'center';
+        card.style.padding = '15px';
+        card.style.marginBottom = '15px';
+        card.style.border = '1px solid #ccc';
+        card.style.borderRadius = '8px';
 
-        // 添加阅读按钮
+        // 图像部分
+        // 图像部分
+        const thumbnail = document.createElement('img');
+        thumbnail.src = codeItem.thumbnail;
+        thumbnail.alt = '\u7f29\u7565\u56fe';
+        thumbnail.style.width = '100px'; // 设置固定宽度
+        thumbnail.style.height = '100px'; // 设置固定高度
+        thumbnail.style.marginRight = '15px';
+        thumbnail.style.flexShrink = '0'; // 防止图像被压缩
+
+
+        // 文字内容部分
+        const textContainer = document.createElement('div');
+        textContainer.style.flex = '4'; // 让文字部分占据大部分可用空间
+        textContainer.style.paddingRight = '15px';
+        textContainer.innerHTML = `<strong>${codeItem.name}</strong><br>${codeItem.intro}`;
+
+        // 添加阅读按钮容器
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.display = 'flex'; // 改为 inline-flex，使容器宽度紧贴内容
+        buttonContainer.style.justifyContent = 'center';
+        buttonContainer.style.alignItems = 'center';
+        buttonContainer.style.flexShrink = '0'; // 防止按钮容器被压缩
+        buttonContainer.style.flex = '1'; // 让按钮容器占据较小部分空间
+
         const readButton = document.createElement('button');
         readButton.textContent = '\u9605\u8bfb';
         readButton.className = 'readButton';
+        readButton.style.padding = '10px 20px';
         readButton.onclick = function () {
             showStoryModal(codeItem.storyContent);
         };
-        card.appendChild(readButton);
+        buttonContainer.appendChild(readButton);
 
+
+
+        // 将各个部分添加到卡片中
+        card.appendChild(thumbnail);
+        card.appendChild(textContainer);
+        card.appendChild(buttonContainer);
+
+        // 卡片点击事件
         card.onclick = function () {
             fetch(codeItem.codeContent)
                 .then(response => response.text())
@@ -270,6 +305,9 @@ function selectCode() {
         };
         modal.appendChild(card);
     });
+
+
+
 
     document.body.appendChild(modal);
 }
