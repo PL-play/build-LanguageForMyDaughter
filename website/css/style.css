@@ -231,3 +231,34 @@ body {
     box-sizing: border-box;
     border-radius: 10px;
 }
+
+.readButton {
+    margin-left: 10px;
+    padding: 10px;
+    background-color: #ff9800; /* 活泼的橙色 */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.readButton:hover {
+    background-color: #e68900; /* 悬停时颜色加深 */
+}
+
+.closeButtonIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 36px; /* 增大关闭按钮 */
+    color: #d9534f; /* 更明显的红色 */
+}
+
+.closeButtonIcon::before {
+    content: "\00d7"; /* 使用 Unicode 表示的叉号符号 */
+}

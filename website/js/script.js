@@ -156,7 +156,6 @@ const codeSelection = [
     }
 ];
 
-// 弹出选择代码的卡片列表
 function selectCode() {
     const modal = document.createElement('div');
     modal.style.position = 'fixed';
@@ -182,7 +181,7 @@ function selectCode() {
         // 添加阅读按钮
         const readButton = document.createElement('button');
         readButton.textContent = '\u9605\u8bfb';
-        readButton.style.marginLeft = '10px';
+        readButton.className = 'readButton';
         readButton.onclick = function () {
             showStoryModal(codeItem.storyContent);
         };
@@ -203,7 +202,6 @@ function selectCode() {
     document.body.appendChild(modal);
 }
 
-// 显示故事内容的弹窗
 function showStoryModal(storyUrl) {
     fetch(storyUrl)
         .then(response => response.text())
@@ -221,12 +219,9 @@ function showStoryModal(storyUrl) {
             storyModal.style.height = '80%';
             storyModal.style.overflow = 'auto';
 
-            // 添加关闭按钮
+            // 添加关闭按钮 (仅右上角一个叉号图标)
             const closeButtonTop = document.createElement('button');
-            closeButtonTop.textContent = '\u5173\u95ed';
-            closeButtonTop.style.position = 'absolute';
-            closeButtonTop.style.top = '10px';
-            closeButtonTop.style.left = '10px';
+            closeButtonTop.className = 'closeButtonIcon';
             closeButtonTop.onclick = function () {
                 document.body.removeChild(storyModal);
             };
@@ -236,15 +231,6 @@ function showStoryModal(storyUrl) {
             const content = document.createElement('div');
             content.innerHTML = storyContent;
             storyModal.appendChild(content);
-
-            // 添加底部关闭按钮
-            const closeButtonBottom = document.createElement('button');
-            closeButtonBottom.textContent = '\u5173\u95ed';
-            closeButtonBottom.style.marginTop = '20px';
-            closeButtonBottom.onclick = function () {
-                document.body.removeChild(storyModal);
-            };
-            storyModal.appendChild(closeButtonBottom);
 
             document.body.appendChild(storyModal);
         });
