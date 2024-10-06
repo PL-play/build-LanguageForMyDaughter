@@ -27,8 +27,12 @@ function setDefaultCode() {
     if (codeId) {
         const codeItem = codeSelection.find(item => item.id === parseInt(codeId));
         if (codeItem) {
-            editor.setValue(codeItem.codeContent);
-            selectedCodeId = codeItem.id;
+            fetch(codeItem.codeContent)
+                .then(response => response.text())
+                .then(data => {
+                    editor.setValue(data);
+                    selectedCodeId = codeItem.id;
+                });
         }
     }
 }
