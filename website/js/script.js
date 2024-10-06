@@ -141,9 +141,9 @@ const codeSelection = [
         name: "\u793a\u4f8b\u4ee3\u78011",
         intro: "\u6253\u5370Hello World",
         codeContent: 'code/code1.duo',
-        storyContent: 'story1.html',
+        storyContent: 'story/story1.html',
         enabled: true,
-        thumbnail: "thumbnail1.png"
+        thumbnail: "thumbnail/t1.png"
     },
     {
         id: 2,
@@ -152,8 +152,80 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story2.html',
         enabled: true,
-        thumbnail: "thumbnail2.png"
-    }
+        thumbnail: "thumbnail/t2.png"
+    },
+    {
+        id: 3,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t3.png"
+    },
+    {
+        id: 4,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t4.png"
+    },
+    {
+        id: 5,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t5.webp"
+    },
+    {
+        id: 6,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t6.webp"
+    },
+    {
+        id: 7,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t7.webp"
+    },
+    {
+        id: 8,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t8.webp"
+    },
+    {
+        id: 9,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t9.webp"
+    },
+    {
+        id: 10,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t10.webp"
+    },
 ];
 
 function selectCode() {
@@ -167,7 +239,7 @@ function selectCode() {
     modal.style.boxShadow = '0 2px 10px rgba(0,0,0,0.5)';
     modal.style.zIndex = '9999';
     modal.style.width = '600px';
-    modal.style.height = '400px';
+    modal.style.height = '430px';
     modal.style.overflow = 'auto';
 
     codeSelection.forEach((codeItem) => {
@@ -218,6 +290,7 @@ function showStoryModal(storyUrl) {
             storyModal.style.width = '80%';
             storyModal.style.height = '80%';
             storyModal.style.overflow = 'auto';
+            storyModal.style.backgroundColor="#FDF5E6";
 
             // 添加关闭按钮 (仅右上角一个叉号图标)
             const closeButtonTop = document.createElement('button');
