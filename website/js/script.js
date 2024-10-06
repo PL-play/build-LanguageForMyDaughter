@@ -157,12 +157,12 @@ const codeSelection = [
     },
     {
         id: 2,
-        name: "0x00. 你好，世界！",
-        intro: "欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边，欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边",
-        codeContent: 'code/code1.duo',
-        storyContent: 'story/story1.html',
+        name: "0x01. 你好，世界！",
+        intro: "欢迎朵朵来到爸爸妈妈的身边，让我们一起进入神奇的魔法世界！",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story/story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t1.png"
+        thumbnail: "thumbnail/t2.png"
     },
     {
         id: 3,
