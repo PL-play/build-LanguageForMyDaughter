@@ -71,7 +71,13 @@ function dispatchMessage(message) {
 
 // 更新状态栏信息
 function updateStatusBar(message) {
-    const timestamp = new Date().toLocaleTimeString('en-US', {hour12: false}) + '.' + new Date().getMilliseconds();
+    const date = new Date();
+    const timestamp = date.getFullYear() + '/' +
+        String(date.getMonth() + 1).padStart(2, '0') + '/' +
+        String(date.getDate()).padStart(2, '0') + ' ' +
+        date.toLocaleTimeString('en-US', {hour12: false}) + '.' +
+        date.getMilliseconds();
+
     let text = '';
     if (message.startsWith('[status]-')) {
         text = message.replace('[status]-', '');

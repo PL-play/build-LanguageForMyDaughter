@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>故事时光</title>
+    <title>故事时光 - 稚之语言</title>
     <style>
         body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #FFE4E1;
             color: #333;
             margin: 0;
             padding: 0;
@@ -16,6 +18,9 @@
             margin: 0 auto;
             padding: 20px;
             text-align: center;
+            background: #FFF8DC;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .title {
@@ -28,14 +33,20 @@
             border: 2px solid #FFD700;
             padding: 20px;
             border-radius: 20px;
-            background: #FFF8DC;
+            background: #FFFAF0;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
         }
 
         .story-text {
-            font-size: 1.5em;
-            line-height: 1.6;
+            font-size: 1.2em;
+            line-height: 1.8;
             margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #FF6347;
         }
 
         .story-image {
@@ -43,6 +54,7 @@
             height: auto;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
         }
 
         .footer {
@@ -54,14 +66,33 @@
 </head>
 <body>
 <div class="storybook-container">
-    <h1 class="title">故事时光</h1>
+    <h1 class="title">故事时光 - 稚之语言</h1>
     <div class="story-section">
         <p class="story-text">
-            从前有一只小兔子，它叫蹦蹦。蹦蹦住在一个美丽的森林里，每天早晨，它都会跳到小溪边洗脸，然后高兴地跟小鸟们打招呼。
+            <span class="highlight">0x00. 咦，这是什么？</span><br><br>
+            这是一个无用但有趣的项目。<br><br>
+            在我的女儿呱呱坠地后，每天我脑子里想的最多的问题便是“她在表达什么？”。我通过各种方式，想搞清楚其中的规律。通过观察和记录她的行为、动作、表情，试图找到一个大致的模式，以便更好地满足需求，但往往最后的哭闹打破了我的结论。<br><br>
+            “要是你会说话就好啦”，我时常这么想。但转念一想，人类又是如何学会语言的呢？乔姆斯基的理论认为，所有人类语言共享一种普遍的结构，称为普遍语法。普遍语法是一套先天的语言规则，所有人类在出生时都具备这种能力。他认为这种语言能力是天生的，是一种生物学上的特征，而人类大脑中内置的学习语言的机制，帮助儿童能够轻松地从有限的输入中推断出复杂的语法规则。<br><br>
+            所以每当看到她哇哇大哭的可爱模样，我都在心中暗自告诫自己，可千万别小看这个小家伙，她可是内置了一套语言学习机制，一个无情的学习机器啊！想到她可以从非常有限和不完整的语言输入下，快速掌握语言的复杂结构，我都由衷感慨，婴儿真的太奇妙了！<br><br>
+            乔姆斯基还提出了著名的乔姆斯基层次理论，用于分类不同类型的形式语言。这个层次理论在计算机科学，尤其是编程语言和自动机理论中有着广泛应用。它将语言分为四类：<br>
+        <ul>
+            <li><span class="highlight">0 型语言（递归可枚举语言）</span>：最为一般的语言，由图灵机识别。</li>
+            <li><span class="highlight">1 型语言（上下文相关语言）</span>：可以由线性有界自动机识别。</li>
+            <li><span class="highlight">2 型语言（上下文无关语言）</span>：可由下推自动机识别，如编程语言中的语法。</li>
+            <li><span class="highlight">3 型语言（正则语言）</span>：由有限状态自动机识别，如正则表达式匹配的语言。</li>
+        </ul>
+        <p class="story-text">
+        人类的自然语言属于 1 型，但是对于婴儿，这一时期的语言行为并不完全符合乔姆斯基语言层次中的任何一种，因为它尚未形成规范化的语法或语言规则。有意思！<br>
+        <img class="story-image" src="thumbnail/baby_language.png" alt="婴儿的语言">
         </p>
-        <img class="story-image" src="https://example.com/bunny_story.jpg" alt="小兔子蹦蹦在森林里">
+        <p class="story-text">
+        随着儿童逐渐掌握语言规则，尤其是在词汇积累和语法规则意识增强之后，儿童的语言能力逐渐接近乔姆斯基语言层次中的 1 型语言，即上下文相关语言。在婴儿学会说话之前，他们的语言并不完全符合乔姆斯基的语言层次划分，因为这个阶段的语言没有明确的语法规则。但可以认为，婴儿的语言逐渐从简单的正则语言特性（如声音重复）向更复杂的语法结构过渡，最终达到了上下文相关语言的复杂性。神奇！难怪我们无法理解她。<br><br>
+        因此在她真正和我交流之前，我想通过为她设计并实现一门 2 型语言，也就是一般的编程语言，以她的名字命名为“稚”，以纪念她的成长过程。实话实说，我并没有发明什么新东西，但是毫无疑问，这是个挑战。为了体验她成长的艰辛和不被理解的无奈，我也“苦行僧”般地为难自己，仅使用 C 标准库（C11 标准）不使用任何依赖完成这个项目，从语言设计、词法、语法分析，到字节码、虚拟机、垃圾回收等，也将它作为生日礼物送给 1 岁的朵朵。在她的成长过程中，每年更新版本，将来如果她也像我一般充满好奇心（或者无聊），可以亲自揭开其中的彩蛋和面纱，窥探其中的奥秘。<br><br>
+        如果你恰好对其他层次的语言感兴趣，我正好也写了一些语法分析器、正则表达式引擎、解释器等项目，请参考链接：<a href="https://github.com/orgs/PL-play/repositories">https://github.com/orgs/PL-play/repositories</a>。<br><br>
+        总而言之，虽然这是个玩具，无法真正在实际中作为严肃的工具，但是有趣（至少对我而言）。
+        </p>
     </div>
-    <div class="footer">妈妈爱你，愿每晚都有甜美的梦。</div>
+    <div class="footer">爸爸妈妈爱你，愿每晚都有甜美的梦。</div>
 </div>
 </body>
 </html>

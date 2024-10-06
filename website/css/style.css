@@ -36,8 +36,8 @@ body {
 }
 
 #container {
-    width: 90vw;  /* 宽度占满屏幕的100% */
-    height: 95vh;  /* 高度为屏幕的80% */
+    width: 98vw;  /* 宽度占满屏幕的100% */
+    height: 98vh;  /* 高度为屏幕的80% */
     display: flex;
     flex-direction: row;
     border: 0px solid #ccc;
