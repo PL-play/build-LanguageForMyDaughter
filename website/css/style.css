@@ -1,0 +1,233 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+#header {
+    background-color: #2c3e50;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+#subHeader, #githubLink {
+    background-color: #2c3e50;
+    color: #ccc;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#githubLink a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+#container {
+    width: 90vw;  /* 宽度占满屏幕的100% */
+    height: 95vh;  /* 高度为屏幕的80% */
+    display: flex;
+    flex-direction: row;
+    border: 0px solid #ccc;
+    margin-top: 10px;
+    margin-bottom: 20px; /* 在底部留出空隙 */
+    box-sizing: border-box;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+
+/* Ensure the editor and output fill the space proportionally */
+#editor, #output {
+    flex: 1;
+    overflow: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    min-height: 0; /* Ensure flex items don’t overflow */
+}
+
+#editor {
+    background-color: #272822;
+    min-height: 300px; /* Ensure editor has a minimum height */
+    padding: 0; /* 确保没有内边距 */
+    margin: 0;  /* 确保没有外边距 */
+    height: 100%; /* 确保它填满父容器的高度 */
+}
+
+.CodeMirror {
+    height: 100%; /* 使得CodeMirror高度填满父容器 */
+}
+
+#editor, .CodeMirror {
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Output block should fill the remaining space proportionally */
+#output {
+    background-color: #f5f5dc;
+    border-top: 1px solid #ccc;
+    font-family: monospace;
+    white-space: pre-wrap;
+    padding-right: 20px;
+    overflow-y: auto;
+}
+
+#statusBar {
+    width: 30%; /* 宽度占父容器的30% */
+    height: 100%; /* 高度占满父容器 */
+    background-color: #666666;
+    color: #f5f5f5;
+    font-family: monospace;
+    text-align: left;
+    padding: 10px;
+    overflow: auto;
+    white-space: pre-wrap;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+/* Adjust button container to not overlap */
+#buttonsContainer {
+    display: flex;
+    padding: 10px; /* 增加按钮容器的内边距，让按钮远离容器的边缘 */
+    gap: 10px;     /* 增加按钮之间的间距 */
+    box-sizing: border-box;
+}
+
+/* 修改按钮样式 */
+#selectButton, #runButton {
+    width: calc(50% - 15px); /* 宽度为容器的一半减去一点间距 */
+    padding: 15px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+/* 按钮的背景颜色样式保持不变 */
+#selectButton {
+    background-color: #3498db;
+}
+
+#selectButton:hover {
+    background-color: #2980b9;
+}
+
+#runButton {
+    background-color: #27ae60;
+}
+
+#runButton:hover {
+    background-color: #2ecc71;
+}
+
+.error {
+    color: red;
+}
+
+.info {
+    color: orange;
+}
+
+#astAndByteCodeContainer {
+    width: 30%; /* 宽度占父容器的30% */
+    height: 100%; /* 高度占满父容器 */
+    margin-right: 1%; /* 保持一点间距 */
+    background-color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#astContainer, #byteCodeContainer {
+    height: 50%;
+    overflow: auto;
+    padding: 10px;
+    font-family: monospace;
+    background-color: #e8f0ff;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+#astContainer {
+    background-color: #c0c0c0;
+}
+
+#byteCodeContainer {
+    background-color: #b0c4de;
+}
+
+.card {
+    background-color: #fff;
+    padding: 15px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.card.selected {
+    border: 2px solid #3498db;
+}
+
+.card img {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.card div {
+    flex-grow: 1;
+}
+.placeholder {
+    color: #000000;
+    font-style: italic;
+}
+/* 设置通用滚动条样式 */
+::-webkit-scrollbar {
+    width: 12px; /* 调整滚动条宽度 */
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* 滚动条轨道颜色 */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888; /* 滚动条颜色 */
+    border-radius: 6px; /* 滚动条圆角 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 滚动条在鼠标悬停时的颜色 */
+}
+
+#codeAndOutputContainer {
+    width: 40%; /* Adjust as needed */
+    height: 100%;
+    margin-right: 1%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 10px;
+}

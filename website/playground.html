@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>稚 Playground</title>
+    <link rel="icon" href="favicon/zhi.ico" type="image/x-icon">
+
+    <!-- 引入外部 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/theme/monokai.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/theme/darcula.min.css">
+    <link rel="stylesheet" href="css/style.css"> <!-- 自定义样式 -->
+
+</head>
+<body>
+<div id="header">婴儿编程 | ZHI / 稚 1.0.0</div>
+<div id="subHeader">献给我的女儿朵朵</div>
+<div id="githubLink"> by Ran | zhangra42@126.com | GitHub:
+    <a href="https://github.com/PL-play/build-LanguageForMyDaughter"
+       target="_blank">https://github.com/PL-play/build-LanguageForMyDaughter</a>
+</div>
+
+<div id="container">
+    <div id="astAndByteCodeContainer">
+        <div id="astContainer" class="placeholder">AST（抽象语法树）将在这里显示</div>
+        <div id="byteCodeContainer" class="placeholder">字节码将在这里显示</div>
+    </div>
+    <div id="codeAndOutputContainer">
+        <div id="editor"></div>
+        <div id="buttonsContainer">
+            <button id="selectButton" onclick="selectCode()">选择故事</button>
+            <button id="runButton" onclick="processInput()">运行代码</button>
+        </div>
+        <div id="output">运行结果将在这里显示</div>
+    </div>
+    <div id="statusBar" class="placeholder">状态信息将在这里显示</div>
+</div>
+
+<!-- 引入 CodeMirror 的 JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/javascript/javascript.min.js"></script>
+
+<!-- 引入外部 JavaScript 文件 -->
+<script src="js/script.js"></script>
+<!-- 加载 WebAssembly JavaScript 文件 -->
+<script src="wasm/ZHI_wasm.js"></script>
+</body>
+</html>

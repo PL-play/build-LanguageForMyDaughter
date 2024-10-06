@@ -74,6 +74,19 @@
         #editor {
             background-color: #272822;
             min-height: 300px; /* Ensure editor has a minimum height */
+            padding: 0; /* 确保没有内边距 */
+            margin: 0;  /* 确保没有外边距 */
+            height: 100%; /* 确保它填满父容器的高度 */
+        }
+
+        .CodeMirror {
+            height: 100%; /* 使得CodeMirror高度填满父容器 */
+        }
+
+        #editor, .CodeMirror {
+            height: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
         }
 
         /* Output block should fill the remaining space proportionally */
