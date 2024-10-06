@@ -138,8 +138,8 @@ function processInput() {
 const codeSelection = [
     {
         id: 1,
-        name: "你好，世界！",
-        intro: "欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边，欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边",
+        name: "0x00. 咦，这是什么？",
+        intro: "我在哪里，这是什么？",
         codeContent: 'code/code1.duo',
         storyContent: 'story/story1.html',
         enabled: true,
@@ -147,12 +147,12 @@ const codeSelection = [
     },
     {
         id: 2,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
+        name: "0x00. 你好，世界！",
+        intro: "欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边，欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边欢迎朵朵来到这个美好的世界，来到爸爸妈妈的身边",
+        codeContent: 'code/code1.duo',
+        storyContent: 'story/story1.html',
         enabled: true,
-        thumbnail: "thumbnail/t2.png"
+        thumbnail: "thumbnail/t1.png"
     },
     {
         id: 3,
@@ -161,7 +161,7 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t3.png"
+        thumbnail: "thumbnail/t2.png"
     },
     {
         id: 4,
@@ -170,7 +170,7 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t4.png"
+        thumbnail: "thumbnail/t3.png"
     },
     {
         id: 5,
@@ -179,7 +179,7 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t5.webp"
+        thumbnail: "thumbnail/t4.png"
     },
     {
         id: 6,
@@ -188,7 +188,7 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t6.webp"
+        thumbnail: "thumbnail/t5.webp"
     },
     {
         id: 7,
@@ -197,7 +197,7 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t7.webp"
+        thumbnail: "thumbnail/t6.webp"
     },
     {
         id: 8,
@@ -206,7 +206,7 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t8.webp"
+        thumbnail: "thumbnail/t7.webp"
     },
     {
         id: 9,
@@ -215,10 +215,19 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t9.webp"
+        thumbnail: "thumbnail/t8.webp"
     },
     {
         id: 10,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail/t9.webp"
+    },
+    {
+        id: 11,
         name: "\u793a\u4f8b\u4ee3\u78012",
         intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
         codeContent: 'code/code2.duo',
@@ -251,6 +260,10 @@ function selectCode() {
         card.style.marginBottom = '15px';
         card.style.border = '1px solid #ccc';
         card.style.borderRadius = '8px';
+        if (selectedCodeId === codeItem.id) {
+            console.log(selectedCodeId);
+            card.classList.add('selected');
+        }
 
         // 图像部分
         // 图像部分
