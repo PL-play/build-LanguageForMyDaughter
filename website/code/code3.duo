@@ -1,0 +1,89 @@
+1;
+puffln (1);
+1+3*3;
+puffln(1+3*3);
+(1-2)/3;
+puffln( (1-2)/3);
+-1-2;
+puffln (-1-2);
+(2-3)*4/3;
+puffln ((2-3)*4/3);
+puffln (1.234*3.14-1--2);
+23.234-34*(123+-5*343)/23-23;
+puffln (23.234-34*(123+-5*343)/23-23);
+23.234--2353.39;
+puffln( 23.234--2353.39);
+(-1 + 2) * 3 - -4;
+puffln ((-1 + 2) * 3 - -4);
+-3!+4^3;
+puffln (-3!+4^3);
+aow;
+puffln (aow);
+!aow;
+puffln (!aow);
+nil;
+puffln (nil);
+!0;
+puffln (!0);
+!1;
+puffln( !1);
+!nil;
+puffln( !nil);
+1>2;
+puffln( 1>2);
+2>=2;
+puffln (2>=2);
+1<2;
+puffln (1<2);
+1<=2;
+puffln (1<=2);
+2<=2;
+puffln (2<=2);
+3>2;
+puffln (3>2);
+!(6 - 4 > 3 * 4 == !nil);
+puffln (!(6 - 4 > 3 * 4 == !nil));
+puffln (1);
+puffln ("12345");
+puffln ("2");
+"aaa"=="aaa";
+puffln ("aaa"=="aaa");
+"aab"=="aaa";
+puffln ("aab"=="aaa");
+puffln ("aaa"+"bbb"+"123");
+puffln (1+2);
+// 全局变量
+waa a=1;
+// '=' 赋值也是一个表达式哦
+puffln(a=2);
+// 重复定义全局变量不是好习惯，所以编译器会警告
+waa a;
+puffln(a);
+waa b =3;
+puffln( a+b);
+waa i = "baba";
+waa j = "mama";
+waa q = "duoduo";
+puffln(i+" love "+j +" love "+ q);
+// 局部作用域会遮蔽区全局变量
+waa a=1;
+{
+   waa a=2;
+   puffln(a);
+}
+ puffln(a);
+ a=3;
+ puffln(a);
+// 会从当前作用于向上寻找，直到全局变量
+{
+    waa b=2;
+    puffln(a);
+}
+waa a=1;
+{
+    waa b=a;
+    puffln(b);
+}
+// 局部变量和全局变量虽然名字相同，但不一样哦
+waa b=4;
+puffln(b);

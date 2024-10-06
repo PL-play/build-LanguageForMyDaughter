@@ -1,0 +1,102 @@
+// 数字
+puffln(1);
+puffln(42);
+puffln(3.14);
+puffln(-100);
+puffln(23.234-34*(123+-5*343)/23-23);
+puffln(-3!+4^3);
+puffln(1.4e4);
+// 字符串
+puffln("妈妈");
+puffln("爸爸");
+puffln("朵朵");
+waa mama = "妈妈";
+waa baba = "爸爸";
+waa duoduo = "朵朵";
+puffln(mama+baba+duoduo);
+waa unicode_duo = "\u6735\u6735";
+puffln(unicode_duo);
+// 布尔
+puffln(aow);
+puffln(emm);
+puffln(!aow);
+puffln(!emm);
+puffln(aow&&emm);
+puffln(aow||emm);
+puffln(!aow&&emm||aow);
+waa i = 3;
+waa j = i>2?1:-1;
+puffln(j);
+waa age = 22;
+waa income = 45000;
+waa creditScore = 700;
+waa completedFinancialCourse = aow;
+waa eligibility = (age >= 18 && age <= 60) ?
+        (income >= 30000 && income <= 90000) ?
+            (creditScore >= 650) ?
+                   (age < 25 ? (completedFinancialCourse ? "Qualifies" : "Does not qualify") : "Qualifies")
+               : "Does not qualify"
+           : "Does not qualify"
+       : "Does not qualify";
+puffln(eligibility); //Output: Qualifies
+
+// nil
+puffln(nil);
+waa n;
+puffln(n);
+
+// array
+// pretty print magic
+magic printv(arr) {
+   wish (__type(arr) != __array_type) {
+     puff(arr);
+     home;
+   }
+   puff("[" );
+   waa len = __len(arr);
+   loop(waa i=0;i<len;i=i+1){
+      printv( arr[i]);
+      wish(i!=len-1){
+        puff(", ");
+      }
+   }
+   puff("]");
+}
+
+puffln([1,2,3]);
+puffln([]);
+puffln(__len([]));
+waa arr = [1,2,3];
+puffln(__len(arr));
+puffln([1,2,3][1]);
+printv(1);
+puff("\n");
+arr[1] = 100;
+printv(arr);
+puff("\n");
+arr[-1] =3.14;
+printv(arr);
+puff("\n");
+arr = [0,1,2,3,4,5,6,7,8,9];
+printv(arr);
+puff("\n");
+printv(arr[1:]);
+puff("\n");
+printv(arr[1:4]);
+puff("\n");
+printv(arr[:]);
+puff("\n");
+printv(arr[:0]);
+puff("\n");
+printv(arr[-10:]);
+puff("\n");
+puffln(arr[-10:][2]=5);
+waa a1 = [[1,2,3],[4,5,6]];
+puffln(__type(a1));
+puffln(__array_type);
+puffln(__type(a1)== __array_type);
+printv(a1);
+puff("\n");
+printv(a1[1:2][0][1:2]);
+puff("\n");
+printv ([[1,2,3,["a","b","c"]],[4,5,6]]);

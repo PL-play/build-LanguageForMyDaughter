@@ -166,21 +166,21 @@ const codeSelection = [
     },
     {
         id: 3,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
+        name: "0x02. 符号森林的神秘咒语",
+        intro: "在符号森林中，小魔法师朵朵学习如何通过表达式和语句施展魔法，并发现了作用域的秘密——魔法只能在它所属的范围内生效",
+        codeContent: 'code/code3.duo',
+        storyContent: 'story/story3.html',
         enabled: true,
-        thumbnail: "thumbnail/t2.png"
+        thumbnail: "thumbnail/t3.png"
     },
     {
         id: 4,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
+        name: "0x03. 元素的守护者",
+        intro: "朵朵在魔法学院中学习如何使用基础的元素力量，像数字、文字和真理之光，并掌握了用魔法钥匙（变量）来封存这些力量的技巧",
+        codeContent: 'code/code4.duo',
+        storyContent: 'story/story4.html',
         enabled: true,
-        thumbnail: "thumbnail/t3.png"
+        thumbnail: "thumbnail/t4.png"
     },
     {
         id: 5,

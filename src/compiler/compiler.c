@@ -1406,14 +1406,16 @@ static void error_at(Compiler *compiler, Token *token, const char *msg) {
 #ifdef WASM_LOG
     char err[100];
     sprintf(err,"[status][error]-ZHI Compiler: [line %zu] Error", token->line);
-#endif
+#else
     fprintf(stderr, "[line %zu] Error", token->line);
+#endif
     if (token->type == TOKEN_EOF) {
-        fprintf(stderr, " at end");
 #ifdef WASM_LOG
         size_t el = strlen(err);
         sprintf(err+el," at end");
         EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#else
+        fprintf(stderr, " at end");
 #endif
     } else if (token->type == TOKEN_ERROR) {
 #ifdef WASM_LOG
@@ -1424,14 +1426,17 @@ static void error_at(Compiler *compiler, Token *token, const char *msg) {
         size_t el = strlen(err);
         sprintf(err+el, " at '%.*s'", token->length, token->start);
         EM_ASM_({console.warn(UTF8ToString($0));}, err);
-#endif
+#else
         fprintf(stderr, " at '%.*s'", token->length, token->start);
+#endif
     }
-    fprintf(stderr, ": %s\n", msg);
+
 #ifdef WASM_LOG
     char wasm_msg[512];
     sprintf(wasm_msg, "[status][error]-ZHI Compiler: %s", msg);
     EM_ASM_({console.warn(UTF8ToString($0));},wasm_msg);
+#else
+    fprintf(stderr, ": %s\n", msg);
 #endif
     compiler->has_compile_error = true;
     Compiler *c = compiler->enclosing;
@@ -1444,33 +1449,38 @@ static void error_at(Compiler *compiler, Token *token, const char *msg) {
 static void warn_at(Compiler *compiler, Token *token, const char *msg) {
 #ifdef WASM_LOG
     char err[100];
-    sprintf(err,"[status]-[WARNING] ZHI Compiler: [line %zu] WARNING", token->line);
-#endif
+    sprintf(err,"[status][info]-ZHI Compiler: [line %zu] WARNING", token->line);
+#else
     fprintf(stdout, "[line %zu] WARNING", token->line);
+#endif
     if (token->type == TOKEN_EOF) {
-        fprintf(stdout, " at end");
 #ifdef WASM_LOG
         size_t el = strlen(err);
         sprintf(err+el," at end");
         EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#else
+        fprintf(stdout, " at end");
 #endif
     } else if (token->type == TOKEN_ERROR) {
 #ifdef WASM_LOG
         EM_ASM_({console.warn(UTF8ToString($0));}, err);
 #endif
     } else {
-        fprintf(stdout, " at '%.*s'", token->length, token->start);
 #ifdef WASM_LOG
         size_t el = strlen(err);
         sprintf(err+el, " at '%.*s'", token->length, token->start);
         EM_ASM_({console.warn(UTF8ToString($0));}, err);
+#else
+        fprintf(stdout, " at '%.*s'", token->length, token->start);
 #endif
     }
-    fprintf(stdout, ": %s\n", msg);
+
 #ifdef WASM_LOG
     char wasm_msg[512];
-    sprintf(wasm_msg, "[status]-[WARNING] ZHI Compiler: %s", msg);
+    sprintf(wasm_msg, "[status][info]-ZHI Compiler: %s", msg);
     EM_ASM_({console.warn(UTF8ToString($0));},wasm_msg);
+#else
+    fprintf(stdout, ": %s\n", msg);
 #endif
 }
 
