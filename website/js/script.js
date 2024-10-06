@@ -134,6 +134,28 @@ function processInput() {
     }
 }
 
+// 更新代码选择项，增加故事内容
+const codeSelection = [
+    {
+        id: 1,
+        name: "\u793a\u4f8b\u4ee3\u78011",
+        intro: "\u6253\u5370Hello World",
+        codeContent: 'code/code1.duo',
+        storyContent: 'story1.html',
+        enabled: true,
+        thumbnail: "thumbnail1.png"
+    },
+    {
+        id: 2,
+        name: "\u793a\u4f8b\u4ee3\u78012",
+        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
+        codeContent: 'code/code2.duo',
+        storyContent: 'story2.html',
+        enabled: true,
+        thumbnail: "thumbnail2.png"
+    }
+];
+
 // 弹出选择代码的卡片列表
 function selectCode() {
     const modal = document.createElement('div');
@@ -152,14 +174,28 @@ function selectCode() {
     codeSelection.forEach((codeItem) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.innerHTML = `<img src="${codeItem.thumbnail}" alt="缩略图"><div><strong>${codeItem.name}</strong><br>${codeItem.intro}</div>`;
+        card.innerHTML = `<img src="${codeItem.thumbnail}" alt="\u7f29\u7565\u56fe"><div><strong>${codeItem.name}</strong><br>${codeItem.intro}</div>`;
         if (selectedCodeId === codeItem.id) {
             card.classList.add('selected');
         }
+
+        // 添加阅读按钮
+        const readButton = document.createElement('button');
+        readButton.textContent = '\u9605\u8bfb';
+        readButton.style.marginLeft = '10px';
+        readButton.onclick = function () {
+            showStoryModal(codeItem.storyContent);
+        };
+        card.appendChild(readButton);
+
         card.onclick = function () {
-            editor.setValue(codeItem.codeContent);
-            selectedCodeId = codeItem.id;
-            document.body.removeChild(modal);
+            fetch(codeItem.codeContent)
+                .then(response => response.text())
+                .then(data => {
+                    editor.setValue(data);
+                    selectedCodeId = codeItem.id;
+                    document.body.removeChild(modal);
+                });
         };
         modal.appendChild(card);
     });
@@ -167,28 +203,52 @@ function selectCode() {
     document.body.appendChild(modal);
 }
 
-// 定义代码选择项
-const codeSelection = [
-    {
-        id: 1,
-        name: "示例代码1",
-        intro: "打印Hello World",
-        codeContent: 'puffln("Hello, World!");',
-        enabled: true,
-        thumbnail: "thumbnail1.png"
-    },
-    {
-        id: 2,
-        name: "示例代码2",
-        intro: "循环打印数字",
-        codeContent: 'loop(waa i=1;i<=2000;i=i+1)\n' +
-            '{ \n' +
-            '    puffln(__str(i)); \n' +
-            '}',
-        enabled: true,
-        thumbnail: "thumbnail2.png"
-    }
-];
+// 显示故事内容的弹窗
+function showStoryModal(storyUrl) {
+    fetch(storyUrl)
+        .then(response => response.text())
+        .then(storyContent => {
+            const storyModal = document.createElement('div');
+            storyModal.style.position = 'fixed';
+            storyModal.style.top = '50%';
+            storyModal.style.left = '50%';
+            storyModal.style.transform = 'translate(-50%, -50%)';
+            storyModal.style.backgroundColor = '#fff';
+            storyModal.style.padding = '20px';
+            storyModal.style.boxShadow = '0 2px 10px rgba(0,0,0,0.5)';
+            storyModal.style.zIndex = '10000';
+            storyModal.style.width = '80%';
+            storyModal.style.height = '80%';
+            storyModal.style.overflow = 'auto';
+
+            // 添加关闭按钮
+            const closeButtonTop = document.createElement('button');
+            closeButtonTop.textContent = '\u5173\u95ed';
+            closeButtonTop.style.position = 'absolute';
+            closeButtonTop.style.top = '10px';
+            closeButtonTop.style.left = '10px';
+            closeButtonTop.onclick = function () {
+                document.body.removeChild(storyModal);
+            };
+            storyModal.appendChild(closeButtonTop);
+
+            // 添加故事内容
+            const content = document.createElement('div');
+            content.innerHTML = storyContent;
+            storyModal.appendChild(content);
+
+            // 添加底部关闭按钮
+            const closeButtonBottom = document.createElement('button');
+            closeButtonBottom.textContent = '\u5173\u95ed';
+            closeButtonBottom.style.marginTop = '20px';
+            closeButtonBottom.onclick = function () {
+                document.body.removeChild(storyModal);
+            };
+            storyModal.appendChild(closeButtonBottom);
+
+            document.body.appendChild(storyModal);
+        });
+}
 
 // 设置默认代码
 setDefaultCode();
