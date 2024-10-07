@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>故事时光 - 骑士的智慧与传承</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #FFE4E1;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .magic-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background: #FFF8DC;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: #FF69B4;
+            margin-bottom: 20px;
+        }
+
+        .story-section {
+            border: 2px solid #FFD700;
+            padding: 20px;
+            border-radius: 20px;
+            background: #FFFAF0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+
+        /* Story text styles, does not affect code-block */
+        .story-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+
+        .highlight {
+            font-weight: bold;
+            color: #FF6347;
+        }
+
+        .code-block {
+            background: #f4f4f4;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        .story-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="magic-container">
+    <h1 class="title">故事时光 - 骑士的智慧与传承</h1>
+    <div class="story-section">
+        <div class="story-text">
+            <span class="highlight">0x06. 骑士的智慧与传承</span><br><br>
+            这一天，朵朵漫步在王国中，听闻一座名叫“骑士之城”的地方，那里的每座城堡都是古老家族的象征，而每位骑士都肩负着家族的使命与责任。骑士们守护着城堡的秘密和技能，并通过继承代代相传。<br><br>
+            “每一座城堡就像是一本魔法书，封装着独特的力量与智慧。”一位年迈的守护者对朵朵说，“而每一位骑士则是这本书的继承者，传承并应用其中的力量。你将学会如何通过建造城堡（类）来创造骑士（实例），并赋予他们不同的技能。”<br><br>
+            怀着满心的好奇与期待，朵朵走进了骑士之城。她开始学习如何用魔法建造自己的城堡，并通过骑士们的冒险掌握面向对象编程的奥秘。<br><br>
+            <span class="highlight">第一步：建造城堡，创造骑士</span><br><br>
+            朵朵在一座古老的书卷塔中发现了一本破旧的卷轴，上面写着创建城堡（类）的方法。她学会了通过“城堡”这个神奇的结构来组织和封装数据与技能。<br><br>
+            她首先设计了一座简单的城堡，名叫“骑士”，并为每个骑士赋予名字和等级。当她完成了这座城堡的设计后，骑士们将按照她的规则去行动和战斗。<br><br>
+        </div>
+        <img class="story-image" src="thumbnail/story7-1.webp" alt="城堡与骑士">
+        <br><br>
+        <div class="code-block">
+        castle 骑士 {
+            init(名字, 等级) {
+                 this.名字 = 名字;
+                 this.等级 = 等级;
+            }
+
+            自我介绍() {
+                puffln("我是" + this.名字 + "，我的等级是" + this.等级);
+            }
+        }
+        </div>
+        <div class="story-text">
+            朵朵创造了她的第一个骑士，并赋予了他名字和等级：
+        </div>
+            <div class="code-block">
+                waa a = 骑士("朵朵骑士", 5);
+                a.自我介绍(); // 输出: 我是朵朵骑士，我的等级是5
+            </div>
+        <div class="story-text">
+            <span class="highlight">封装的奥秘：</span><br><br>
+            守护者解释道：“城堡（类）是一个封装的魔法容器，它能够将特定的数据和功能隐藏起来，只有骑士自己知道如何使用这些技能。”朵朵意识到，每一位骑士的名字和等级都是封装在城堡中的秘密，外界不能随意更改这些信息，除非使用了特别的魔法方法。<br><br>
+            她通过添加方法来访问和修改骑士的属性：
+        </div>
+
+        <div class="code-block">
+        castle 骑士 {
+            获取健康值() {
+                return this.健康值;
+            }
+
+            受到伤害(伤害值) {
+                this.健康值 = this.健康值 - 伤害值;
+                wish (this.健康值 < 0) {
+                    this.健康值 = 0;
+                }
+            }
+        }
+        </div>
+        <div class="story-text">
+            朵朵发现，骑士的健康值是封装的，不能直接访问，但她可以通过特定的魔法方法（获取健康值和受到伤害）来操作它。封装的魔力让骑士们更加安全，并防止不小心的更改。<br><br>
+            <span class="highlight">第二步：骑士的继承与传承</span><br><br>
+            随着时间的推移，朵朵的骑士们变得越来越强大，但她发现，有些骑士可以从其他骑士的城堡中继承技能，而不需要从头开始建造新的城堡。守护者告诉她：“这就是继承（Inheritance）的力量。”<br><br>
+            她学会了通过继承来扩展已有的骑士技能。例如，朵朵想创造一种“魔法骑士”，它继承了普通骑士的所有技能，并增加了强大的魔法能力：<br><br>
+        </div>
+
+        <div class="code-block">
+        castle 魔法骑士 < 骑士 {
+            释放魔法() {
+                puffln(this.名字 + "释放了强大的魔法！");
+            }
+        }
+        </div>
+        <div class="story-text">
+            通过继承，魔法骑士不仅拥有普通骑士的名字和等级，还可以释放强大的魔法：<br><br>
+        </div>
+        <div class="code-block">
+        waa 魔法骑士1 = 魔法骑士("朵朵魔法骑士", 10);
+        魔法骑士1.自我介绍(); // 输出: 我是朵朵魔法骑士，我的等级是10
+        魔法骑士1.释放魔法(); // 输出: 朵朵魔法骑士释放了强大的魔法！
+        </div>
+            <img class="story-image" src="thumbnail/story7.webp" alt="朵朵的奇幻冒险">
+            <br><br>
+        <div class="story-text">
+            <span class="highlight">英雄hero（super）的力量：</span><br><br>
+            在一次特别的任务中，朵朵发现了hero这个神秘的咒语，它允许骑士调用父级城堡的方法。<br><br>
+            她想让魔法骑士不仅能使用自己的魔法技能，还能继承普通骑士的初始化方法：<br><br>
+        </div>
+        <div class="code-block">
+        castle 魔法骑士 < 骑士 {
+            init(名字, 等级, 魔法值) {
+                hero.init(名字, 等级); // 调用父类的初始化方法
+                this.魔法值 = 魔法值;
+            }
+
+            释放魔法() {
+                puffln(this.名字 + "释放了强大的魔法，魔法值是" + this.魔法值);
+            }
+        }
+        </div>
+        <div class="story-text">
+            通过调用hero，魔法骑士可以继承普通骑士的初始化功能，并扩展自己的魔法能力：<br><br>
+        </div>
+
+        <div class="code-block">
+        waa 魔法骑士2 = 魔法骑士("莉莉魔法骑士", 15, 50);
+        魔法骑士2.自我介绍(); // 输出: 我是莉莉魔法骑士，我的等级是15
+        魔法骑士2.释放魔法(); // 输出: 莉莉魔法骑士释放了强大的魔法，魔法值是50
+        </div>
+        <div class="story-text">
+            朵朵逐渐理解了继承和hero的奥秘，明白了如何通过传承父级城堡的力量来创建更强大的骑士。<br><br>
+            <span class="highlight">第三步：多态的神秘力量</span><br><br>
+            在骑士之城的深处，朵朵听说了一种叫做“多态”（Polymorphism）的神秘力量。守护者告诉她：“多态的力量允许你在不同的城堡中使用相同的命令，而每个城堡都会根据自己的规则去执行命令。”<br><br>
+            朵朵通过创建不同的骑士城堡，发现即使她使用相同的命令，不同的骑士会根据各自的技能做出不同的回应：<br><br>
+        </div>
+        <div class="code-block">
+        castle A {
+            m1() {
+                puffln("A m1()");
+            }
+        }
+        castle B < A {
+            m1() {
+                puffln("B m1()");
+            }
+        }
+        </div>
+        <div class="story-text">
+            当她调用m1时，不同的城堡展示了各自的行为：<br><br>
+        </div>
+        <div class="code-block">
+        waa b = B();
+        b.m1(); // 输出: B m1()
+        </div>
+        <div class="story-text">
+        多态的力量让朵朵感到无比神奇，她可以统一管理不同的骑士，而每个骑士根据自己的城堡表现出不同的技能。<br><br>
+            <span class="highlight">第四步：静态方法的力量</span><br><br>
+            朵朵发现，不是所有的法术都需要依赖于具体的骑士实例。有些法术可以直接属于城堡本身，而不需要任何具体的骑士去执行。这种法术叫做静态方法（Static
+            Method）。<br><br>
+        </div>
+        <div class="code-block">
+        castle A {
+            static m1() {
+                puffln("A static m1()");
+            }
+        }
+        </div>
+        <div class="story-text">
+            通过静态方法，朵朵不需要创建骑士实例，就可以直接调用城堡的方法：<br><br>
+        </div>
+
+        <div class="code-block">
+        A.m1(); // 输出: A static m1()
+        </div>
+        <div class="story-text">
+            静态方法的力量让她明白，有时候，某些法术是属于整个城堡的，而不是某个具体的骑士。<br><br>
+            <span class="highlight">尾声：骑士的终极智慧</span><br><br>
+            经过无数次的冒险和学习，朵朵终于掌握了面向对象编程的三大核心：封装、继承和多态。她明白了城堡（类）是如何保护骑士的秘密，通过继承传承力量，并通过多态展现不同的技能。<br><br>
+
+            在学习骑士和城堡的魔法时，朵朵渐渐意识到，骑士之城的秘密不仅仅在于每个骑士的技能，还在于它们背后复杂而强大的结构。守护者告诉她：
+            “在这个世界里，有两种主要的魔法设计方式，一种是<span class="highlight">面向过程</span>的，另一种是<span class="highlight">面向对象</span>的。”<br><br>
+
+            <span class="highlight">面向过程：一步步的指令</span><br><br>
+            守护者指着远处的村庄说道：“面向过程的魔法就像是一位老匠人，他会一步步地给出指令，所有的任务按照顺序进行。每一个步骤都是手动执行的，如果你需要重复某个任务，你必须重新写下所有的步骤。”<br><br>
+            朵朵看着村庄里的匠人，他们正在打铁，每一次打铁的动作都需要被逐一执行。如果想让他们打另一种铁剑，整个流程需要完全重头再来。
+            守护者继续解释道：“面向过程的编程就像这样，每一步操作都明确写出来，整个系统像流水线一样进行。”<br><br>
+
+            <span class="highlight">面向对象：组织和复用的力量</span><br><br>
+            接着，守护者把朵朵带到了一座繁忙的骑士城堡。他说：“而面向对象的魔法则像建造城堡一样。城堡不仅可以被重复使用，每个骑士还可以继承已有的技能，发展出新的能力。”<br><br>
+            在骑士城堡中，每座城堡（类）就像是一个蓝图，骑士（实例）通过这些蓝图创建出来，拥有各自的属性和技能。每一个新的骑士不需要重新从零开始，因为他们继承了父辈的力量，并且可以在此基础上扩展和修改。<br><br>
+            “这就是面向对象的重要性，”守护者继续说道，“它能让你轻松地管理复杂的系统，复用已有的代码，还可以通过继承和多态来扩展功能。
+            每个骑士都可以是独立的个体，但他们共享城堡的智慧与力量。”这种编程思想让朵朵感到无比强大，她可以更灵活地创建、管理和扩展她的骑士王国，而不必每次从头开始设计。<br><br>
+
+            <span class="highlight">为什么面向对象如此重要？</span><br><br>
+            朵朵明白了，在她的魔法冒险中，面向对象的思想让她能够轻松地创建具有复杂功能的骑士，不必重复劳动。
+            她不仅能够通过继承复用已有的代码，还可以通过封装保护骑士的秘密技能，并用多态在不同任务中展现出不同的行为。<br><br>
+
+            “面向对象的编程像是建筑大师的工具，”守护者总结道，“它能够帮助你设计出强大而灵活的系统，
+            适应不断变化的需求，同时减少重复劳动。每座城堡（类）都能被多个骑士（实例）使用，每个骑士可以根据需要继承或扩展城堡的力量。”<br><br>
+        </div>
+        <img class="story-image" src="thumbnail/story7-2.webp" alt="面向对象和面向过程">
+        <br><br>
+        <div class="story-text">
+            <span class="highlight">总结：</span><br>
+            <ul>
+                <li><span class="highlight">封装（Encapsulation）</span>：通过城堡（类），朵朵学会了如何封装骑士的属性和技能，保护它们不被外界随意更改。
+                </li>
+                <li><span class="highlight">继承（Inheritance）</span>：通过继承，朵朵能够让新骑士城堡继承父级的技能，并扩展新的能力。
+                </li>
+                <li><span class="highlight">多态（Polymorphism）</span>：多态的力量让她能够用统一的命令管理不同的骑士，展示出各自的技能。
+                </li>
+                <li><span class="highlight">静态方法（Static Method）</span>：她还学会了如何使用静态方法，直接在城堡上执行法术，而不需要依赖具体的骑士实例。
+                </li>
+            </ul>
+            朵朵通过建造城堡和创造骑士，掌握了面向对象编程的三大核心：封装、继承、多态，
+            也理解了它为何如此重要。在她未来的冒险中，面向对象的思想将成为她构建魔法系统的重要工具，帮助她应对越来越复杂的挑战。
+        </div>
+    </div>
+    <div class="footer">爸爸妈妈爱你，愿每晚都有甜美的梦</div>
+</div>
+</body>
+</html>

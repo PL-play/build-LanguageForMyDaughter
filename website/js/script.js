@@ -200,6 +200,15 @@ const codeSelection = [
         enabled: true,
         thumbnail: "thumbnail/t6.webp"
     },
+    {
+        id: 7,
+        name: "0x06. 城堡中的秘密法术",
+        intro: "朵朵学习了如何通过类和实例创建强大的骑士，并理解了如何使用不同的方法和继承技巧扩展骑士的能力。她还发现了静态方法和多态的奥秘",
+        codeContent: 'code/code7.duo',
+        storyContent: 'story/story7.html',
+        enabled: true,
+        thumbnail: "thumbnail/t7.webp"
+    },
 
 ];
 
