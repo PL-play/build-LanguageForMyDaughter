@@ -1,0 +1,36 @@
+magic map(iter, fn){
+    loop(waa i = 0; i < __len(iter); i=i+1) {
+        iter[i] = fn(iter[i]);
+    }
+}
+magic printv(arr) {
+   wish (__type(arr) != __array_type) {
+     puff(arr);
+     home;
+   }
+   puff("[" );
+   waa len = __len(arr);
+   loop(waa i=0;i<len;i=i+1){
+      printv( arr[i]);
+      wish(i!=len-1){
+        puff(", ");
+      }
+   }
+   puff("]");
+}
+
+magic power(n){
+    home shadow(x){
+        home x^n;
+    };
+}
+
+waa list = [1,2,3,4,5,6];
+printv(list);
+puff("\n");
+map(list,power(2));
+printv(list);
+waa list2 = [4,6,8,10];
+puff("\n");
+map(list2,power(3));
+printv(list2);

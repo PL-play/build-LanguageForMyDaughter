@@ -211,6 +211,16 @@ const codeSelection = [
         enabled: true,
         thumbnail: "thumbnail/t7.webp"
     },
+    {
+        id: 8,
+        name: "0x07. 幻影施法者的秘密与纯净魔法的力量",
+        intro: "朵朵在她的冒险中，遇到了一群神秘的施法者，他们的魔法不依赖于物理世界，而是通过纯粹的逻辑和函数实现。" +
+            "她发现了函数作为一等公民的重要性，理解了纯函数、递归、高阶函数的概念,明白了函数式编程在避免副作用、简化代码、提升灵活性等方面的优势",
+        codeContent: 'code/code8.duo',
+        storyContent: 'story/story8.html',
+        enabled: true,
+        thumbnail: "thumbnail/t8.webp"
+    },
 
 ];
 
@@ -238,7 +248,6 @@ function selectCode() {
         card.style.border = '1px solid #ccc';
         card.style.borderRadius = '8px';
         if (selectedCodeId === codeItem.id) {
-            console.log(selectedCodeId);
             card.classList.add('selected');
         }
 

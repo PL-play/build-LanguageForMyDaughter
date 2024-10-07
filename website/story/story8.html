@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>故事时光 - 函数式编程的奇妙世界</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #FFE4E1;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .magic-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background: #FFF8DC;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: #FF69B4;
+            margin-bottom: 20px;
+        }
+
+        .story-section {
+            border: 2px solid #FFD700;
+            padding: 20px;
+            border-radius: 20px;
+            background: #FFFAF0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        .story-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #FF6347;
+        }
+
+        .code-block {
+            background: #f4f4f4;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        .story-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="magic-container">
+    <h1 class="title">故事时光 - 函数式编程的奇妙世界</h1>
+    <div class="story-section">
+        <div class="story-text">
+            <span class="highlight">0x07. 函数式编程的奇妙世界</span><br><br>
+            在朵朵的冒险中，她一路北行，走进了云雾缭绕的“幻影之城”。这座城市与她之前见过的城堡和村庄截然不同，充满了神秘的能量。城中的施法者们并不依赖骑士和物理世界的物体来施展魔法，他们的力量纯粹而强大，仿佛是直接从思想中产生的。<br><br>
+            守护者告诉朵朵：“在这里，函数就是我们的魔法。我们施展的魔法不会影响外界，也不会依赖具体的物体，我们通过函数解决一切问题。” 朵朵怀着好奇，开始她的学习。<br><br>
+            <span class="highlight">函数是一等公民：魔法中的核心力量</span><br><br>
+            幻影施法者首先教会了朵朵，函数在他们的世界中是一等公民。意思是，函数像数字或字符串一样，可以被传递、存储、甚至返回。<br><br>
+            朵朵想起在之前的冒险中，骑士的技能和方法虽然很强大，但它们通常只能依赖于具体的骑士（实例），而函数在幻影之城却可以作为独立的力量存在。<br><br>
+            施法者给朵朵展示了如何将函数作为值来传递：
+            <div class="code-block">
+                magic 加法(x, y) {
+                    home x + y;
+                }
+
+                waa 操作 = 加法;
+                puffln(操作(3, 4));  // 输出: 7
+            </div>
+            通过这个例子，朵朵发现，函数不仅可以作为一个值被传递，还可以存储在变量中，并且在需要时像其他数据一样被调用。这种方式极大地提升了魔法的灵活性。<br><br>
+            <img class="story-image" src="thumbnail/story8.webp" alt="">
+            <br><br>
+            <span class="highlight">非函数式编程的局限性</span><br><br>
+            为了更好地理解函数式编程的优势，施法者向朵朵展示了非函数式编程（面向过程编程）中的局限性。<br><br>
+            “在传统的编程方式中，”施法者说，“你可能会定义一系列操作步骤，每一步都是明确的指令，并且很多时候需要依赖于某些全局状态或变量。”<br><br>
+            他给出了一个面向过程的例子：
+            <div class="code-block">
+                waa 结果 = 0;
+
+                magic 加法(x, y) {
+                    结果 = x + y;
+                }
+
+                结果 = 加法(3, 4);
+                puffln(结果);  // 输出: 7
+            </div>
+            在这个例子中，加法函数依赖于全局变量结果，每次调用函数时，都会改变这个全局状态。这种方式虽然可以工作，但容易引发混乱，特别是当程序变得复杂时，很多地方都会改变相同的变量，导致难以跟踪和调试。<br><br>
+            <span class="highlight">函数式编程的优势：避免副作用</span><br><br>
+            “而在函数式编程中，”施法者解释道，“我们避免了副作用（side effects）。每个函数的输出只依赖于它的输入，而不会改变任何外部状态。”这种纯净的魔法让程序更加可预测，结果总是与输入一致。<br><br>
+            他给朵朵展示了一个纯函数的例子：
+            <div class="code-block">
+                magic 加法(x, y) {
+                    home x + y;
+                }
+
+                puffln(加法(3, 4));  // 输出: 7
+            </div>
+            在这个例子中，加法函数只依赖于传入的参数，而不会改变外部的任何变量。朵朵理解到，纯函数的好处是它们更加可靠和可控。无论在什么情况下，只要输入相同，输出就永远一致，外部环境不会影响函数的执行。<br><br>
+            <span class="highlight">递归：优雅地解决复杂问题</span><br><br>
+            在传统的编程中，朵朵习惯使用loop来重复执行任务。但幻影施法者向她展示了一种更为优雅的解决问题方式——递归。<br><br>
+            “在我们的魔法中，”他们解释道，“我们使用递归来解决问题，递归是一种函数调用自身的技巧，直到问题解决为止。”<br><br>
+            朵朵开始尝试用递归解决阶乘问题：
+            <div class="code-block">
+                magic 阶乘(n) {
+                    wish (n == 1) {
+                        home 1;
+                    } dream {
+                        home n * 阶乘(n - 1);
+                    }
+                }
+
+                puffln(阶乘(5));  // 输出: 120
+            </div>
+            通过递归，朵朵发现她能够更简洁地解决问题，而不需要像传统编程那样用loop循环来完成任务。递归不仅让代码变得更短、更直观，还可以处理非常复杂的任务，比如树形结构、分治算法等。<br><br>
+            幻影施法者还向朵朵展示了一种更加简洁的魔法方式——匿名函数。匿名函数是没有名字的函数，施法者们常用它来简化那些只需要一次性执行的小法术。<br><br>
+            朵朵尝试使用匿名函数来进行简单的操作：
+            <div class="code-block">
+                shadow(a, b) {
+                    puffln(a + b);
+                }(1, "234");  // 输出: 1234
+            </div>
+            这种没有名字的函数在被定义后立即执行，节省了定义和调用两个步骤。她发现，匿名函数可以很方便地用于那些只需要临时使用的任务。<br><br>
+            此外，幻影施法者还告诉朵朵，匿名函数不仅可以直接执行，还可以赋值给变量，然后重复使用：
+            <div class="code-block">
+                waa ff = shadow(a, b) {
+                    puffln(a + b);
+                    home a + b;
+                };
+
+                ff("i love ", ff(" mama ,", "duoduo"));  // 输出: mama ,duoduo 和 i love mama ,duoduo
+            </div>
+            通过这个例子，朵朵了解到匿名函数的强大之处，它不仅可以简化代码，还能灵活地与高阶函数一起使用，打造出更简洁和强大的魔法系统。
+
+            通过这个例子，朵朵发现她可以编写一个通用的函数运算处理，它可以接收不同的函数（如加法或乘法）作为参数，并执行这些函数。这让她的魔法代码更加灵活，能够根据需要动态调整行为。<br><br>
+            <span class="highlight">函数组合：构建复杂魔法</span><br><br>
+            在幻影之城，施法者们还教会了朵朵如何将多个函数组合在一起，构建出更复杂的魔法。<br><br>
+            朵朵尝试将两个函数组合成一个更大的函数：
+            <div class="code-block">
+                magic 乘法(x) {
+                    home x * 2;
+                }
+
+                magic 加法(x) {
+                    home x + 3;
+                }
+
+                magic 组合(函数1, 函数2, x) {
+                    home 函数2(函数1(x));
+                }
+
+                puffln(组合(乘法, 加法, 5));  // 输出: 13 （先乘以2，再加3）
+            </div>
+            通过这种方式，朵朵可以轻松地将简单的函数组合成复杂的魔法效果，而无需重复编写每一步的逻辑。这种函数组合的能力让她能够以更高的抽象层次思考问题，专注于魔法的逻辑，而不是每个具体步骤的实现。<br><br>
+            <span class="highlight">非函数式编程的局限：副作用和复杂性</span><br><br>
+            施法者进一步解释道，传统的编程方式经常会产生副作用和复杂的全局状态。这些状态可能在不同的函数中被修改，导致程序难以预测和调试。<br><br>
+            “当程序变得复杂时，”施法者说，“全局状态和副作用会让代码变得脆弱，难以维护。而函数式编程通过使用纯函数、递归和高阶函数，避免了这些问题。”<br><br>
+            朵朵回忆起她之前在骑士城堡中遇到的复杂代码，有时骑士的状态会在多个方法中被修改，导致她难以找到问题的根源。而在函数式编程中，函数的独立性和纯净性让问题更容易追踪和解决。<br><br>
+            <span class="highlight">- 为什么函数式编程如此强大？</span><br><br>
+            通过学习，朵朵渐渐明白了函数式编程的优势：<br><br>
+            <ul>
+                <li><span class="highlight">函数是一等公民</span>：函数可以像变量一样传递、存储和返回，极大地提升了魔法的灵活性。</li>
+                <li><span class="highlight">避免副作用</span>：每个函数都是纯净的，不会改变外部状态，确保了魔法的可预测性和可靠性。</li>
+                <li><span class="highlight">递归和高阶函数</span>：递归让她可以用简洁的方式解决复杂问题，而高阶函数让她能够灵活地组合和操作函数，构建强大的魔法系统。</li>
+                <li><span class="highlight">减少复杂性</span>：通过避免全局状态和副作用，函数式编程让代码更加简洁、稳定，减少了调试和维护的难度。</li>
+            </ul>
+            朵朵意识到，函数式编程就像是一种“思想的魔法”，它通过简洁的逻辑和优雅的设计让魔法变得更加清晰、纯净。无论任务多么复杂，她都能够通过组合和递归来轻松应对。<br><br>
+            <span class="highlight">总结：</span><br><br>
+            <ul>
+                <li>函数作为一等公民让朵朵能够灵活地传递和操作函数。</li>
+                <li>避免副作用确保了每个魔法只依赖于输入，而不会影响外部环境。</li>
+                <li>递归和高阶函数让朵朵能够用简洁的方式解决复杂问题，并灵活组合函数以实现强大的功能。</li>
+                <li>函数式编程的优势在于它减少了代码的复杂性，避免了状态混乱，使得程序更加稳定和可控。</li>
+            </ul>
+            <img class="story-image" src="thumbnail/story8-2.webp" alt="">
+            <br><br>
+            朵朵站在幻影之城中，看着纯净的魔法符号漂浮在空气中，她忍不住好奇：“如果这些函数还能再组合，能不能创造出前所未见的强大魔法呢？” 下一步的冒险等待着她去探索更多的可能性！
+        </div>
+    </div>
+    <div class="footer">爸爸妈妈爱你，愿每晚都有甜美的梦</div>
+</div>
+</body>
+</html>
