@@ -2992,12 +2992,25 @@ Value native_puff(int arg_count, Value *args, void *v) {
     return NIL_VAL;
 }
 
+unsigned int next_power_of2(unsigned int n) {
+    if (n == 0) return 1;
+
+    n--;
+    n |= n >> 1;
+    n |= n >> 2;
+    n |= n >> 4;
+    n |= n >> 8;
+    n |= n >> 16;
+
+    return n + 1;
+}
+
 Value native_array(int arg_count, Value *args, void *v) {
     VM *vm = v;
     Value arg0 = args[0];
     int size = (int) AS_NUMBER(arg0);
     if (size <= 0)size = 0;
-    ValueArrayList *array_list = Valuenew_arraylist(size == 0 ? ARRAY_INIT_SIZE : size * 2);
+    ValueArrayList *array_list = Valuenew_arraylist(size == 0 ? ARRAY_INIT_SIZE : next_power_of2(size));
     for (int i = 0; i < size; i++) {
         Valueappend_arraylist(array_list,NIL_VAL);
     }
