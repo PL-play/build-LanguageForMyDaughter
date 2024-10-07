@@ -191,6 +191,15 @@ const codeSelection = [
         enabled: true,
         thumbnail: "thumbnail/t5.webp"
     },
+    {
+        id: 6,
+        name: "0x05. 魔法师的咒语与神秘的魔咒瓶",
+        intro: "朵朵在她的魔法旅途中，学会了如何使用魔法咒语（函数）解决问题，探索了返回值、值传递、递归等魔法技巧。她还发现了一种神秘的力量——魔咒瓶（闭包），能够保存并延续魔法的效果",
+        codeContent: 'code/code6.duo',
+        storyContent: 'story/story6.html',
+        enabled: true,
+        thumbnail: "thumbnail/t6.webp"
+    },
 
 ];
 

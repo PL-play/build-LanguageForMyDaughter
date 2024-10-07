@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>故事时光 - 函数与魔咒的力量</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #FFE4E1;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .magic-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background: #FFF8DC;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: #FF69B4;
+            margin-bottom: 20px;
+        }
+
+        .story-section {
+            border: 2px solid #FFD700;
+            padding: 20px;
+            border-radius: 20px;
+            background: #FFFAF0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        .story-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #FF6347;
+        }
+
+        .code-block {
+            background: #f4f4f4;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        .story-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="magic-container">
+    <h1 class="title">故事时光 - 函数与魔咒的力量</h1>
+    <div class="story-section">
+        <p class="story-text">
+            <span class="highlight">0x05. 函数与魔咒的力量</span><br><br>
+            在朵朵的旅途中，她来到了一座神秘的“魔法之塔”。这座塔里藏着无数的魔法卷轴，卷轴上的咒语可以帮助魔法师解决各种问题。守护者告诉朵朵，魔法师们发明了一种强大的工具——“魔法咒语” (magic)。这种工具可以像一把钥匙，帮助她在旅程中解决各种难题。<br><br>
+            <span class="highlight">函数定义：创建属于自己的咒语</span><br><br>
+            守护者首先教会了朵朵如何定义自己的魔法咒语。<br>
+            “每当你遇到问题时，你可以创造一个咒语来解决它。”守护者解释道，“咒语就是一个函数，只要用magic关键字创建它，它就会像一个法术一样被反复使用。”<br><br>
+            例如，朵朵学会了如何定义一个简单的咒语来计算两个数字的和：
+        </p>
+
+        <div class="code-block">
+            magic sum(a, b) {
+                home a + b;
+            }
+        </div>
+        <p class="story-text">
+        当她想知道两个数字的和时，她只需要召唤这个咒语：
+        </p>
+        <div class="code-block">
+            sum(3, 4); // 输出: 7
+        </div>
+        <p class="story-text">
+        这个咒语可以帮助她计算任何两个数字的和。她也学会了home这个关键字，它能让咒语返回结果。<br><br>
+        <span class="highlight">返回值：让咒语告诉你结果</span><br><br>
+        朵朵发现，每个咒语都可以通过home关键字返回一个结果。<br>
+        例如，朵朵定义了一个咒语来计算圆的周长，并返回结果：
+        </p>
+        <div class="code-block">
+            magic circumference(r) {
+                home 2 * 3.14 * r;
+            }
+        </div>
+        <p class="story-text">
+        当她输入半径时，咒语会返回计算好的周长：
+        </p>
+        <div class="code-block">
+            circumference(5); // 输出: 31.4
+        </div>
+        <p class="story-text">
+        返回值让咒语不仅仅是执行某个动作，还能给她提供具体的答案。<br><br>
+        <span class="highlight">值传递：将信息传递给咒语</span><br><br>
+        朵朵还学会了如何将不同的信息传递给咒语。<br>
+        每个咒语都可以接受一些信息，这些信息叫做参数。参数就像是一张小纸条，写着你希望咒语使用的值。当你调用咒语时，将这些参数传递给它，咒语便会根据这些值执行。<br><br>
+        例如，朵朵想传递两个不同的数字给她的“求和”咒语：
+        </p>
+        <div class="code-block">
+            sum(10, 20);
+        </div>
+        <p class="story-text">
+        朵朵发现，咒语会根据她传递进去的值来计算不同的结果。每次输入不同的参数，咒语都会产生不同的效果。<br><br>
+        <span class="highlight">返回函数：创造带有魔法的咒语瓶</span><br><br>
+        接下来，朵朵发现了一种更为神奇的能力：她可以让一个咒语返回另一个咒语。<br>
+        守护者告诉她：“你可以让一个咒语产生另一个咒语，这样你就能在不同的情况下灵活地使用这些咒语。”<br>
+        例如，朵朵想创建一个咒语，它会返回一个专门计算某个数字倍数的咒语：
+        </p>
+        <div class="code-block">
+            magic multiply(m) {
+                magic result(n) {
+                    home m * n;
+                }
+                home result;
+            }
+        </div>
+        <p class="story-text">
+        当朵朵调用这个咒语时，它会返回一个新的咒语：
+        </p>
+        <div class="code-block">
+            waa m = multiply(5);
+            puffln(m(2)); // 输出: 10
+        </div>
+        <p class="story-text">
+        这个新的咒语专门计算某个数字的倍数，朵朵可以根据需要创造不同的倍数咒语。<br><br>
+        <span class="highlight">递归：循环的咒语</span><br><br>
+        朵朵还学到了一个更为强大的技巧，叫做递归，它让咒语可以自己调用自己。<br>
+        守护者解释说：“有时，你需要一个咒语不断重复自己，直到满足某个条件。这就是递归的力量。”<br>
+        朵朵非常好奇，于是她决定用递归咒语来计算阶乘。阶乘是一个数字乘以它之前所有的数字。例如，5的阶乘就是5 * 4 * 3 * 2 * 1。<br>
+        朵朵这样定义了她的递归咒语：
+        </p>
+        <div class="code-block">
+            magic factorial(n) {
+                wish (n == 1) {
+                    home 1;
+                } dream {
+                    home n * factorial(n - 1);
+                }
+            }
+        </div>
+        <p class="story-text">
+        她发现，当她调用这个咒语时，咒语会不断调用自己，直到n等于1为止：
+        </p>
+        <div class="code-block">
+            factorial(5);  // 输出: 120
+        </div>
+        <p class="story-text">
+        递归让朵朵可以处理更复杂的问题，通过重复调用咒语达到最终结果。<br><br>
+        <span class="highlight">闭包：神秘的魔咒瓶</span><br><br>
+        最后，朵朵发现了一种更为神秘的力量——魔咒瓶 (charm)。<br>
+        魔咒瓶不仅能施展魔法，还能保存魔法中的一部分力量，延续到未来的时刻。守护者告诉她：“当你需要保存某个特定的环境，让它在未来依然有效时，你可以使用魔咒瓶。魔咒瓶能捕捉当时的环境，哪怕你已经离开，魔法依然会生效。”<br><br>
+        朵朵用一个魔咒瓶保存了当前的风速：
+        </p>
+        <div class="code-block">
+            magic genSpeed() {
+                waa speed = 10;
+                home shadow() {
+                    puffln(speed);
+                };
+            }
+        </div>
+        <p class="story-text">
+        这个魔咒瓶不仅保存了她创建时的风速，还能在未来的某个时刻再次调用。当朵朵需要风速时，她只需打开这个魔咒瓶，魔法依然会生效。<br>
+        </p>
+
+        <img class="story-image" src="thumbnail/story6.webp" alt="朵朵的奇幻冒险">
+        <br><br>
+        <p class="story-text">
+        <span class="highlight">总结：</span><br>
+        </p>
+        <ul>
+            <li>
+                <p class="story-text">
+                <span class="highlight">函数 (magic)</span>：朵朵学会了如何通过magic定义和调用咒语，解决问题，并通过return关键字获取咒语的结果。
+                </p>
+            </li>
+            <li>
+                <p class="story-text">
+                <span class="highlight">值传递</span>：她掌握了如何将参数传递给咒语，让咒语根据不同的值执行不同的操作。
+                </p>
+            </li>
+            <li>
+                <p class="story-text">
+                <span class="highlight">返回函数</span>：朵朵还学会了如何让一个咒语返回另一个咒语，使得咒语可以更加灵活。
+                </p>
+            </li>
+            <li>
+                <p class="story-text">
+                <span class="highlight">递归</span>：她探索了递归的力量，创造了可以自己调用自己的咒语来解决复杂问题。
+                </p>
+            </li>
+            <li>
+                <p class="story-text">
+                <span class="highlight">闭包 (charm)</span>：朵朵最终学会了使用魔咒瓶，保存和延续魔法的效果，即使未来再调用时依然有效。
+                </p>
+            </li>
+        </ul>
+        <br>
+        <p class="story-text">
+        朵朵微笑着意识到，魔法的真正奥秘不仅在于咒语本身，还在于她如何灵活地创造、保存并延续这些魔法，使它们在不同的时刻为她服务。
+        </p>
+    </div>
+    <div class="footer">爸爸妈妈爱你，愿每晚都有甜美的梦</div>
+</div>
+</body>
+</html>

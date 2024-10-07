@@ -1,0 +1,79 @@
+{
+    magic add(a,b){
+        home a+b;
+    }
+    puffln(add);
+    puffln(add(2,4));
+    // 递归
+    magic factorial(a){
+        wish (a<=1) home 1;
+        home a*factorial(a-1);
+    }
+    puffln( factorial(7)+factorial(2));
+    {
+        magic f2(a,b){home a+b;}
+        puffln(f2(4,5));
+    }
+    // 匿名函数
+    shadow(a,b){puffln( a+b);}(1,"234");
+    waa ff = shadow(a,b){puffln( a+b); home a+b;};
+    ff("i love", ff(" mama ,", "duoduo"));
+}
+// 闭包
+{
+    magic outer(){
+      waa x = "duoduo";
+      magic inner(){
+        x = "I love " + x;
+        puffln(x);
+      }
+      inner();
+    }
+    outer();
+
+    {
+       waa x = "outside";
+       magic inner() {
+        x = "inside";
+        puffln(x);
+       }
+       inner();
+     }
+}
+{
+    magic outer(){
+      waa x = "duoduo";
+      magic inner(){
+        x = "baba love "+x;
+        puffln(x);
+      }
+      home inner;
+    }
+    waa closure = outer();
+    puffln(closure);
+    closure();
+}
+{
+    magic outer(){
+      waa x = "duoduocool";
+      magic middle(){
+        magic inner(){
+           puffln(x);
+        }
+        puffln("create inner closure");
+        home inner;
+      }
+      puffln("return from outer");
+      home middle;
+    }
+    waa mid = outer();
+    waa in = mid();
+    in();
+    {
+       waa y = "outside";
+       magic inner() {
+         puffln(y);
+       }
+       inner();
+     }
+}

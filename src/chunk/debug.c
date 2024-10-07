@@ -372,10 +372,9 @@ static size_t closure_instruction(const char *name, Chunk *chunk, size_t offset)
     for (int i = 0; i < function->upvalue_count; ++i) {
         int is_local = chunk->code->data[offset++];
         int index = chunk->code->data[offset++];
-        printf("%04zu   |      %s %d\n", offset - 2, is_local ? "local" : "upvalue", index);
 #ifdef WASM_LOG
-        char buff[50];
-        sprintf(buff,"%04zu   |    %s %d[nl]", offset - 2, is_local ? "local" : "upvalue", index);
+        char buff[80];
+        sprintf(buff,"[bytecode]-%04zu   |    %s %d[nl]", offset - 2, is_local ? "local" : "upvalue", index);
         EM_ASM_({console.warn(UTF8ToString($0));}, buff);
 #else
         printf("%04zu   |    %s %d\n", offset - 2, is_local ? "local" : "upvalue", index);
