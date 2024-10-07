@@ -184,12 +184,12 @@ const codeSelection = [
     },
     {
         id: 5,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
+        name: "0x04. 选择的岔路与旋转的花园",
+        intro: "朵朵在她的冒险中来到了“选择之路”，学习了如何通过愿望树作出不同的决定。她还发现了一个神奇的旋转花园，在那里她不断地循环，直到找到正确的出口",
+        codeContent: 'code/code5.duo',
+        storyContent: 'story/story5.html',
         enabled: true,
-        thumbnail: "thumbnail/t4.png"
+        thumbnail: "thumbnail/t5.webp"
     },
     {
         id: 6,

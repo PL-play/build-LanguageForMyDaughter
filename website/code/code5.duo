@@ -1,0 +1,88 @@
+// 条件
+{
+    waa a = 1;
+    wish(a >= 1) {
+       puffln(a);
+    }
+}
+{
+    wish(1) puffln(2);
+}
+{
+    waa a =5;
+    wish(a > 3) {
+        puffln(a);
+        waa b = 5;
+        wish(a > b) puffln("duoduo");
+        dream puffln(" love");
+    } dream {
+        puffln("baba");
+    }
+}
+// loop循环
+{
+    loop(waa a=0;a<5;a=a+1) {
+        puffln("duoduo cool");
+    }
+    waa b;
+    loop(b=5;b>0;b=b-1) {
+        puffln(b);
+        puffln("mama love duoduo");
+    }
+}
+
+// wloop循环
+{
+    waa a=5;
+    wloop(a >= 0) {
+        a = a-1;
+        puffln(a && (a-1) || "i love duoduo");
+    }
+}
+// skip
+{
+    loop(waa a=0;a<5;a=a+1){
+        wish(a==3) skip;
+        puffln("a="+(a+1));
+    }
+    loop(waa a =0;a<5;a=a+1){
+        loop(waa b=0;b<5; b=b+1) {
+            wish(a+b==7) skip;
+            puffln( "" + a + "+" + b + "=" + (a+b));
+        }
+    }
+    waa b;
+    loop(b=5;b>0;b=b-1){
+        wish(b%2==0) skip;
+        puffln(b);
+        puffln("mama love duoduo");
+    }
+    waa a=5;
+    wloop(a>=0){
+        a = a-1;
+        wish(a%2==0) skip;
+        puffln(a && (a-1) || "i love duoduo");
+    }
+}
+// break
+{
+    loop(waa a=0;a<5;a=a+1){
+        wish(a==3) break;
+        wish(a%2==0) skip;
+        puffln(a);
+    }
+    waa a=5;
+    wloop(a>=0){
+        a = a-1;
+        wish(a==0) break;
+        wish(a%2==0) skip;
+        puffln("i love duoduo "+a);
+    }
+}
+{
+    loop(waa i=0;i<1000;i=i+1){
+        puff(__str(i));
+        puff(" ");
+    }
+}
+
