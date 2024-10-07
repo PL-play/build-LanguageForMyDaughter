@@ -191,60 +191,7 @@ const codeSelection = [
         enabled: true,
         thumbnail: "thumbnail/t5.webp"
     },
-    {
-        id: 6,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
-        enabled: true,
-        thumbnail: "thumbnail/t5.webp"
-    },
-    {
-        id: 7,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
-        enabled: true,
-        thumbnail: "thumbnail/t6.webp"
-    },
-    {
-        id: 8,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
-        enabled: true,
-        thumbnail: "thumbnail/t7.webp"
-    },
-    {
-        id: 9,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
-        enabled: true,
-        thumbnail: "thumbnail/t8.webp"
-    },
-    {
-        id: 10,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
-        enabled: true,
-        thumbnail: "thumbnail/t9.webp"
-    },
-    {
-        id: 11,
-        name: "\u793a\u4f8b\u4ee3\u78012",
-        intro: "\u5faa\u73af\u6253\u5370\u6570\u5b57",
-        codeContent: 'code/code2.duo',
-        storyContent: 'story2.html',
-        enabled: true,
-        thumbnail: "thumbnail/t10.webp"
-    },
+
 ];
 
 function selectCode() {
