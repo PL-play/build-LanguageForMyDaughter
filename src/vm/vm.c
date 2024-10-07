@@ -322,6 +322,7 @@ long factorial(int n) {
                           Value klass = peek(vm, slot);\
                           set_class_method(vm, klass, method, READ_BYTE(frame));
 
+
 #define METHOD_GLOBAL(OP_)  Value method = peek_last(vm);\
                             Value klass = Valueget_data_arraylist(vm->compile_context.global_values, OP_);\
                             set_class_method(vm, klass, method, READ_BYTE(frame));

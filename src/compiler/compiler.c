@@ -601,7 +601,7 @@ static void statement_emit_bytecode(Compiler *compiler, Statement *statement) {
 
                 if (local_index != -1) {
                     // class is local variable
-                    VARIABLE_OPERATION(compiler, i + 1, func_stmt->line, OP_METHOD_LOCAL);
+                    VARIABLE_OPERATION(compiler, local_index, func_stmt->line, OP_METHOD_LOCAL);
                     emit_byte(compiler, 0, func_stmt->line);
                 } else {
                     // global class

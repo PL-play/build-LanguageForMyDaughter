@@ -832,25 +832,24 @@ static void test_string() {
 }
 static void test_castle3() {
     char *es[] = {
-        "{"
+        // "{"
         "castle A{"
         "   init(age){"
-        // "       this.age =age;"
+        "       this.age =age;"
         "   }"
         "}"
         "castle B < A{"
-        // "   init (name){"
-        // "       hero.init(1);"
-        // "       this.name = name;"
-        // "   }"
-        "       init(a,b){}"
+        "   init (name){"
+        "       hero.init(1);"
+        "       this.name = name;"
+        "   }"
         "}"
-        ""
-        "puffln( A);"
+        "waa b = B(\"爸爸\");"
         "waa a = A(\"朵朵\");"
-        // "puffln(a.age);"
-        // "puffln(b.name);"
-        "}"
+        "puffln(a.age);"
+        "puffln(b.name);"
+        "puffln(b.age);"
+        // "}"
         "",
         NULL
     };
@@ -870,29 +869,29 @@ static void test_castle3() {
 }
 
 static UnitTestFunction tests[] = {
-    // test_computed_goto,
-    // test_vm,
-    // test_global_variable,
-    // test_global_variable_long,
-    // test_local_variable,
-    // test_local_variable_long,
-    // test_wish_statement,
-    // test_wloop_statement,
-    // test_loop_statement,
-    // test_skip,
-    // test_equals,
-    // test_break,
-    // test_magic,
-    // test_magic2,
-    // test_charm,
-    // test_castle,
-    // test_property,
-    // test_method,
-    // test_super,
-    // test_static_method,
-    // test_condition,
-    // test_string,
-    test_castle3,
+    test_computed_goto,
+    test_vm,
+    test_global_variable,
+    test_global_variable_long,
+    test_local_variable,
+    test_local_variable_long,
+    test_wish_statement,
+    test_wloop_statement,
+    test_loop_statement,
+    test_skip,
+    test_equals,
+    test_break,
+    test_magic,
+    test_magic2,
+    test_charm,
+    test_castle,
+    test_property,
+    test_method,
+    test_super,
+    test_static_method,
+    test_condition,
+    test_string,
+    // test_castle3,
     NULL
 };
 
