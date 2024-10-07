@@ -1,18 +1,54 @@
 // 类与对象
-castle A{
-      init(age){
-           this.age =age;
+{
+    castle A{
+          init(age){
+               this.age =age;
+          }
+    }
+
+    castle B < A{
+         init (name){
+             hero.init(1);
+             this.name = name;
+         }
+    }
+
+    waa b = B("朵朵");
+    puffln(b.age);
+    puffln(b.name);
+}
+
+{
+    castle A{}
+    puffln(A);
+    {
+      castle B{}
+      puffln(A);
+      puffln(B);
+      waa a = A;
+      puffln("a=" + a);
+      a = B;
+      puffln("a=" + a);
+    }
+    waa a = A;
+    puffln("a=" + a);
+
+    magic f1(){
+      castle Duoduo{}
+      puffln(Duoduo);
+      magic inf1(){
+        puffln("inf1:" + Duoduo);
+        home Duoduo;
       }
+      home inf1;
+    }
+    waa f = f1();
+    waa c = f();
+    puffln(c);
+
+    puffln(A());
+    puffln(c());
+    waa ic = c();
+    puffln("ic=" + ic);
+
 }
-
-castle B < A{
-     init (name){
-         hero.init(1);
-         this.name = name;
-     }
-}
-
-waa b = B("朵朵");
-puffln(b.age);
-puffln(b.name);
-

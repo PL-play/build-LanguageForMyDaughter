@@ -2965,41 +2965,6 @@ Value native_type(int arg_count, Value *args, void *vm) {
 Value native_stringify(int arg_count, Value *args, void *v) {
     VM *vm = v;
     Value arg0 = args[0];
-    if (IS_ARRAY(arg0)) {
-        ObjArray *arr = AS_ARRAY(arg0);
-        if (arr->array->size == 0) {
-            char *s = "[]";
-            uint32_t hash = fnv1a_hash(s, 2);
-            return OBJ_VAL(get_or_create_string(vm, s, hash, 2));
-        }
-        ObjString *strarr[arr->array->size];
-
-        size_t arr_str_size = 0;
-        for (size_t i = 0; i < arr->array->size; i++) {
-            Value e = arr->array->data[i];
-            ObjString *sa = value_to_string(vm, e);
-            if (sa == NULL) {
-                cx_throw(100);
-            }
-            strarr[i] = sa;
-            arr_str_size += sa->length;
-        }
-        // + n-1 ',' and '[',']' and a \0
-        char ret[arr_str_size + arr->array->size - 1 + 2 + 1];
-        ret[0] = '[';
-        size_t loc = 1;
-        for (size_t i = 0; i < arr->array->size; i++) {
-            memcpy(ret + loc, strarr[i]->string, strarr[i]->length);
-            loc += strarr[i]->length;
-            if (i != arr->array->size - 1) {
-                ret[loc++] = ',';
-            }
-        }
-        ret[loc++] = ']';
-        ret[loc + 1] = '\0';
-        uint32_t hash = fnv1a_hash(ret, loc);
-        return OBJ_VAL(get_or_create_string(vm, ret, hash, loc));
-    }
     ObjString *sa = value_to_string(vm, arg0);
     if (sa == NULL) {
         cx_throw(100);
@@ -3009,12 +2974,20 @@ Value native_stringify(int arg_count, Value *args, void *v) {
 
 Value native_puffln(int arg_count, Value *args, void *v) {
     native_puff(arg_count, args, v);
+#ifdef WASM_LOG
+    EM_ASM_({console.info(UTF8ToString($0));}, "\n");
+#else
     printf("\n");
+#endif
     return NIL_VAL;
 }
 
 Value native_puff(int arg_count, Value *args, void *v) {
     Value str = native_stringify(arg_count, args, v);
+#ifdef WASM_LOG
+    EM_ASM_({console.info(UTF8ToString($0));}, AS_STRING(str)->string);
+#else
     printf("%s",AS_STRING(str)->string);
+#endif
     return NIL_VAL;
 }

@@ -183,8 +183,7 @@ typedef struct {
                              break;          \
                            }          \
                            case OBJ_ARRAY: {     \
-                             ObjArray* i = ((ObjArray *) (OBJ));  \
-                             len = 7;          \
+                             len = 5;          \
                              break;          \
                            }                                 \
                           }\
@@ -249,7 +248,7 @@ typedef struct {
                                break;          \
                             }         \
                             case OBJ_ARRAY:{   \
-                               sprintf(string_, "<array>");          \
+                               sprintf(string_, "<arr>");          \
                                break;          \
                             }          \
                             default: {\

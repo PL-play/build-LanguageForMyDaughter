@@ -41,12 +41,6 @@ function setDefaultCode() {
 var Module = {
     onRuntimeInitialized: function () {
         console.log('WebAssembly module loaded.');
-    },
-    print: function (text) {
-        processOutput(text);
-    },
-    printErr: function (text) {
-        updateStatusBar(`${text}`);
     }
 };
 
@@ -55,9 +49,23 @@ var Module = {
     var originalConsoleWarn = console.warn;
     console.warn = function (message) {
         dispatchMessage(message);
-        originalConsoleWarn.apply(console, arguments);
+        // originalConsoleWarn.apply(console, arguments);
     };
 })();
+
+
+// 监听控制台的警告输出
+(function () {
+    var originalConsoleInfo = console.info;
+    console.info = function (message) {
+        updateConsole(message);
+        // originalConsoleInfo.apply(console, arguments);
+    };
+})();
+
+function updateConsole(message){
+    outputElement.value += message;
+}
 
 function dispatchMessage(message) {
     if (message.startsWith('[status]')) {
@@ -108,12 +116,6 @@ function updateByteCode(message) {
     }
 }
 
-// 处理输出内容
-function processOutput(text) {
-    outputContent += text + '\n';
-    outputElement.innerHTML = outputContent;
-}
-
 // 处理用户输入的代码并调用 WebAssembly 函数
 function processInput() {
     const codeInput = editor.getValue();
@@ -124,7 +126,7 @@ function processInput() {
 
     // 清空之前的输出内容
     outputContent = '';
-    outputElement.innerHTML = '';
+    outputElement.value = '';
     statusBarElement.innerHTML = '';
     astContainerElement.innerHTML = '';
     byteCodeContainerElement.innerHTML = '';
@@ -138,10 +140,10 @@ function processInput() {
     );
 
     // 去掉最后的 '\n'（如果有）
-    if (outputContent.endsWith('\n')) {
-        outputContent = outputContent.slice(0, -1);
-        outputElement.innerHTML = outputContent;
-    }
+    // if (outputContent.endsWith('\n')) {
+    //     outputContent = outputContent.slice(0, -1);
+    //     outputElement.innerHTML = outputContent;
+    // }
 }
 
 // 更新代码选择项，增加故事内容

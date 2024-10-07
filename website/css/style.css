@@ -84,6 +84,7 @@ body {
     white-space: pre-wrap;
     padding-right: 20px;
     overflow-y: auto;
+    resize: none !important;           /* 禁止拖动调整大小 */
 }
 
 #statusBar {
