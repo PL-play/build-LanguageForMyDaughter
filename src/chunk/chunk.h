@@ -257,7 +257,7 @@ size_t get_code_size(Chunk *chunk);
  */
 size_t add_constant(Chunk *c, Value value);
 
-static void add_constant_and_write(Chunk *c, Value v, size_t line, uint8_t op);
+static size_t add_constant_and_write(Chunk *c, Value v, size_t line, uint8_t op);
 
 /**
  * add constant and write chunk.
@@ -282,7 +282,7 @@ void write_closure(Chunk *c, Value, size_t line);
  * @param v
  * @param line
  */
-void write_class(Chunk *c, Value v, size_t line);
+size_t write_class(Chunk *c, Value v, size_t line);
 
 /**
  * add property name and write chunk

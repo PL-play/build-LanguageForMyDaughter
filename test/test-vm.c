@@ -868,6 +868,176 @@ static void test_castle3() {
     free_VM(&vm);
 }
 
+static void test_castle4() {
+    char *es[] = {
+        ""
+        "{"
+        "castle A{\n"
+        "    init(name){\n"
+        "       this.name = name;\n"
+        "       puffln(\"A set name in init(): \"+this.name);\n"
+        "    }\n"
+        "    m1(){\n"
+        "       puffln(\"get name in m1():\"+ this.name);\n"
+        "    }\n"
+        "    m2(name){\n"
+        "      this.name = name;\n"
+        "      puffln(\"call m1() inside m2()\");\n"
+        "      this.m1();\n"
+        "      puffln( \"set name in m2(): \"+this.name);\n"
+        "   }\n"
+        "   m3(p){\n"
+        "      magic f(){"
+        "        puffln( this.name+\" \"+ p);"
+        "      }\n"
+        "      home f;"
+        "   }\n"
+        "}\n"
+        ""
+        "puffln(__has_method(A,\"init\"));"
+        "puffln(__has_method(A,\"m1\"));"
+        "puffln(__has_method(A,\"m2\"));"
+        "puffln(__has_method(A,\"m3\"));"
+        "waa a = A(1);"
+        "puffln(a.name);"
+        "a.m1();"
+        "a.m2(\"duoduo\");"
+        "a.m1();"
+        "a.m3(100);"
+        "castle B{\n"
+        "  init(){\n"
+        "     this.name = \"MAMA\";"
+        "     puffln( \"init B\");\n"
+        "  }\n"
+        "}\n"
+        "puffln(__has_method(A,\"init\"));"
+        "puffln(__has_method(A,\"m1\"));"
+        "puffln(__has_method(A,\"m2\"));"
+        "puffln(__has_method(A,\"m3\"));"
+        "puffln( \"call init\");\n"
+        "waa a2 = A(\"baba and \");\n"
+        "puffln(\"get name in global:\"+ a.name);\n"
+        "puffln( \"call m1\");\n"
+        "a.m1();\n"
+        "puffln( \"call m2\");\n"
+        "a.m2(\"duoduo\");\n"
+        "puffln( \"call m1\");\n"
+        "waa m1 = a.m1;\n"
+        "m1();"
+        "puffln( \"get name in global call:\"+ a.name);\n"
+        "puffln( \"call m3\");\n"
+        "waa f = a.m3(\"baba mama\");\n"
+        "f();\n"
+        "a.b = B;\n"
+        "waa b = a.b();\n"
+        "puffln( \"b name: \"+ b.name);\n"
+        "a.c = shadow(x){puffln( x.name);};\n"
+        "puffln( \"call a.c()\");\n"
+        "a.c(b);\n"
+        ""
+        "}",
+        NULL
+    };
+    VM vm;
+    init_VM(&vm, NULL,NULL, true);
+
+    for (int i = 0; es[i] != NULL; ++i) {
+        char *source = es[i];
+
+        printf("++++++++++++\n interpret for test castle3: \n\n%s \n+++++++++++\n", source);
+        printf("\n------ result ------\n");
+        InterpretResult result = interpret(&vm, NULL, source);
+        assert(result == INTERPRET_OK);
+        printf("\n\n\n");
+    }
+    free_VM(&vm);
+}
+
+static void test_castle5() {
+    char *es[] = {
+        ""
+        "{"
+        "castle A{\n"
+        "    init(name){\n"
+        "       this.name = name;\n"
+        "       puffln(\"A set name in init(): \"+this.name);\n"
+        "    }\n"
+        "    m1(){\n"
+        "       puffln(\"get name in m1():\"+ this.name);\n"
+        "    }\n"
+        "    m2(name){\n"
+        "      this.name = name;\n"
+        "      puffln(\"call m1() inside m2()\");\n"
+        "      this.m1();\n"
+        "      puffln( \"set name in m2(): \"+this.name);\n"
+        "   }\n"
+        "   m3(p){\n"
+        "      magic f(){"
+        "        puffln( this.name+\" \"+ p);"
+        "      }\n"
+        "      home f;"
+        "   }\n"
+        "}\n"
+        "A(\"baba \");\n"
+        "castle B{\n"
+        "  init(a,b){\n"
+        "     this.name = \"MAMA\";"
+        "     puffln( \"init B\");\n"
+        "  }\n"
+        "  m4(a){\n"
+      "     this.name = \"MAMA\";"
+      "     puffln( \"init B\");\n"
+      "  }\n"
+        "}\n"
+        "puffln(__has_method(A,\"init\"));"
+        "puffln(__has_method(A,\"m4\"));"
+        "puffln(__has_method(A,\"m1\"));"
+        "puffln(__has_method(A,\"m2\"));"
+        "puffln(__has_method(A,\"m3\"));"
+        "puffln( \"call init\");\n"
+        "waa a2 = A(\"duoduo \");\n"
+        // "puffln(\"get name in global:\"+ a.name);\n"
+        // "puffln( \"call m1\");\n"
+        // "a.m1();\n"
+        // "puffln( \"call m2\");\n"
+        // "a.m2(\"duoduo\");\n"
+        // "puffln( \"call m1\");\n"
+        // "waa m1 = a.m1;\n"
+        // "m1();"
+        // "puffln( \"get name in global call:\"+ a.name);\n"
+        // "puffln( \"call m3\");\n"
+        // "waa f = a.m3(\"baba mama\");\n"
+        // "f();\n"
+        // "a.b = B;\n"
+        // "waa b = a.b();\n"
+        // "puffln( \"b name: \"+ b.name);\n"
+        // "a.c = shadow(x){puffln( x.name);};\n"
+        // "puffln( \"call a.c()\");\n"
+        // "a.c(b);\n"
+        "}",
+        "{"
+            "castle A{"
+                "init(){ "
+                "}"
+            "}"
+        "}",
+        NULL
+    };
+    VM vm;
+    init_VM(&vm, NULL,NULL, true);
+
+    for (int i = 1; es[i] != NULL; ++i) {
+        char *source = es[i];
+
+        printf("++++++++++++\n interpret for test castle3: \n\n%s \n+++++++++++\n", source);
+        printf("\n------ result ------\n");
+        InterpretResult result = interpret(&vm, NULL, source);
+        assert(result == INTERPRET_OK);
+        printf("\n\n\n");
+    }
+    free_VM(&vm);
+}
+
 static UnitTestFunction tests[] = {
     test_computed_goto,
     test_vm,
@@ -891,8 +1061,11 @@ static UnitTestFunction tests[] = {
     test_static_method,
     test_condition,
     test_string,
-    // test_castle3,
+    test_castle3,
+    test_castle4,
+    // test_castle5,
     NULL
+
 };
 
 int main(int argc, char *argv[]) {

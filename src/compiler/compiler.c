@@ -56,7 +56,7 @@ static void emit_int_3bytes(Compiler *compiler, size_t i, size_t line_);
 
 static void emit_loop(Compiler *compiler, size_t location, size_t line);
 
-static void emit_class(Compiler *compiler, Value value, size_t line);
+static size_t emit_class(Compiler *compiler, Value value, size_t line);
 
 static void *expression_emit_bytecode(Compiler *compiler, Expression *expression);
 
@@ -509,11 +509,13 @@ static void statement_emit_bytecode(Compiler *compiler, Statement *statement) {
             ObjClass *klass = new_class(class_name);
             Value value = OBJ_VAL(klass);
             int global_index = -1;
+            size_t klass_constant;
             if (local_index != -1) {
                 // mark the local as initialized.
                 (&(compiler->local_context->local->data[local_index]))->depth = compiler->local_context->scope_depth;
                 // compile class
-                emit_class(compiler, value, statement->class_stmt.name.line);
+                // emit class will write class to constants and push on the vm's value stack
+                klass_constant = emit_class(compiler, value, statement->class_stmt.name.line);
                 if (statement->class_stmt.super_class != NULL) {
                     // inherit from superclass
                     expression_emit_bytecode(compiler, statement->class_stmt.super_class);
@@ -551,7 +553,7 @@ static void statement_emit_bytecode(Compiler *compiler, Statement *statement) {
                 VARIABLE_OPERATION(compiler, index, func_stmt->line, OP_SET_LOCAL);
                 if (local_index != -1) {
                     // class is local variable
-                    VARIABLE_OPERATION(compiler, i + 1, func_stmt->line, OP_METHOD_LOCAL);
+                    VARIABLE_OPERATION(compiler, klass_constant, func_stmt->line, OP_METHOD_LOCAL);
                     emit_byte(compiler, 1, func_stmt->line);
                 } else {
                     // global class
@@ -601,7 +603,7 @@ static void statement_emit_bytecode(Compiler *compiler, Statement *statement) {
 
                 if (local_index != -1) {
                     // class is local variable
-                    VARIABLE_OPERATION(compiler, local_index, func_stmt->line, OP_METHOD_LOCAL);
+                    VARIABLE_OPERATION(compiler, klass_constant, func_stmt->line, OP_METHOD_LOCAL);
                     emit_byte(compiler, 0, func_stmt->line);
                 } else {
                     // global class
@@ -1120,10 +1122,11 @@ static void emit_loop(Compiler *compiler, size_t location, size_t line) {
     emit_byte(compiler, (uint8_t) ((offset >> 16) & 0xff), line);
 }
 
-static void emit_class(Compiler *compiler, Value value, size_t line) {
-    write_class(current_chunk(compiler), value, line);
+static size_t emit_class(Compiler *compiler, Value value, size_t line) {
+    size_t index = write_class(current_chunk(compiler), value, line);
     // Add class objects
     Valueappend_arraylist(compiler->context->class_objs, value);
+    return index;
 }
 
 static int global_variable_decl(Compiler *compiler, Token name, Expression *expression, bool emit_nil) {

@@ -52,3 +52,140 @@
     puffln("ic=" + ic);
 
 }
+// __has_field和__del_field
+{
+    castle A{}
+    waa a = A();
+    a.f1 = 3;
+    a.f2 = 8;
+    puffln(a.f1);
+    puffln(a.f2);
+    puffln(a.f1 + a.f2);
+    puffln(__has_field(a, "f1"));
+    __del_field(a, "f1");
+    puffln(__has_field(a, "f1"));
+
+}
+
+{
+    castle A{
+        init(name){
+           this.name = name;
+           puffln("set name in init(): " + this.name);
+        }
+        m1(){
+           puffln("get name in m1():" + this.name);
+        }
+        m2(name){
+          this.name = name;
+          puffln("call m1() inside m2()");
+          this.m1();
+          puffln("set name in m2(): " + this.name);
+       }
+       m3(p){
+          magic f(){
+            puffln(this.name + " " + p);
+          }
+          home f;
+       }
+    }
+
+    castle B{
+      init(){
+         this.name = "MAMA";
+         puffln("init B");
+      }
+    }
+
+    puffln("call init");
+    waa a = A("baba and ");
+
+    puffln("get name in global:" + a.name);
+    puffln("call m1");
+
+    a.m1();
+
+    puffln("call m2");
+    a.m2("duoduo");
+
+    puffln("call m1");
+    waa m1 = a.m1;
+    m1();
+
+    puffln("get name in global call:" + a.name);
+    puffln("call m3");
+    waa f = a.m3("baba mama");
+    f();
+
+    a.b = B;
+    waa b = a.b();
+    puffln("b name: " + b.name);
+
+    a.c = shadow(x){puffln(x.name);};
+    puffln("call a.c()");
+    a.c(b);
+
+}
+// 多态和hero
+{
+    castle A{
+        m1(){
+           puffln("A m1()");
+        }
+        m2(){
+           puffln("m2");
+        }
+    }
+
+    castle B < A{
+      init(){
+        hero.m1();
+        waa m = hero.m1;
+        m();
+      }
+      m1(){
+        puffln("B m1");
+      }
+    }
+
+    waa b = B();
+    b.m2();
+    b.m1();
+    puffln(__has_method(b, "m1"));
+    puffln(__has_method(b, "m2"));
+    puffln(__has_method(A, "m2"));
+    puffln(__has_method(B, "m2"));
+    puffln(__has_method(A, "init"));
+
+}
+// 静态方法
+{
+    castle A{
+        static m1(){
+           puffln("A static m1()");
+        }
+        m2(){
+           puffln("A m2");
+           A.m1();
+        }
+    }
+
+    castle B < A{
+      m3(){
+         puffln("b call super methods:");
+         hero.m1();
+         hero.m2();
+      }
+    }
+
+    A.m1();
+    waa a = A();
+    a.m1();
+    waa m1 = A.m1;
+    m1();
+    puffln("call m2:");
+    a.m2();
+waa b = B();
+b.m3();
+
+}

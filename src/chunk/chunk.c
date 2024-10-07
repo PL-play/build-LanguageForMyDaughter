@@ -82,7 +82,7 @@ size_t add_constant(Chunk *c, Value value) {
   return c->constants->size - 1;
 }
 
-static void add_constant_and_write(Chunk *c, Value v, size_t line, uint8_t op) {
+static size_t add_constant_and_write(Chunk *c, Value v, size_t line, uint8_t op) {
   bool found = false;
   size_t i = find_value_in_constant(c, v, &found);
   size_t index = found ? i : add_constant(c, v);
@@ -96,6 +96,7 @@ static void add_constant_and_write(Chunk *c, Value v, size_t line, uint8_t op) {
     add_chunk(c, (uint8_t) ((index >> 8) & 0xff), line);
     add_chunk(c, (uint8_t) ((index >> 16) & 0xff), line);
   }
+  return index;
 }
 
 void write_constant(Chunk *c, Value v, size_t line) {
@@ -108,9 +109,9 @@ void write_closure(Chunk *c, Value v, size_t line) {
   add_constant_and_write(c, v, line, OP_CLOSURE);
 }
 
-void write_class(Chunk *c, Value v, size_t line) {
+size_t write_class(Chunk *c, Value v, size_t line) {
   assert(c != NULL);
-  add_constant_and_write(c, v, line, OP_CLASS);
+  return add_constant_and_write(c, v, line, OP_CLASS);
 }
 
 size_t find_value_in_constant(Chunk *c, Value target, bool *found) {

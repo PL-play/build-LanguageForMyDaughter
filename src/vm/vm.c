@@ -319,7 +319,7 @@ long factorial(int n) {
 
 #define METHOD_LOCAL(OP_) size_t slot = OP_;\
                           Value method = peek_last(vm);\
-                          Value klass = peek(vm, slot);\
+                          Value klass = Valueget_data_arraylist(get_frame_function(frame)->chunk->constants,slot);\
                           set_class_method(vm, klass, method, READ_BYTE(frame));
 
 
@@ -1379,7 +1379,7 @@ static InterpretResult run(VM *vm) {
 
     INS_GET_LOCAL_LONG: {
             size_t slot = READ_3BYTES(frame);
-            push(vm, vm->stack->data[slot]);
+            push(vm, vm->stack->data[frame->frame_stack +slot]);
             continue;
         }
 
