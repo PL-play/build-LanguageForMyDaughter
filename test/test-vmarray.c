@@ -48,7 +48,33 @@ static void test_array() {
   for (int i = 0; es[i] != NULL; ++i) {
     char *source = es[i];
 
-    printf("++++++++++++\n interpret for test string: \n\n%s \n+++++++++++\n", source);
+    printf("++++++++++++\n interpret for test array: \n\n%s \n+++++++++++\n", source);
+    printf("\n------ result ------\n");
+    InterpretResult result = interpret(&vm, NULL, source);
+    assert(result == INTERPRET_OK);
+    printf("\n\n\n");
+  }
+  free_VM(&vm);
+}
+
+static void test_array2() {
+  char *es[] = {
+    "want \"./duoduolib/libarr.duo\" as ll;\n",
+    //      "__len(1);", //throw error
+   "waa arr = __arr(2);"
+   "puffln(__type(arr));"
+   "puffln(__len(arr));"
+   "ll.printv(arr);"
+   "",
+    NULL
+  };
+  VM vm;
+  init_VM(&vm, NULL,NULL, true);
+
+  for (int i = 0; es[i] != NULL; ++i) {
+    char *source = es[i];
+
+    printf("++++++++++++\n interpret for test array2: \n\n%s \n+++++++++++\n", source);
     printf("\n------ result ------\n");
     InterpretResult result = interpret(&vm, NULL, source);
     assert(result == INTERPRET_OK);
@@ -59,6 +85,7 @@ static void test_array() {
 
 static UnitTestFunction tests[] = {
   test_array,
+  test_array2,
   NULL
 };
 

@@ -1379,7 +1379,7 @@ static InterpretResult run(VM *vm) {
 
     INS_GET_LOCAL_LONG: {
             size_t slot = READ_3BYTES(frame);
-            push(vm, vm->stack->data[frame->frame_stack +slot]);
+            push(vm, vm->stack->data[frame->frame_stack + slot]);
             continue;
         }
 
@@ -2990,4 +2990,18 @@ Value native_puff(int arg_count, Value *args, void *v) {
     printf("%s",AS_STRING(str)->string);
 #endif
     return NIL_VAL;
+}
+
+Value native_array(int arg_count, Value *args, void *v) {
+    VM *vm = v;
+    Value arg0 = args[0];
+    int size = (int) AS_NUMBER(arg0);
+    if (size <= 0)size = 0;
+    ValueArrayList *array_list = Valuenew_arraylist(size == 0 ? ARRAY_INIT_SIZE : size * 2);
+    for (int i = 0; i < size; i++) {
+        Valueappend_arraylist(array_list,NIL_VAL);
+    }
+    RTObjput_hash_table(vm->objects, (RTObjHashtableKey) array_list, sizeof(ObjArray));
+    vm->gc_info->bytes_allocated += sizeof(ObjArray);
+    return OBJ_VAL(new_array(array_list));
 }

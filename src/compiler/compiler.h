@@ -164,6 +164,15 @@ Value native_puffln(int arg_count, Value *args, void *);
  */
 Value native_puff(int arg_count, Value *args, void *);
 
+ /**
+ * new array with given size
+ *
+ * @param arg_count
+ * @param args
+ * @return
+ */
+Value native_array(int arg_count,Value* args,void *);
+
 int compile(Compiler *compiler, StatementArrayList *statement);
 
 /**
