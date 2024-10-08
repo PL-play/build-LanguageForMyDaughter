@@ -238,6 +238,15 @@ const codeSelection = [
         enabled: true,
         thumbnail: "thumbnail/list/t10.webp"
     },
+    {
+        id: 11,
+        name: "0xA. 妈妈也有话对朵朵说",
+        intro: "听妈妈的话，别动她的盲盒～" ,
+        codeContent: 'code/code11.duo',
+        storyContent: 'story/story11.html',
+        enabled: true,
+        thumbnail: "thumbnail/list/t11.png"
+    },
 
 ];
 
