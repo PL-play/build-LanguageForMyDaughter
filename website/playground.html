@@ -16,6 +16,9 @@
 <div id="githubLink"> by Ran | zhangran42@126.com | GitHub:
     <a href="https://github.com/PL-play/build-LanguageForMyDaughter"
        target="_blank">https://github.com/PL-play/build-LanguageForMyDaughter</a>
+    <button id="donateButton" onclick="showQRCode()">
+        <img src="path/to/your/donation_icon.png" alt="捐赠" style="width: 20px; height: 20px; vertical-align: middle;"> 捐赠
+    </button> <!-- 美化后的捐赠按钮 -->
 </div>
 
 <div id="container">
@@ -35,6 +38,14 @@
 
     </div>
     <div id="statusBar" class="placeholder">虚拟机状态信息将在这里显示</div>
+</div>
+
+<!-- 模态窗口，用于显示二维码 -->
+<div id="qrCodeModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="hideQRCode()">&times;</span>
+        <img id="qrCodeImage" src="thumbnail/donate.jpg" alt="二维码" style="width: 200px; height: 200px;">
+    </div>
 </div>
 
 <!-- 引入 CodeMirror 的 JavaScript -->

@@ -362,6 +362,23 @@ function showStoryModal(storyUrl) {
             document.body.appendChild(storyModal);
         });
 }
+function showQRCode() {
+    const qrCodeModal = document.getElementById("qrCodeModal");
+    qrCodeModal.style.display = "block";
+}
+
+function hideQRCode() {
+    const qrCodeModal = document.getElementById("qrCodeModal");
+    qrCodeModal.style.display = "none";
+}
+
+// 点击模态窗口外部时关闭模态
+window.onclick = function(event) {
+    const qrCodeModal = document.getElementById("qrCodeModal");
+    if (event.target === qrCodeModal) {
+        qrCodeModal.style.display = "none";
+    }
+}
 
 // 设置默认代码
 setDefaultCode();
