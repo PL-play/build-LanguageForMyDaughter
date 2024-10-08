@@ -18,40 +18,7 @@
     puffln(b.name);
 }
 
-{
-    castle A{}
-    puffln(A);
-    {
-      castle B{}
-      puffln(A);
-      puffln(B);
-      waa a = A;
-      puffln("a=" + a);
-      a = B;
-      puffln("a=" + a);
-    }
-    waa a = A;
-    puffln("a=" + a);
 
-    magic f1(){
-      castle Duoduo{}
-      puffln(Duoduo);
-      magic inf1(){
-        puffln("inf1:" + Duoduo);
-        home Duoduo;
-      }
-      home inf1;
-    }
-    waa f = f1();
-    waa c = f();
-    puffln(c);
-
-    puffln(A());
-    puffln(c());
-    waa ic = c();
-    puffln("ic=" + ic);
-
-}
 // __has_field和__del_field
 {
     castle A{}
@@ -153,9 +120,6 @@
     b.m1();
     puffln(__has_method(b, "m1"));
     puffln(__has_method(b, "m2"));
-    puffln(__has_method(A, "m2"));
-    puffln(__has_method(B, "m2"));
-    puffln(__has_method(A, "init"));
 
 }
 // 静态方法
@@ -185,36 +149,8 @@
     m1();
     puffln("call m2:");
     a.m2();
-waa b = B();
-b.m3();
+    waa b = B();
+    b.m3();
 
 }
 
-{
-    castle A{
-        init(name){
-            this.name =name;
-        }
-        m1(){
-            puffln(this.name+" m1");
-        }
-        m2(name){
-              puffln("m2 change "+ this.name+" to "+ name);
-              this.name=name;
-              puffln("new name "+ this.name);
-        }
-        m3(p){
-             puffln(this.name +"call m3 "+ p);
-        }
-    }
-    puffln(__has_method(A,"init"));
-    puffln(__has_method(A,"m1"));
-    puffln(__has_method(A,"m2"));
-    puffln(__has_method(A,"m3"));
-    waa a = A(1);
-    puffln(a.name);
-    a.m1();
-    a.m2("duoduo");
-    a.m1();
-    a.m3(100);
-}

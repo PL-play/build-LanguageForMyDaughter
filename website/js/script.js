@@ -222,12 +222,12 @@ const codeSelection = [
     },
     {
         id: 9,
-        name: "0x07. 幻影施法者的秘密与纯净魔法的力量",
-        intro: "朵朵在她的冒险中，遇到了一群神秘的施法者，他们的魔法不依赖于物理世界，而是通过纯粹的逻辑和函数实现。" ,
+        name: "0x08. 朵朵的愿望与魔法的分工",
+        intro: "朵朵在她的冒险中，学习了如何通过“模块”将不同的魔法划分开来，并且通过关键词want来调用她需要的部分。而want这个关键词，更让她想起了她在现实世界中第一个学会的词：“要”" ,
         codeContent: 'code/code9.duo',
-        storyContent: 'story/story8.html',
+        storyContent: 'story/story9.html',
         enabled: true,
-        thumbnail: "thumbnail/t8.webp"
+        thumbnail: "thumbnail/t9.webp"
     },
 
 ];

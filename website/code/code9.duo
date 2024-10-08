@@ -1,3 +1,9 @@
+/**
+ *  note： 在浏览器环境中，无法直接引用文件路径，而是在固定目录文件下。
+ *  如果你需要定义更多模块，和文件导入，请使用本地环境。
+ *  如果你还是想用浏览器环境，请在项目wasmzhistd目录下放置文件，
+ *  该目录会被默认编译为标准库，baba.duo和mama.duo就是如此
+ */
 want "baba.duo" as BABA;
 puffln("爸爸名字叫: "+BABA.name);
 puffln("爸爸 "+BABA.age + "岁");
