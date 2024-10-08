@@ -263,7 +263,6 @@ body {
 .closeButtonIcon::before {
     content: "\00d7"; /* 使用 Unicode 表示的叉号符号 */
 }
-
 /* 美化捐赠按钮 */
 #donateButton {
     background-color: #3a3a3a; /* 使用和页面背景更融合的颜色 */
