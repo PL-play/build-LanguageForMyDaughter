@@ -155,7 +155,7 @@ const codeSelection = [
         codeContent: 'code/code1.duo',
         storyContent: 'story/story1.html',
         enabled: true,
-        thumbnail: "thumbnail/t1.png"
+        thumbnail: "thumbnail/list/t1.webp"
     },
     {
         id: 2,
@@ -164,7 +164,7 @@ const codeSelection = [
         codeContent: 'code/code2.duo',
         storyContent: 'story/story2.html',
         enabled: true,
-        thumbnail: "thumbnail/t2.png"
+        thumbnail: "thumbnail/list/t2.webp"
     },
     {
         id: 3,
@@ -173,7 +173,7 @@ const codeSelection = [
         codeContent: 'code/code3.duo',
         storyContent: 'story/story3.html',
         enabled: true,
-        thumbnail: "thumbnail/t3.png"
+        thumbnail: "thumbnail/list/t3.webp"
     },
     {
         id: 4,
@@ -182,7 +182,7 @@ const codeSelection = [
         codeContent: 'code/code4.duo',
         storyContent: 'story/story4.html',
         enabled: true,
-        thumbnail: "thumbnail/t4.png"
+        thumbnail: "thumbnail/list/t4.webp"
     },
     {
         id: 5,
@@ -191,7 +191,7 @@ const codeSelection = [
         codeContent: 'code/code5.duo',
         storyContent: 'story/story5.html',
         enabled: true,
-        thumbnail: "thumbnail/t5.webp"
+        thumbnail: "thumbnail/list/t5.webp"
     },
     {
         id: 6,
@@ -200,7 +200,7 @@ const codeSelection = [
         codeContent: 'code/code6.duo',
         storyContent: 'story/story6.html',
         enabled: true,
-        thumbnail: "thumbnail/t6.webp"
+        thumbnail: "thumbnail/list/t6.webp"
     },
     {
         id: 7,
@@ -209,7 +209,7 @@ const codeSelection = [
         codeContent: 'code/code7.duo',
         storyContent: 'story/story7.html',
         enabled: true,
-        thumbnail: "thumbnail/t7.webp"
+        thumbnail: "thumbnail/list/t7.webp"
     },
     {
         id: 8,
@@ -218,7 +218,7 @@ const codeSelection = [
         codeContent: 'code/code8.duo',
         storyContent: 'story/story8.html',
         enabled: true,
-        thumbnail: "thumbnail/t8.webp"
+        thumbnail: "thumbnail/list/t8.webp"
     },
     {
         id: 9,
@@ -227,7 +227,7 @@ const codeSelection = [
         codeContent: 'code/code9.duo',
         storyContent: 'story/story9.html',
         enabled: true,
-        thumbnail: "thumbnail/t9.webp"
+        thumbnail: "thumbnail/list/t9.webp"
     },
     {
         id: 10,
@@ -236,7 +236,7 @@ const codeSelection = [
         codeContent: 'code/code10.duo',
         storyContent: 'story/story10.html',
         enabled: true,
-        thumbnail: "thumbnail/t10.webp"
+        thumbnail: "thumbnail/list/t10.webp"
     },
 
 ];
