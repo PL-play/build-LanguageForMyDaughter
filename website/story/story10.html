@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>故事时光 - 创造属于自己的魔法世界</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #FFE4E1;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .magic-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background: #FFF8DC;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: #FF69B4;
+            margin-bottom: 20px;
+        }
+
+        .story-section {
+            border: 2px solid #FFD700;
+            padding: 20px;
+            border-radius: 20px;
+            background: #FFFAF0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        .story-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #FF6347;
+        }
+
+        .code-block {
+            background: #f4f4f4;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        .story-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="magic-container">
+    <h1 class="title">故事时光 - 创造属于自己的魔法世界</h1>
+    <div class="story-section">
+        <div class="story-text">
+            <span class="highlight">0x09. 创造属于自己的魔法世界</span><br><br>
+            <span class="highlight">开篇：魔法世界的崩塌</span><br><br>
+            朵朵从梦中醒来，发现她所在的魔法世界正在逐渐失去活力。天空中飘浮的魔法符号变得模糊，原本强大的骑士们失去了他们的力量，魔法城堡也开始崩塌。所有的魔法师都陷入了绝望，无法阻止这种毁灭。<br><br>
+            “朵朵，”守护者的声音在她耳边响起，“魔法世界正在瓦解，原因是它的根基不稳。只有你能拯救这个世界。你掌握了所有的编程和魔法知识，现在是时候把它们结合起来，重建这个世界。”<br><br>
+            朵朵感受到肩上沉重的责任，但她没有退缩。她明白，这一次，她将要面对的是一个前所未有的挑战。她需要运用自己所有的知识——类、模块、函数、闭包、递归、匿名函数，还有本地函数——创造一个全新的、稳定的魔法系统。<br><br>
+            <img class="story-image" src="thumbnail/story10-1.webp" alt="">
+            <br><br>
+            <span class="highlight">重建魔法世界的基础</span><br><br>
+            首先，朵朵知道，重建魔法世界的基础在于模块化和有序的结构。她决定为每一部分魔法世界创建独立的模块，这样可以让它们互不干扰，并且更加灵活可维护。她用<span class="highlight">want</span>来引入这些模块，并确保它们能够协同工作。<br><br>
+            她创建了“天空模块”和“地面模块”，分别负责管理天空的星星和地面的建筑：
+            <div class="code-block">
+                want "sky.duo" as SKY;
+                want "earth.duo" as EARTH;
+
+                puffln("重建天空...");
+                SKY.create_stars();
+
+                puffln("重建大地...");
+                EARTH.build_castles();
+            </div>
+            通过这种模块化设计，朵朵确保了魔法世界的不同部分能够独立运作，并且在需要时可以轻松维护和更新。<br><br>
+            <span class="highlight">本地函数的运用</span><br><br>
+            朵朵在重建魔法世界时，不仅依靠了她自己设计的法术，还使用了系统内置的本地函数，这些本地函数为她提供了更多的便利和强大的功能。守护者告诉她：“本地函数是魔法系统的一部分，它们就像语言的内置魔法，帮助你快速完成常见任务。”<br><br>
+            当朵朵需要知道现在的时间时，她使用了<span class="highlight">__clock</span>函数：
+            <div class="code-block">
+                puffln("当前时间: " + __clock());
+            </div>
+            在创建新骑士时，她通过<span class="highlight">__has_field</span>检查骑士是否具备某些属性：
+            <div class="code-block">
+                puffln(__has_field(骑士, "name"));  // 输出: true
+            </div>
+            当她需要创建魔法数组时，<span class="highlight">__arr</span>函数帮助她迅速完成：
+            <div class="code-block">
+                waa arr = __arr(10);
+                puffln(__len(arr));  // 输出: 10
+            </div>
+            守护者告诉朵朵，在她的语言系统中，有一组特别强大的本地函数，它们是魔法系统的核心。它们能够快速高效地执行任务，并且可以扩展，让语言具备无限的可能性。<br><br>
+            本地函数就像是语言系统中的“内置法术”，它们可以直接调用，帮助朵朵执行常见的任务，比如获取对象的类型、计算数组长度、检查属性或方法是否存在，等等。<br><br>
+            这些本地函数的定义如下：
+            <ul>
+                <li><span class="highlight">_clock</span>：返回当前的时间，帮助朵朵追踪时间流逝。</li>
+                <li><span class="highlight">__GC</span>：执行垃圾回收，清理不再需要的魔法数据，保持世界的整洁。(注意：当用户调用“__GC（）”函数时，虚拟机将其视为垃圾收集的“建议”，而不是一定执行。虚拟机有自己的执行策略。但可以配置，控制有多少“建议”后肯定会触发GC。一般而言用户无需手动调用该函数，该函数只做为调试和测试中的能力给出。如果你想要尝试，在编译项目是添加GC_TRIGGER参数，且设置为1，保证调用后必定触发一次GC)</li>
+                <li><span class="highlight">__has_field</span>：检查对象是否有特定的属性（字段）。</li>
+                <li><span class="highlight">__del_field</span>：删除对象中的某个属性（字段）。</li>
+                <li><span class="highlight">__has_method</span>：检查对象是否实现了某个特定方法。</li>
+                <li><span class="highlight">__len</span>：返回数组或字符串的长度。</li>
+                <li><span class="highlight">__type</span>：返回对象的类型，帮助识别魔法元素的种类。</li>
+                <li><span class="highlight">__str</span>：将对象转换为字符串，便于显示和输出。</li>
+                <li><span class="highlight">puffln</span>：输出魔法消息，并在之后换行，便于记录或调试。</li>
+                <li><span class="highlight">puff</span>：输出魔法消息，不换行，适合连续展示。</li>
+                <li><span class="highlight">__arr</span>：创建一个新数组。</li>
+            </ul>
+            这些本地函数不仅让朵朵的魔法更加高效，还展现了语言系统的强大扩展性。她明白了，本地函数的存在让她能够快速处理系统级任务，而无需从头编写所有逻辑。<br><br>
+            <span class="highlight">本地函数与语言的未来</span><br><br>
+            守护者对朵朵说道：“本地函数就像是语言的支柱，它们使得你的语言不仅具备基础的魔法能力，还可以处理高级任务。而且，你可以不断扩展这些本地函数，为你的语言加入新的功能。”<br><br>
+            朵朵明白了，这些本地函数不仅帮助她完成了许多常见的任务，还让她的语言更具灵活性和可扩展性。未来，她还可以继续为语言系统添加更多的本地函数，提升语言的能力，解决更复杂的魔法挑战。<br><br>
+            <span class="highlight">使用类与继承，赋予骑士新生</span><br><br>
+            朵朵知道，世界的核心力量来自骑士，而骑士们的力量源自于类与继承。她决定重建骑士的体系，通过类的设计，让骑士们不仅继承原有的力量，还能够获得新的技能。<br><br>
+            她首先创建了一个基础骑士类，并通过继承让不同类型的骑士能够拥有各自的特技。
+            <div class="code-block">
+                castle 基础骑士 {
+                    init(name) {
+                        this.name = name;
+                        puffln(this.name + " 骑士诞生了！");
+                    }
+
+                    战斗() {
+                        puffln(this.name + " 正在战斗...");
+                    }
+                }
+
+                castle 魔法骑士 < 基础骑士 {
+                     施法() {
+                        puffln(this.name + " 正在施展强大的魔法！");
+                    }
+                }
+            </div>
+            接着，她为每个新骑士赋予生命，并赋予他们不同的任务：
+            <div class="code-block">
+                waa 魔法骑士1 = 魔法骑士("星辰骑士");
+                魔法骑士1.战斗();
+                魔法骑士1.施法();
+            </div>
+            通过类和继承，朵朵让魔法骑士们重新获得了力量，他们不仅继承了基础骑士的战斗技能，还获得了施展魔法的能力。这种设计让她能够轻松扩展不同类型的骑士，而无需从头开始编写每个骑士的技能。<br><br>
+            <span class="highlight">多态与系统的灵活性</span><br><br>
+            在最后的挑战中，朵朵运用多态的魔法，让她的骑士们根据不同的情况执行不同的任务。她创建了一个通用的任务分配系统，根据骑士的类型分配不同的任务。
+            <div class="code-block">
+                magic 执行任务(骑士) {
+                    骑士.战斗();
+                }
+
+                执行任务(魔法骑士1);  // 输出: 星辰骑士 正在战斗...
+            </div>
+            通过多态，朵朵的骑士们能够灵活地应对不同的任务，无论是战斗还是施展魔法。这种设计让她的系统变得更加灵活，能够根据不同的需求动态调整骑士的行为。<br><br>
+            <span class="highlight">朵朵的终极愿望</span><br><br>
+            一切准备就绪后，朵朵站在魔法世界的中心，手中举起魔杖，心中默念着一个愿望：“我要拯救这个世界。”<br><br>
+            她用want这个关键词，召唤出所有她需要的模块和力量，将它们融合在一起，创造了一个全新的魔法系统。她不仅重建了天空和大地，还赋予了骑士们新的生命与力量，让整个魔法世界焕然一新。<br><br>
+            最终，魔法世界重新恢复了生机，天空中的星星再次闪耀，骑士们守护着他们的城堡，而朵朵站在高处，看着自己所创造的一切，感到无比自豪。<br><br>
+            <img class="story-image" src="thumbnail/story10-2.webp" alt="">
+            <br><br>
+            <span class="highlight">总结：</span><br>
+            <ul>
+                <li><span class="highlight">模块化</span>让朵朵能够清晰地管理和维护她的魔法世界。</li>
+                <li><span class="highlight">本地函数</span>让她的魔法更高效，通过系统内置的功能处理常见任务。</li>
+                <li><span class="highlight">函数式编程与闭包</span>赋予她处理复杂问题的灵活性。</li>
+                <li><span class="highlight">类与继承</span>让骑士们能够传承力量，并获得新的技能。</li>
+                <li><span class="highlight">多态</span>让系统变得灵活，能够根据情况动态调整行为。</li>
+            </ul>
+            朵朵明白了，编程和魔法一样，不仅仅是工具，更是一种表达创造的方式。她通过运用所有学到的知识，创造了一个属于自己的全新魔法世界。最终，朵朵看向远方，心中充满了无限的可能性——未来的冒险，正在等待她去探索。
+        </div>
+    </div>
+    <div class="footer">爸爸妈妈爱你，愿每晚都有甜美的梦</div>
+</div>
+</body>
+</html>

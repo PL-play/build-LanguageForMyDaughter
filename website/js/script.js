@@ -229,6 +229,15 @@ const codeSelection = [
         enabled: true,
         thumbnail: "thumbnail/t9.webp"
     },
+    {
+        id: 10,
+        name: "0x09. 朵朵的终极试炼：创造与重生",
+        intro: "朵朵在历经了无数次冒险之后，面对一个终极挑战——她的魔法世界面临崩塌的危机。为了拯救它，她必须运用所有学到的知识，结合类、函数、模块、闭包、递归和本地函数的力量，创造一个全新的魔法系统，让魔法世界重获新生" ,
+        codeContent: 'code/code10.duo',
+        storyContent: 'story/story10.html',
+        enabled: true,
+        thumbnail: "thumbnail/t10.webp"
+    },
 
 ];
 
