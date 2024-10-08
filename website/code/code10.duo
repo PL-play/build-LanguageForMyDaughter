@@ -1,2 +1,31 @@
 // 谢谢你
 puffln("谢谢你的陪伴");
+
+want "baba.duo" as BABA;
+want "mama.duo" as MAMA;
+
+castle Home {
+    init(){
+    	this.baba = BABA;
+      	this.mama = MAMA;
+    }
+
+}
+
+castle Duo < Home{
+	init(){
+      	hero.init();
+      	this.name = "朵朵";
+      	this.age = 1;
+    }
+
+  	play(){
+    	puffln(this.name + "在爸爸"+this.baba.name + "和妈妈"+ this.mama.name + "的身边茁壮成长！");
+    }
+}
+
+
+waa duoduo = Duo();
+puffln(duoduo.baba);
+puffln(duoduo.mama);
+duoduo.play();
