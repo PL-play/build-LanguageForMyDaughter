@@ -245,7 +245,16 @@ const codeSelection = [
         codeContent: 'code/code11.duo',
         storyContent: 'story/story11.html',
         enabled: true,
-        thumbnail: "thumbnail/list/t11.png"
+        thumbnail: "thumbnail/list/t11.webp"
+    },
+    {
+        id: 12,
+        name: "0xB. 那爸爸也说几句吧",
+        intro: "I Am Your Father!" ,
+        codeContent: 'code/code12.duo',
+        storyContent: 'story/story12.html',
+        enabled: true,
+        thumbnail: "thumbnail/list/t12.webp"
     },
 
 ];
