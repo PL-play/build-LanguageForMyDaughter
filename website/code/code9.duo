@@ -1,13 +1,15 @@
 want "baba.duo" as BABA;
-puffln("BABA name: "+BABA.name);
-puffln("BABA age: "+BABA.age);
-puffln("BABA height: "+BABA.height);
-puffln("BABA weight: "+BABA.weight);
+puffln("爸爸名字叫: "+BABA.name);
+puffln("爸爸 "+BABA.age + "岁");
+puffln("爸爸身高: "+BABA.height+"m");
+puffln("爸爸体重: "+BABA.weight+"斤");
+puffln("爸爸对朵朵说: \n");
 BABA.love_duoduo();
 
 want "mama.duo" as MAMA;
-puffln("MAMA name: "+MAMA.name);
-puffln("MAMA age: "+MAMA.age);
-puffln("MAMA height: "+MAMA.height);
-puffln("MAMA weight: "+MAMA.weight);
+puffln("妈妈名字叫: "+MAMA.name);
+puffln("妈妈 "+MAMA.age+"岁");
+puffln("妈妈身高: "+BABA.height+"m");
+puffln("妈妈体重: "+BABA.weight+"斤");
+puffln("妈妈对朵朵说: \n");
 MAMA.love_duoduo();
