@@ -220,6 +220,15 @@ const codeSelection = [
         enabled: true,
         thumbnail: "thumbnail/t8.webp"
     },
+    {
+        id: 9,
+        name: "0x07. 幻影施法者的秘密与纯净魔法的力量",
+        intro: "朵朵在她的冒险中，遇到了一群神秘的施法者，他们的魔法不依赖于物理世界，而是通过纯粹的逻辑和函数实现。" ,
+        codeContent: 'code/code9.duo',
+        storyContent: 'story/story8.html',
+        enabled: true,
+        thumbnail: "thumbnail/t8.webp"
+    },
 
 ];
 

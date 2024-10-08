@@ -144,6 +144,12 @@ static void reset_stack(VM *vm);
 
 static bool should_trigger_gc(VM *vm);
 
+static const char b64_table[] =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+
+static int base64_decode(const char *encoded, uint8_t **decoded, size_t *decoded_size);
+
 static int const init_len = strlen(INIT_METHOD_NAME);
 static uint32_t init_hash = 0;
 
@@ -175,6 +181,23 @@ long factorial(int n) {
         f *= i;
     return f;
 }
+
+
+#ifdef WASM_LOG
+struct WASM_ZHI_FileData {
+    const char *name;
+    const char *base64_content;
+    size_t size;
+};
+
+typedef struct WASM_ZHI_FileData WASM_ZHI_FileData;
+
+extern WASM_ZHI_FileData wasm_std_file_data[];
+
+static WASM_ZHI_FileData *get_wasm_zhi_file_data(const char *file_name);
+#endif
+// TODO WASM only, test
+
 
 // *********** macro methods *****************
 #define COPY_METHODS(FROM_, TO_) { \
@@ -1636,33 +1659,61 @@ static InterpretResult run(VM *vm) {
             // stack: [path][alias]
             ObjString *alias = AS_STRING(pop(vm));
             ObjString *path = AS_STRING(pop(vm));
+#ifdef WASM_LOG
+            WASM_ZHI_FileData *file_data = get_wasm_zhi_file_data(path->string);
+#endif
+            uint8_t *decoded_content;
             char module_abs_path[PATH_MAX];
-            resolve_module_abs_path(vm, path->string, module_abs_path);
+            bool wasm_find_std = false;
+#ifdef WASM_LOG
+            if (file_data != NULL) {
+                // find std
+                wasm_find_std = true;
+                strcpy(module_abs_path, path->string);
+                // 解码 Base64 内容
+                size_t decoded_size;
+                int ret = base64_decode(file_data->base64_content, &decoded_content, &decoded_size);
+                if (ret != 0) {
+                    runtime_error(vm, "Can't want lib from '%s'.", path->string);
+                    return INTERPRET_RUNTIME_ERROR;
+                }
+            }
+#endif
+            if (!wasm_find_std) {
+                resolve_module_abs_path(vm, path->string, module_abs_path);
+            }
 #ifdef DEBUG_TRACE_EXECUTION
       printf("resolve module [%s] get: [%s]\n", path->string, module_abs_path);
 #endif
-            if (strlen(module_abs_path) == 0) {
-                runtime_error(vm, "Can't want lib from '%s'. Lib path not found.", path->string);
-                return INTERPRET_RUNTIME_ERROR;
-            }
-            FILE *file = fopen(module_abs_path, "rb");
-            if (file == NULL) {
-                runtime_error(vm, "Can't want lib from '%s'. Read content failed.", path->string);
-                return INTERPRET_RUNTIME_ERROR;
+
+
+            char *lib_content = NULL;
+            if (!wasm_find_std) {
+                if (strlen(module_abs_path) == 0) {
+                    runtime_error(vm, "Can't want lib from '%s'. Lib path not found.", path->string);
+                    return INTERPRET_RUNTIME_ERROR;
+                }
+                FILE *file = fopen(module_abs_path, "rb");
+                if (file == NULL) {
+                    runtime_error(vm, "Can't want lib from '%s'. Read content failed.", path->string);
+                    return INTERPRET_RUNTIME_ERROR;
+                }
+
+                fseek(file, 0L, SEEK_END);
+                size_t file_size = ftell(file);
+                rewind(file);
+
+                lib_content = malloc(file_size + 1);
+                size_t read_len = fread(lib_content, sizeof(char), file_size, file);
+                if (read_len < file_size) {
+                    runtime_error(vm, "Can't resolve lib '%s'.", path->string);
+                    return INTERPRET_RUNTIME_ERROR;
+                }
+                lib_content[read_len] = '\0';
+                fclose(file);
             }
 
-            fseek(file, 0L, SEEK_END);
-            size_t file_size = ftell(file);
-            rewind(file);
 
-            char content[file_size + 1];
-            size_t read_len = fread(content, sizeof(char), file_size, file);
-            if (read_len < file_size) {
-                runtime_error(vm, "Can't resolve lib '%s'.", path->string);
-                return INTERPRET_RUNTIME_ERROR;
-            }
-            content[read_len] = '\0';
-            fclose(file);
 #ifdef DEBUG_TRACE_EXECUTION
       printf("\n---------------\n");
       printf("lib: [%s] content:\n+++++++++\n%s\n", module_abs_path, content);
@@ -1710,8 +1761,13 @@ static InterpretResult run(VM *vm) {
 #ifdef DEBUG_TRACE_EXECUTION
       printf("interpret module: %s\n", module_abs_path);
 #endif
-            InterpretResult result = interpret(sub_vm, module_abs_path, content);
-
+            InterpretResult result = interpret(sub_vm, module_abs_path,
+                                               wasm_find_std ? (char *) decoded_content : lib_content);
+            if (wasm_find_std) {
+                free(decoded_content);
+            } else {
+                free(lib_content);
+            }
             if (result != INTERPRET_OK) {
                 runtime_error(vm, "Want lib ['%s']. error.", path->string);
                 return INTERPRET_RUNTIME_ERROR;
@@ -3017,4 +3073,48 @@ Value native_array(int arg_count, Value *args, void *v) {
     RTObjput_hash_table(vm->objects, (RTObjHashtableKey) array_list, sizeof(ObjArray));
     vm->gc_info->bytes_allocated += sizeof(ObjArray);
     return OBJ_VAL(new_array(array_list));
+}
+#ifdef WASM_LOG
+static WASM_ZHI_FileData *get_wasm_zhi_file_data(const char *file_name) {
+    for (int i = 0; wasm_std_file_data[i].name != NULL; i++) {
+        if (strcmp(wasm_std_file_data[i].name, file_name) == 0) {
+            return &wasm_std_file_data[i];
+        }
+    }
+    return NULL;
+}
+#endif
+
+
+static int base64_decode(const char *encoded, uint8_t **decoded, size_t *decoded_size) {
+    size_t len = strlen(encoded);
+    size_t padding = 0;
+
+    if (encoded[len - 1] == '=') padding++;
+    if (encoded[len - 2] == '=') padding++;
+
+    *decoded_size = (len / 4) * 3 - padding;
+
+    *decoded = malloc(*decoded_size + 1);
+    if (*decoded == NULL) return -1;
+
+    uint8_t *p = *decoded;
+
+    for (size_t i = 0; i < len; i += 4) {
+        uint32_t n = 0;
+
+        for (int j = 0; j < 4; j++) {
+            if (encoded[i + j] != '=') {
+                n = (n << 6) + (strchr(b64_table, encoded[i + j]) - b64_table);
+            } else {
+                n = (n << 6);
+            }
+        }
+
+        *(p++) = (n >> 16) & 0xFF;
+        if (encoded[i + 2] != '=') *(p++) = (n >> 8) & 0xFF;
+        if (encoded[i + 3] != '=') *(p++) = n & 0xFF;
+    }
+    (*decoded)[*decoded_size] = '\0';
+    return 0;
 }

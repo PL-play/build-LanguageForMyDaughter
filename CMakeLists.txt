@@ -15,15 +15,58 @@ set(CMAKE_C_STANDARD 11)
 include_directories("src")
 include_directories("src/zcollection/include")
 include_directories("src/zjson/include")
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
     add_definitions(-DWASM_LOG=ON)
     add_definitions(-DINIT_GC=1024*5)
 endif ()
 # 递归获取 src 目录下的所有 .c文件
 file(GLOB_RECURSE SRC_FILES src/*.c)
+set(SRC_FILES ${SRC_FILES})
+# 为了在浏览器中模拟模块导入
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+    # 定义输入目录和输出的 C 源文件路径
+    set(INPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/wasmzhistd)
+    set(OUTPUT_FILE ${CMAKE_BINARY_DIR}/wasmstd.c)
 
+    # 获取指定目录下的所有文件（递归）
+    file(GLOB_RECURSE ALL_FILES "${INPUT_DIRECTORY}/*")
+
+    # 开始生成 C 文件
+    file(WRITE ${OUTPUT_FILE} "#include <stddef.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n")
+    file(APPEND ${OUTPUT_FILE} "struct WASM_ZHI_FileData {\n    const char* name;\n    const char* base64_content;\n    size_t size;\n};\n\n")
+
+    file(APPEND ${OUTPUT_FILE} "struct WASM_ZHI_FileData wasm_std_file_data[] = {\n")
+
+    # 遍历所有文件
+    foreach (FILE_PATH ${ALL_FILES})
+        # 获取相对路径
+        file(RELATIVE_PATH REL_PATH ${INPUT_DIRECTORY} ${FILE_PATH})
+
+        # 使用 Python 脚本对文件进行 Base64 编码，并将结果写入 C 文件
+        execute_process(
+                COMMAND python3 -c "
+import base64
+with open('${FILE_PATH}', 'rb') as f:
+    content = f.read()
+    encoded = base64.b64encode(content).decode('utf-8')
+    print(f'    {{\"${REL_PATH}\", \"' + encoded + '\", ' + str(len(content)) + ' },')
+"
+                OUTPUT_VARIABLE BASE64_CONTENT
+        )
+
+        # 将 Base64 编码的内容添加到 C 文件
+        file(APPEND ${OUTPUT_FILE} "${BASE64_CONTENT}")
+    endforeach ()
+
+    # 数组结束
+    file(APPEND ${OUTPUT_FILE} "    {NULL, NULL, 0} // 数组结束\n};\n")
+
+    # 将生成的文件添加到项目的源文件列表中
+    set(SRC_FILES ${SRC_FILES} ${OUTPUT_FILE})
+endif ()
 # 添加静态或共享库
 add_library(zhi_core ${SRC_FILES})
+
 
 target_link_libraries(zhi_core PUBLIC
         m
@@ -32,8 +75,10 @@ target_link_libraries(zhi_core PUBLIC
         #        /usr/local/lib/libZCollection.a #手动连接库
         #        /usr/local/lib/libZJSON.a
 )
+
+
 # 测试用例，非emcmake时测试时开启
-if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+if (NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
     # tests
     file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/test/*.c")
     foreach (file ${files})
@@ -87,7 +132,7 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
     endforeach ()
 endif ()
 
-if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+if (NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
     # 添加 main.c 作为可执行程序
     add_executable(ZHI zhi/main.c)
 
@@ -100,7 +145,7 @@ endif ()
 
 # 检测是否使用 Emscripten
 # 单独为 WebAssembly 设置目标
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
     # 为 Wasm 构建使用不同的入口文件
     add_executable(ZHI_wasm wasm/wasm_main.c)
 
@@ -133,7 +178,7 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
 
     # 安装生成的文件
     install(TARGETS ZHI_wasm RUNTIME DESTINATION bin)
-endif()
+endif ()
 
 
 

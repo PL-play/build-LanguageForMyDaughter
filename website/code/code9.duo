@@ -1,0 +1,13 @@
+want "baba.duo" as BABA;
+puffln("BABA name: "+BABA.name);
+puffln("BABA age: "+BABA.age);
+puffln("BABA height: "+BABA.height);
+puffln("BABA weight: "+BABA.weight);
+BABA.love_duoduo();
+
+want "mama.duo" as MAMA;
+puffln("MAMA name: "+MAMA.name);
+puffln("MAMA age: "+MAMA.age);
+puffln("MAMA height: "+MAMA.height);
+puffln("MAMA weight: "+MAMA.weight);
+MAMA.love_duoduo();
