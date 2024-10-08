@@ -161,7 +161,7 @@ typedef Value (*value_add_operation)(Value a, Value b, VM *v);
 
 static Value string_add_string(Value a, Value b, VM *v) {
 }
-
+// TODO
 static value_add_operation ADD_OPERATION_RULE[][13] = {
     [VAL_BOOL] = {
         [VAL_BOOL] = string_add_string,
@@ -182,6 +182,32 @@ long factorial(int n) {
     return f;
 }
 
+#define LOG_WITH_PREFIX(_pre)   va_list args;\
+                                va_start(args, format);\
+                                vfprintf(stderr, format, args);\
+                                char buffer[500];\
+                                vsnprintf(buffer, sizeof(buffer), format, args);\
+                                char final_message[512];\
+                                snprintf(final_message, sizeof(final_message), _pre"-%s", buffer);\
+                                EM_ASM_({console.warn(UTF8ToString($0));}, final_message);
+
+void wasm_log(const char *format, ...) {
+#ifdef WASM_LOG
+    LOG_WITH_PREFIX("[status]")
+#endif
+}
+
+void wasm_err(const char *format, ...) {
+#ifdef WASM_LOG
+    LOG_WITH_PREFIX("[status][error]")
+#endif
+}
+
+void wasm_info(const char *format, ...) {
+#ifdef WASM_LOG
+    LOG_WITH_PREFIX("[status][info]")
+#endif
+}
 
 #ifdef WASM_LOG
 struct WASM_ZHI_FileData {
@@ -195,6 +221,7 @@ typedef struct WASM_ZHI_FileData WASM_ZHI_FileData;
 extern WASM_ZHI_FileData wasm_std_file_data[];
 
 static WASM_ZHI_FileData *get_wasm_zhi_file_data(const char *file_name);
+
 #endif
 // TODO WASM only, test
 
@@ -1660,6 +1687,7 @@ static InterpretResult run(VM *vm) {
             ObjString *alias = AS_STRING(pop(vm));
             ObjString *path = AS_STRING(pop(vm));
 #ifdef WASM_LOG
+            wasm_info("import module from %s", path->string);
             WASM_ZHI_FileData *file_data = get_wasm_zhi_file_data(path->string);
 #endif
             uint8_t *decoded_content;
@@ -1691,11 +1719,13 @@ static InterpretResult run(VM *vm) {
             if (!wasm_find_std) {
                 if (strlen(module_abs_path) == 0) {
                     runtime_error(vm, "Can't want lib from '%s'. Lib path not found.", path->string);
+                    wasm_err("Can't want lib from '%s'. Lib path not found.", path->string);
                     return INTERPRET_RUNTIME_ERROR;
                 }
                 FILE *file = fopen(module_abs_path, "rb");
                 if (file == NULL) {
                     runtime_error(vm, "Can't want lib from '%s'. Read content failed.", path->string);
+                    wasm_err("Can't want lib from '%s'. Read content failed.", path->string);
                     return INTERPRET_RUNTIME_ERROR;
                 }
 
@@ -1707,6 +1737,7 @@ static InterpretResult run(VM *vm) {
                 size_t read_len = fread(lib_content, sizeof(char), file_size, file);
                 if (read_len < file_size) {
                     runtime_error(vm, "Can't resolve lib '%s'.", path->string);
+                    wasm_err("Can't resolve lib '%s'.", path->string);
                     return INTERPRET_RUNTIME_ERROR;
                 }
                 lib_content[read_len] = '\0';
@@ -1739,6 +1770,7 @@ static InterpretResult run(VM *vm) {
                     // abort the vm.
                     // TODO print the circular path
                     print_error(vm, "Circular dependency for lib '%s.", path->string);
+                    wasm_err("Circular dependency for lib '%s.", path->string);
                     exit(70);
                 }
                 // get module from cache
@@ -1747,6 +1779,7 @@ static InterpretResult run(VM *vm) {
 #ifdef DEBUG_TRACE_EXECUTION
         printf("resolve cached module:[%s]\n", cached_module->lib->string);
 #endif
+                wasm_log("Resolve cached module:[%s]", cached_module->lib->string);
                 push(vm, OBJ_VAL(cached_module));
                 continue;
             }
@@ -1761,6 +1794,7 @@ static InterpretResult run(VM *vm) {
 #ifdef DEBUG_TRACE_EXECUTION
       printf("interpret module: %s\n", module_abs_path);
 #endif
+            wasm_info("Interpret module: %s\n", module_abs_path);
             InterpretResult result = interpret(sub_vm, module_abs_path,
                                                wasm_find_std ? (char *) decoded_content : lib_content);
             if (wasm_find_std) {
@@ -1770,20 +1804,22 @@ static InterpretResult run(VM *vm) {
             }
             if (result != INTERPRET_OK) {
                 runtime_error(vm, "Want lib ['%s']. error.", path->string);
+                wasm_err("Want lib ['%s']. error.", path->string);
                 return INTERPRET_RUNTIME_ERROR;
             }
 
             ObjModule *module = register_module(sub_vm, path);
             push(vm, OBJ_VAL(module));
-
+            wasm_info("Registering module...");
             // cache module
             Moduleput_hash_table(lib_path_visited, &path_string, module);
-
+            wasm_log("Cache module...");
             RTObjput_hash_table(vm->objects, (RTObjHashtableKey) module, sizeof(ObjModule));
             vm->gc_info->bytes_allocated += sizeof(ObjModule);
-
+            wasm_log("Update GC bytes allocated");
             // merge runtime objects
             merge_rt_obj(vm, sub_vm);
+            wasm_log("Merge runtime objects...");
 
             // free subcontext global names
             String_free_hash_table(sub_context.global_names);
