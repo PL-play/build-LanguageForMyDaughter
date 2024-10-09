@@ -1,9 +1,0 @@
-want "baba.duo" as BABA;
-want "mama.duo" as MAMA;
-
-name = "朵朵";
-age = 1;
-
-castle Home {
-    init
-}
