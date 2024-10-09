@@ -1,8 +1,18 @@
+// map, reduce
 magic map(iter, fn){
     loop(waa i = 0; i < __len(iter); i=i+1) {
         iter[i] = fn(iter[i]);
     }
 }
+
+magic reduce(iter, initv, fn){
+  	waa acc = initv;
+	loop(waa i=0;i < __len(iter); i=i+1){
+		acc = fn(acc ,iter[i]);
+    }
+  	home acc;
+}
+
 magic printv(arr) {
    wish (__type(arr) != __array_type) {
      puff(arr);
@@ -18,12 +28,21 @@ magic printv(arr) {
    }
    puff("]");
 }
+magic printvln(arr){
+	printv(arr);
+  	puffln("");
+}
 
 magic power(n){
     home shadow(x){
         home x^n;
     };
 }
+
+magic sum(a,b){
+	home a+b;
+}
+
 // 使用__arr(size)函数创建数组
 magic new_arr(size,init_fn){
     waa arr = __arr(size);
@@ -34,13 +53,14 @@ magic new_arr(size,init_fn){
 }
 
 waa list = new_arr(10, shadow(x){home x;});
-printv(list);
-puff("\n");
+printvln(list);
+puffln(reduce(list,0,sum));
 map(list,power(2));
-printv(list);
-puff("\n");
+printvln(list);
+puffln(reduce(list,0,sum));
 list = new_arr(10, shadow(x){home x*-1;});
-printv(list);
-puff("\n");
+printvln(list);
+puffln(reduce(list,0,sum));
 map(list,power(3));
-printv(list);
+printvln(list);
+puffln(reduce(list,0,sum));
