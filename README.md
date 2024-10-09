@@ -4,6 +4,8 @@
 
 This project is the development of a custom programming language designed with simplicity and creativity in mind, created as a fun, learning-oriented language for my daughter. It is a dynamic, interpreted language featuring bytecode, a virtual machine, garbage collection (GC), and debugging tools such as AST (Abstract Syntax Tree) output and bytecode decompilation, allowing playful coding concepts while remaining powerful enough to demonstrate important programming fundamentals.
 
+Online playground:
+https://cool.duoduo.baby/
 ## Project Structure
 
 - **src**: Contains all source code for the core language.
