@@ -6,7 +6,7 @@ This project is the development of a custom programming language designed with s
 
 ## Project Structure
 
-- **src**: Contains all source code for the core language, including:
+- **src**: Contains all source code for the core language.
 
 - **test**: Includes unit tests for the various parts of the language core.
 
