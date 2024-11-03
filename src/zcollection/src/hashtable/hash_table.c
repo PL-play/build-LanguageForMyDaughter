@@ -20,7 +20,7 @@
 #define PRIME_INDEXES 25
 
 /**
- * This is a set of good hash string_intern prime numbers, from:
+ * This is a set of good hash prime numbers, from:
  *   https://planetmath.org/goodhashtableprimes
  */
 static const unsigned int hash_table_primes[] =
